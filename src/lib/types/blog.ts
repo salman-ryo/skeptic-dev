@@ -1,5 +1,7 @@
+import { Document } from "mongoose";
+
 // types/Blog.ts
-type BlockType = 
+export type BlockType = 
   | 'text' 
   | 'heading1' 
   | 'heading2' 
@@ -12,7 +14,7 @@ type BlockType =
   | 'twitter'
   | 'divider';
 
-interface Block {
+export interface Block {
   id: string;
   type: BlockType;
   content: string;
@@ -23,4 +25,12 @@ interface Block {
     listItems?: string[];
     embedId?: string;
   };
+}
+
+export interface BlogDocument extends Document {
+  title: string;
+  author: string;
+  blocks: Block[];
+  createdAt: Date;
+  updatedAt: Date;
 }

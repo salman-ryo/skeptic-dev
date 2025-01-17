@@ -1,5 +1,6 @@
+// components/BlockEditor.tsx
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Block, BlockType } from "@/lib/types/blog";
 
 interface BlockEditorProps {
   blocks: Block[];
@@ -20,6 +22,13 @@ interface BlockEditorProps {
 }
 
 export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
+  // Add client-side rendering check
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const addBlock = (index: number) => {
     const newBlock: Block = {
       id: crypto.randomUUID(),
@@ -64,7 +73,52 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
             onChange={(content) => updateBlock(block.id, { content })}
           />
         );
-
+  
+      case "code":
+        return (
+          <div className="space-y-2">
+            <Select
+              value={block.metadata?.language || "javascript"}
+              onValueChange={(language) =>
+                updateBlock(block.id, {
+                  metadata: { ...block.metadata, language },
+                })
+              }
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="javascript">JavaScript</SelectItem>
+                <SelectItem value="typescript">TypeScript</SelectItem>
+                <SelectItem value="jsx">JSX</SelectItem>
+                <SelectItem value="tsx">TSX</SelectItem>
+                <SelectItem value="css">CSS</SelectItem>
+                <SelectItem value="html">HTML</SelectItem>
+                <SelectItem value="python">Python</SelectItem>
+                <SelectItem value="java">Java</SelectItem>
+                <SelectItem value="cpp">C++</SelectItem>
+                <SelectItem value="csharp">C#</SelectItem>
+                <SelectItem value="ruby">Ruby</SelectItem>
+                <SelectItem value="go">Go</SelectItem>
+                <SelectItem value="rust">Rust</SelectItem>
+                <SelectItem value="sql">SQL</SelectItem>
+                <SelectItem value="bash">Bash</SelectItem>
+                <SelectItem value="json">JSON</SelectItem>
+                <SelectItem value="yaml">YAML</SelectItem>
+                <SelectItem value="markdown">Markdown</SelectItem>
+              </SelectContent>
+            </Select>
+            <textarea
+              className="w-full min-h-[200px] font-mono text-sm bg-gray-900 text-gray-100 p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+              value={block.content}
+              onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+              placeholder="Enter code here..."
+              spellCheck={false}
+            />
+          </div>
+        );
+  
       case "image":
         return (
           <div className="space-y-2">
@@ -139,9 +193,25 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
     }
   };
 
+  if (!mounted) {
+    return (
+      <div className="space-y-4">
+        {blocks.map((block, index) => (
+          <Card key={block.id} className="p-4">
+            <div className="flex gap-4">
+              <div className="cursor-move">⋮</div>
+              <div className="w-32">{block.type}</div>
+              <div className="flex-1">{renderBlockContent(block)}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="blocks">
+      <Droppable droppableId="blocks" type="BLOCK">
         {(provided) => (
           <div
             ref={provided.innerRef}
@@ -150,17 +220,19 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
           >
             {blocks.map((block, index) => (
               <Draggable key={block.id} draggableId={block.id} index={index}>
-                {(provided) => (
+                {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    className="relative group"
+                    className={`relative group ${
+                      snapshot.isDragging ? "z-50" : ""
+                    }`}
                   >
                     <Card className="p-4">
                       <div className="flex gap-4">
                         <div
                           {...provided.dragHandleProps}
-                          className="cursor-move"
+                          className="cursor-move hover:text-primary"
                         >
                           ⋮
                         </div>
@@ -222,4 +294,5 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
       </Droppable>
     </DragDropContext>
   );
+
 };

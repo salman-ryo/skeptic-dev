@@ -1,8 +1,8 @@
 "use client"
-
 import { BlockEditor } from "@/components/blog/BlockEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Block } from "@/lib/types/blog";
 import { useState } from "react";
 
 export default function NewBlog() {
@@ -10,18 +10,52 @@ export default function NewBlog() {
     const [blocks, setBlocks] = useState<Block[]>([
       { id: "1", type: "text", content: "" }
     ]);
-  
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleSubmit = async () => {
+      if (isSubmitting) return;
+      setIsSubmitting(true);
       const blog = {
         title,
         blocks,
-        author: 'Current User',
+        author: 'Ryo',
         createdAt: new Date(),
         updatedAt: new Date(),
         published: true
       };
       
       console.log('Blog to be saved:', blog);
+      try {
+        console.log('Blog to be saved:', blog);
+    
+        const response = await fetch("/api/blogs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(blog),
+        });
+    
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Failed to save blog:", errorData);
+          alert("Failed to save blog. Please try again.");
+          return;
+        }
+    
+        const responseData = await response.json();
+        console.log("Blog saved successfully:", responseData);
+    
+        // Optionally reset the state
+        setTitle("");
+        setBlocks([{ id: "1", type: "text", content: "" }]);
+        alert("Blog published successfully!");
+      } catch (error) {
+        console.error("Error submitting blog:", error);
+        alert("An error occurred while saving the blog. Please try again.");
+      } finally{
+        setIsSubmitting(false)
+      }
     };
   
     return (

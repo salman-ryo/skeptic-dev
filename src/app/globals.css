@@ -16,9 +16,34 @@
   }
 }
 
+.prism-code {
+  background-color: #1a1a1a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thumb-gray-700::-webkit-scrollbar-thumb {
+    background-color: #374151;
+    border-radius: 0.25rem;
+  }
+  
+  .scrollbar-track-gray-900::-webkit-scrollbar-track {
+    background-color: #111827;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
   }
 }
 
