@@ -18,10 +18,13 @@ const BlockSchema = new Schema<Block>({
   },
 });
 
+
 const BlogSchema = new Schema<BlogDocument>({
   title: { type: String, required: true },
   author: { type: String, required: true },
+  description: { type: String, maxlength:2000 },
   blocks: [BlockSchema],
+  tag: [String]
 }, {
   timestamps: true,
 });

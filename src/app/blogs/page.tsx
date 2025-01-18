@@ -49,7 +49,7 @@ export default function BlogsPage() {
       <h1 className="text-4xl font-bold mb-8">Latest Posts</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog, index) => (
-          <Link href={`/blog/${blog._id}`} key={index}>
+          <Link href={`/blogs/${blog._id}`} key={index}>
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle>{blog.title}</CardTitle>

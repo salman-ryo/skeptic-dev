@@ -30,7 +30,9 @@ export interface Block {
 export interface BlogDocument extends Document {
   title: string;
   author: string;
-  blocks: Block[];
+  description?:string;
+  blocks?: Block[];
+  tag?:string[];
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
