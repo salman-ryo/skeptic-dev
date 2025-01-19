@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Block } from "@/lib/types/blog";
 import { useState } from "react";
 import {nanoid} from "nanoid"
+import { Textarea } from "@/components/ui/textarea";
 
 export default function NewBlog() {
   const [title, setTitle] = useState('');
@@ -87,7 +88,7 @@ export default function NewBlog() {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Blog Title"
         />
-        <Input
+        <Textarea
           className="mt-4"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

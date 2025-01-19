@@ -20,7 +20,7 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
           <img
             src={block.metadata?.url}
             alt={block.metadata?.alt || ''}
-            className="w-full rounded-lg"
+            className="w-full max-h-[500px] object-cover rounded-lg"
           />
           {block.metadata?.alt && (
             <figcaption className="text-center text-gray-600 mt-2">
@@ -65,6 +65,6 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
       return <hr className="my-8 border-gray-200" />;
     
     default:
-      return <div className="mb-4 prose">{renderHTML(block.content)}</div>;
+      return <p className="mb-4">{renderHTML(block.content)}</p>;
   }
 };

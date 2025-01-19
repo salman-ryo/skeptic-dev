@@ -19,9 +19,14 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-			cuBlack: {
+			cBlack: {
 				light: '#1C1C1C',
 				DEFAULT: '#1C1C1C',
+				dark: '#1C1C1C'
+			},
+			cGray: {
+				light: '#6b7280',
+				DEFAULT: '#374151',
 				dark: '#1C1C1C'
 			},
 		}

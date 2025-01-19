@@ -3,7 +3,7 @@ const blogBlocks = [
     {
       id: "1",
       type: "heading1",
-      content: "Abstraction | Is It Really That Bad?",
+      content: "Abstraction - Is It Really That Bad?",
     },
     {
       id: "2",
@@ -72,12 +72,12 @@ const blogBlocks = [
     {
       id: "12",
       type: "heading2",
-      content: "A Funny Example of Abstraction Gone Wrong",
+      content: "A Serious Example of Abstraction Gone Wrong",
     },
     {
       id: "13",
       type: "code",
-      content: "abstract class Animal {\n  abstract makeSound(): void;\n}\n\nclass Dog extends Animal {\n  makeSound() {\n    console.log('Woof!');\n  }\n}\n\nclass Cat extends Animal {\n  makeSound() {\n    console.log('Meow!');\n  }\n}\n\nconst animals: Animal[] = [new Dog(), new Cat()];\nanimals.forEach(animal => animal.makeSound());\n",
+      content: "abstract class Animal {  abstract makeSound(): void; class Dog extends Animal {  makeSound() {     console.log('Woof!');   } }  class Cat extends Animal {   makeSound() {     console.log('Meow!');   } }  const animals: Animal[] = [new Dog(), new Cat()]; animals.forEach(animal => animal.makeSound()); ",
       metadata: {
         language: "typescript",
       }

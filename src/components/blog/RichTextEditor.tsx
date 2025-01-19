@@ -54,13 +54,13 @@ export const RichTextEditor = ({
         >
           <ListOrdered className="h-4 w-4" />
         </Button>
-        <Button
+        {/* <Button
           size="sm"
           variant={editor.isActive('code') ? 'default' : 'outline'}
           onClick={() => editor.chain().focus().toggleCode().run()}
         >
           <Code className="h-4 w-4" />
-        </Button>
+        </Button> */}
       </div>
       <EditorContent editor={editor} className="p-4" />
     </div>

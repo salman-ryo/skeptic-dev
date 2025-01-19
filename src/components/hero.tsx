@@ -14,7 +14,7 @@ export function Hero() {
 
   }
   return (
-    <div className="bg-cuBlack pb-12 px-16">
+    <div className="bg-cBlack pb-12 px-16">
       <div className="container">
         <div className="py-8 flex justify-start items-center">
           <h1 className="text-white text-9xl font-bold tracking-tight">
@@ -55,7 +55,7 @@ export function Hero() {
               </div>
             </div>
             <Image
-              src="/skhero.jpg"
+              src="/images/blogs/skhero.jpg"
               alt="Film Photography"
               width={600}
               height={400}

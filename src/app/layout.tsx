@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import "prismjs/themes/prism-tomorrow.css";
 import { Header } from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({subsets:["latin","greek","cyrillic"], weight:["400","100","700"]})
 
 export const metadata: Metadata = {
   title: "Skeptic Dev",
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={`${roboto.className}`}>
         <Header />
         <main>{children}</main>
       </body>

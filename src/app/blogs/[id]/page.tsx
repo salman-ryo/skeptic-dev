@@ -2,6 +2,11 @@
 import { useEffect, useState } from "react";
 import { BlogDocument } from "@/lib/types/blog";
 import { BlockRenderer } from "@/components/blog/BlockRenderer";
+import { formatDateUS } from "@/lib/utils";
+import { Bar } from "@/components/common/Bar";
+import Link from "next/link";
+import { extLink } from "@/lib/externalLinks";
+import ShareSection from "@/components/blog/ShareSection";
 
 export default function BlogPage({ params }: { params: { id: string } }) {
   const [blog, setBlog] = useState<BlogDocument | null>(null);
@@ -12,6 +17,7 @@ export default function BlogPage({ params }: { params: { id: string } }) {
       try {
         const response = await fetch(`/api/blogs?id=${params.id}`);
         const data = await response.json();
+        console.log("🚀 ~ fetchBlog ~ response:", data)
         setBlog(data);
       } catch (error) {
         console.error("Error fetching blog:", error);
@@ -46,18 +52,38 @@ export default function BlogPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <article className="container mx-auto p-6 max-w-4xl">
+    <article className="w-full md:w-[70%] mx-auto p-6">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
-        <div className="text-gray-600">
-          By {blog.author} • {new Date(blog.createdAt).toLocaleDateString()}
+        <h1 className="text-5xl font-bold mt-8 mb-4">{blog.title}</h1>
+        {
+          blog.description&&
+        <p className="text-cGray text-lg font-medium mb-4">{blog.description}</p>
+        }
+        {/* Author and date */}
+        <div className="flex justify-start items-center space-x-3 font-medium text-cGray-light mb-4">
+          <span className="flex justify-start items-center space-x-2">
+            <span>
+          - By 
+            </span>
+          <Link title="View Author" href={extLink.author} referrerPolicy="no-referrer" target="_blank" className="font-semibold text-cGray">
+          {blog.author}
+          </Link>
+          </span>
+          <Bar/>
+          <span>
+           {formatDateUS(new Date(blog.createdAt))}
+          </span>
         </div>
+        <ShareSection/>
       </header>
+      {
+        blog?.blocks &&
       <div className="prose prose-lg max-w-none">
         {blog.blocks.map((block) => (
           <BlockRenderer key={block.id} block={block} />
         ))}
       </div>
+      }
     </article>
   );
 }
