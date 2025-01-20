@@ -20,6 +20,7 @@ export function PodcastSection() {
   return (
     <div className="grid md:grid-cols-2 gap-8 items-start bg-gray-50 rounded-lg p-8">
       <div className="space-y-6">
+        <Image src={"/images/codeblue.jpg"} alt="Code sources" width={200} height={400} className="h-60 w-40 object-cover"/>
         <div className="space-y-4">
           <span className="text-sm font-medium">Podcast</span>
           <h3 className="font-bold">The Creative Pulse</h3>
