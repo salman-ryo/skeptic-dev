@@ -1,5 +1,4 @@
-import { Header } from "@/components/header";
-import { PodcastSection } from "@/components/podcast-section";
+import { Header } from "@/components/layout/header";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -7,14 +6,15 @@ import { Hero } from "@/components/hero";
 import { SpotlightSection } from "@/components/spotlight-section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ArticleCard } from "@/components/ui/article-card";
+import { ResourceRecommendationSection } from "@/components/resource-section";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-cyan-300">
+    <div className="min-h-screen">
       <Hero />
       <div className="container py-16 space-y-16">
         {/* Podcast Section */}
-        <PodcastSection />
+        <ResourceRecommendationSection />
 
         {/* Spotlight Section */}
         <SpotlightSection />

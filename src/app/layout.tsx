@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import "prismjs/themes/prism-tomorrow.css";
-import { Header } from "@/components/header";
+import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
-const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
   subsets: ["latin", "greek", "cyrillic"],
   weight: ["400", "100", "700"],
@@ -23,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className}`}>
         <ThemeProvider
           attribute="class"

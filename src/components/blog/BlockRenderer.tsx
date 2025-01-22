@@ -65,6 +65,6 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
       return <hr className="my-8 border-gray-200" />;
     
     default:
-      return <p className="mb-4">{renderHTML(block.content)}</p>;
+      return <div className="mb-4">{renderHTML(block.content)}</div>;
   }
 };

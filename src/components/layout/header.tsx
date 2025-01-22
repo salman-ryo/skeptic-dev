@@ -1,7 +1,7 @@
+import Image from "next/image"
 import Link from "next/link"
 
 export function Header() {
-  const navItems = ["Blogs", "About", "Contact"]
   const navLinks = [
     {
       name:"Blogs",
@@ -22,9 +22,12 @@ export function Header() {
   ]
   
   return (
-      <header className="w-full flex items-center justify-between px-10 bg-cBlack text-white py-4 border-b border-gray-400">
-        <Link href="/" className="text-sm uppercase tracking-wider">
-          The Canvas Blog.
+      <header className="w-full flex items-center justify-between px-10 bg-cBlack text-white py-4">
+        {/* <Link href="/" className="text-sm uppercase tracking-wider">
+          The Skeptic Blog
+        </Link> */}
+        <Link href={"/"}>
+        <Image src={"/logo/skepticgrd.png"} alt="Skeptic Dev Logo" width={300} height={100} className="h-8 w-auto object-contain"/>
         </Link>
         <div className="flex items-center gap-8">
           <nav>

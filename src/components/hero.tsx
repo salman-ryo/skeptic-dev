@@ -20,15 +20,16 @@ export function Hero() {
           <h1 className="text-white text-9xl font-bold tracking-tight">
             SKEPTIC DEV
           </h1>
-          <p className="text-gray-400 text-xl mt-1 font-bold ml-3">
-            Blog about
+          <p className="text-gray-400 text-base font-bold ml-6">
+            Eat
             <br />
-            tech <br />
-            code.
+            Sleep <br />
+            Code <br />
+            Repeat
           </p>
         </div>
 
-        <div className="bg-white rounded-lg overflow-hidden p-10">
+        <div className="bg-gray-100 rounded-lg overflow-hidden p-10">
           <div className="flex justify-between items-start gap-4">
             <div className="w-1/3 mr-4">
               <time className="text-sm text-gray-500">{formatDateUS(mainBlog.createdAt)}</time>
@@ -59,7 +60,7 @@ export function Hero() {
               alt="Film Photography"
               width={600}
               height={400}
-              className="w-full h-[400px] object-cover"
+              className="w-full h-[400px] object-cover blackNwhite rounded-sm p-1"
             />
           </div>
         </div>
