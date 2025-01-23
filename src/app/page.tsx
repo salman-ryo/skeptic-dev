@@ -3,21 +3,22 @@ import { NewsletterSection } from "@/components/newsletter-section";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Hero } from "@/components/hero";
-import { SpotlightSection } from "@/components/spotlight-section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ArticleCard } from "@/components/ui/article-card";
 import { ResourceRecommendationSection } from "@/components/resource-section";
+import Footer from "@/components/layout/footer";
+import MostViewedBlogs from "@/components/most-viewed-blogs";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       <Hero />
-      <div className="container py-16 space-y-16">
+      <div className="container py-16 space-y-16 mx-auto md:px-16">
         {/* Podcast Section */}
         <ResourceRecommendationSection />
 
         {/* Spotlight Section */}
-        <SpotlightSection />
+        <MostViewedBlogs />
 
         {/* Newsletter Section */}
         <NewsletterSection />
@@ -52,71 +53,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-black text-white mt-16 py-8">
-        <div className="container">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-bold tracking-tighter">
-                THE CANVAS
-              </h2>
-              <p className="text-sm text-gray-400">
-                Blog about art
-                <br />
-                music
-                <br />
-                design.
-              </p>
-            </div>
-            <nav>
-              <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Terms & Conditions
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Cookie Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Latest
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Trending
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Art
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Design
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Music
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Podcast
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div className="mt-8 text-center text-sm text-gray-400">
-            <p>All rights reserved. © 2024 The Canvas</p>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 }

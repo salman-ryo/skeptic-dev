@@ -80,7 +80,7 @@ export function ResourceRecommendationSection() {
         </div>
       </div>
       <div className="w-[40%] flex flex-col justify-center items-center px-10 py-2">
-        <h2 className="text-4xl md:text-6xl font-bold mb-10 mt-4">
+        <h2 className="text-4xl md:text-6xl font-bold mb-10 mt-4 text-cGray-dark">
           Highly Recommended Resources For Learning
         </h2>
         <Button className="w-full rounded-full py-5 font-bold border-2 border-cGray-light shadow-md shadow-black" size={"lg"}>
