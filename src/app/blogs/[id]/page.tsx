@@ -2,14 +2,16 @@
 import { useEffect, useState } from "react";
 import { BlogDocument } from "@/lib/types/blog";
 import { BlockRenderer } from "@/components/blog/BlockRenderer";
-import { formatDateUS } from "@/lib/utils";
 import { Bar } from "@/components/common/Bar";
 import Link from "next/link";
 import { extLink } from "@/lib/externalLinks";
 import ShareSection from "@/components/blog/ShareSection";
+import BlogSkeleton from "@/components/blog/BlogSkeleton";
+import { formatDateUS } from "@/utils/dateTime";
 
 export default function BlogPage({ params }: { params: { id: string } }) {
   const [blog, setBlog] = useState<BlogDocument | null>(null);
+  console.log("🚀 ~ BlogPage ~ blog:", blog)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,15 +33,7 @@ export default function BlogPage({ params }: { params: { id: string } }) {
 
   if (loading) {
     return (
-      <div className="container mx-auto p-6 animate-pulse">
-        <div className="h-12 bg-gray-200 rounded w-3/4 mb-4"></div>
-        <div className="h-4 bg-gray-200 rounded w-1/4 mb-8"></div>
-        <div className="space-y-4">
-          <div className="h-4 bg-gray-200 rounded w-full"></div>
-          <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-          <div className="h-4 bg-gray-200 rounded w-4/6"></div>
-        </div>
-      </div>
+      <BlogSkeleton/>
     );
   }
 
@@ -54,13 +48,30 @@ export default function BlogPage({ params }: { params: { id: string } }) {
   return (
     <article className="w-full md:w-[70%] mx-auto p-6">
       <header className="mb-8">
+        {
+          blog.tags && blog.tags.length > 0 &&
+          <div className="flex justify-start items-center gap-x-4">
+            {
+              blog.tags.map((tag, index)=>{
+                return(
+                  <div className="flex justify-center items-center gap-x-4" key={index}>
+                    <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300"> 
+                    {tag}
+                    </span>
+                    {index < (blog.tags as string[]).length-1 && <Bar className="w-[2px]"/>}
+                  </div>
+                )
+              })
+            }
+          </div>
+        }
         <h1 className="text-5xl font-bold mt-8 mb-4">{blog.title}</h1>
         {
           blog.description&&
         <p className="text-cGray text-lg font-medium mb-4">{blog.description}</p>
         }
         {/* Author and date */}
-        <div className="flex justify-start items-center space-x-3 font-medium text-cGray-light mb-4">
+        <div className="flex justify-start items-center space-x-3 font-medium text-cGray mb-4">
           <span className="flex justify-start items-center space-x-2">
             <span>
           - By 

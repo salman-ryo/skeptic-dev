@@ -1,7 +1,6 @@
 import { BlogDocument } from "@/lib/types/blog";
-import { formatDateUS } from "@/lib/utils";
+import { formatDateUS } from "@/utils/dateTime";
 import Image from "next/image";
-import Link from "next/link";
 
 export function Hero() {
   // @ts-ignore
@@ -11,11 +10,10 @@ export function Hero() {
     author:"Ryo",
     description:"Dive into the debate around abstraction in software development. While abstraction is a cornerstone of clean, scalable code, it often gets a bad reputation for being overly complex or hiding critical details. In this article, we explore when abstraction is your best friend, when it becomes an obstacle, and how to strike the right balance for maintainable and efficient solutions. Whether you’re a beginner or a seasoned developer, gain a fresh perspective on one of programming’s most polarizing concepts.",
     createdAt: new Date()
-
   }
   return (
-    <div className="bg-cBlack pb-12 px-16">
-      <div className="container">
+    <div className="bg-cGray-dark pb-12 px-16">
+      <div className="container mx-auto">
         <div className="py-8 flex justify-start items-center">
           <h1 className="text-white text-9xl font-bold tracking-tight">
             SKEPTIC DEV
@@ -29,7 +27,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="bg-gray-100 rounded-lg overflow-hidden p-10">
+        <div className="bg-gray-100 rounded-md overflow-hidden p-10">
           <div className="flex justify-between items-start gap-4">
             <div className="w-1/3 mr-4">
               <time className="text-sm text-gray-500">{formatDateUS(mainBlog.createdAt)}</time>
@@ -58,8 +56,8 @@ export function Hero() {
             <Image
               src="/images/blogs/skhero.jpg"
               alt="Film Photography"
-              width={600}
-              height={400}
+              width={1920}
+              height={1080}
               className="w-full h-[400px] object-cover blackNwhite rounded-sm p-1"
             />
           </div>

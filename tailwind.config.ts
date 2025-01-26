@@ -27,7 +27,7 @@ const config: Config = {
 			cGray: {
 				light: '#d1d5db',
 				DEFAULT: '#374151',
-				dark: '#1f2937'
+				dark: '#2A2A2A'
 			},
 			cPeach: {
 				light: '#FF8178',

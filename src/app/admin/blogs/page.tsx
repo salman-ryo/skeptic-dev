@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, ClockIcon } from "lucide-react";
-import { formatDateUS } from "@/lib/utils";
+import { formatDateUS } from "@/utils/dateTime";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogDocument[]>([]);
@@ -120,7 +120,7 @@ export default function BlogsPage() {
                 <CardContent className="flex-grow">
                   <p className="text-muted-foreground">{blog.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {blog.tag?.map((tag, tagIndex) => (
+                    {blog.tags?.map((tag, tagIndex) => (
                       <Badge key={tagIndex} variant="secondary">
                         {tag}
                       </Badge>
@@ -130,15 +130,15 @@ export default function BlogsPage() {
                 <CardFooter className="text-sm text-muted-foreground">
                   <div className="flex items-center">
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    <time dateTime={formatDateUS(new Date(blog.createdAt))}>
-                      {formatDateUS(new Date(blog.createdAt))}
+                    <time dateTime={formatDateUS(blog.createdAt)}>
+                      {formatDateUS(blog.createdAt)}
                     </time>
                   </div>
                   {blog.updatedAt && (
                     <div className="flex items-center ml-4">
                       <ClockIcon className="mr-2 h-4 w-4" />
-                      <time dateTime={formatDateUS(new Date(blog.updatedAt))}>
-                      Updated: {formatDateUS(new Date(blog.updatedAt))}
+                      <time dateTime={formatDateUS(blog.updatedAt)}>
+                      Updated: {formatDateUS(blog.updatedAt)}
                     </time>
                     </div>
                   )}

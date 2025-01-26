@@ -3,7 +3,7 @@ import { Facebook, Instagram, Youtube } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2A2A2A] w-full p-16 pb-8">
+    <footer className="bg-cGray-dark w-full p-16 pb-8">
       <div className="container mx-auto">
         {/* Top section with logo and social icons */}
         <div className="flex flex-col md:flex-row justify-between items-center ">
@@ -22,21 +22,21 @@ export default function Footer() {
           <div className="flex gap-4">
             <Link
               href="#"
-              className="bg-cPeach hover:bg-cPeach/80 transition-colors p-2 rounded-full"
+              className="bg-white hover:bg-white/80 transition-colors p-2 rounded-full"
             >
               <Instagram className="w-6 h-6" />
               <span className="sr-only">Instagram</span>
             </Link>
             <Link
               href="#"
-              className="bg-cPeach hover:bg-cPeach/80 transition-colors p-2 rounded-full"
+              className="bg-white hover:bg-white/80 transition-colors p-2 rounded-full"
             >
               <Youtube className="w-6 h-6" />
               <span className="sr-only">YouTube</span>
             </Link>
             <Link
               href="#"
-              className="bg-cPeach hover:bg-cPeach/80 transition-colors p-2 rounded-full"
+              className="bg-white hover:bg-white/80 transition-colors p-2 rounded-full"
             >
               <Facebook className="w-6 h-6" />
               <span className="sr-only">Facebook</span>
@@ -83,7 +83,7 @@ export default function Footer() {
                 </Link>
               </div>
               <p className="text-sm text-gray-400">
-                All rights reserved. © {new Date().getFullYear()} The Canvas
+                All rights reserved. © {new Date().getFullYear()} The Skeptic Dev
               </p>
             </nav>
           </div>

@@ -10,12 +10,11 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, ClockIcon } from "lucide-react";
-import { formatDateUS } from "@/lib/utils";
 import Image from "next/image";
 import { useRandomImage } from "@/hooks/useRandomImage";
+import { formatDateUS } from "@/utils/dateTime";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogDocument[]>([]);
@@ -90,7 +89,7 @@ export default function BlogsPage() {
                 <CardContent className="flex-grow">
                   <p className="text-muted-foreground">{blog.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {blog.tag?.map((tag, tagIndex) => (
+                    {blog.tags?.map((tag, tagIndex) => (
                       <Badge key={tagIndex} variant="secondary">
                         {tag}
                       </Badge>

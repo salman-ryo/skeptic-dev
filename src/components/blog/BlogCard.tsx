@@ -1,0 +1,74 @@
+"use client";
+import { FC, Key } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { BlogDocument } from "@/lib/types/blog";
+import { useRandomImage } from "@/hooks/useRandomImage";
+import { formatDateUS } from "@/utils/dateTime";
+import { calculateReadTime, limitWords } from "@/utils/text";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+
+interface BlogCardProps {
+  blog: BlogDocument; // Using BlogDocument as the type
+}
+
+const BlogCard: FC<BlogCardProps> = ({ blog }) => {
+  const { _id, title, description, tags, blocks, createdAt } = blog;
+  const fallbackImg = useRandomImage();
+
+  // Extract image from blocks if it exists
+  const imageBlock = blocks?.find((block) => block.type === "image");
+  const imgSrc = imageBlock?.metadata?.url || fallbackImg.url;
+  const altText = imageBlock?.metadata?.alt || "Blog image";
+
+  return (
+    <Card
+      className="w-[400px] min-h-[520px] flex-shrink-0 bg-white h-full border-2 rounded-md border-cGray-light snap-center"
+    >
+      <CardContent className="p-6">
+        <div className="mb-4">
+          <img
+            src={imgSrc}
+            alt={altText}
+            className="w-full h-[210px] object-cover rounded-sm blackNwhite"
+          />
+        </div>
+        <div className="space-y-3">
+          <div className="flex gap-2">
+            {tags?.map((tag, idx) => (
+              <Badge
+                key={idx}
+                variant="secondary"
+                className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
+          <p className="text-gray-500">{formatDateUS(createdAt)}</p>
+          <Tooltip>
+            <TooltipTrigger>
+              <Link href={`/blogs/${_id}`} className="block">
+                <h3 className="text-xl font-bold hover:text-gray-700 text-left text-pretty">
+                  {limitWords(title, 9)}
+                </h3>
+              </Link>
+              <TooltipContent>{title}</TooltipContent>
+            </TooltipTrigger>
+          </Tooltip>
+          {blog.blocks && (
+            <p className="text-gray-500">
+              {calculateReadTime(blog.blocks)} min read
+            </p>
+          )}
+          {description && (
+            <p className="text-gray-600">{limitWords(description, 15)}</p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default BlogCard;

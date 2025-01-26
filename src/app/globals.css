@@ -146,12 +146,21 @@
 }
 
 /* Apply grayscale filter */
-.blackNwhite {
+.blackNwhiteContast {
   filter: grayscale(100%) contrast(1.5) brightness(0.7);
 }
 
+
 /* Optionally add a hover effect */
-.blackNwhite:hover {
+.blackNwhiteContast:hover {
   filter: grayscale(0%) contrast(1) brightness(1); /* Restores the original color */
   transition: filter 5s ease-in-out; /* Smooth transition */
+}
+
+.blackNwhite{
+  filter: grayscale(100%);
+}
+.blackNwhite:hover {
+  filter: grayscale(0%) ; /* Restores the original color */
+  transition: filter 1s ease-in-out; /* Smooth transition */
 }

@@ -22,10 +22,7 @@ export function Header() {
   ]
   
   return (
-      <header className="w-full flex items-center justify-between px-10 bg-cBlack text-white py-4">
-        {/* <Link href="/" className="text-sm uppercase tracking-wider">
-          The Skeptic Blog
-        </Link> */}
+      <header className="w-full flex items-center justify-between px-10 bg-cGray-dark text-white py-4">
         <Link href={"/"}>
         <Image src={"/logo/skepticgrd.png"} alt="Skeptic Dev Logo" width={300} height={100} className="h-8 w-auto object-contain"/>
         </Link>
