@@ -8,29 +8,29 @@ import BlogCard from "../../blog/BlogCard";
 import ScrollButtons from "../../common/ScrollButtons";
 import BlogCardSkeleton from "@/components/blog/BlogCardSkeleton";
 
-export default function MostViewedBlogs() {
+export default function   MostViewedBlogs({blogsData}:{blogsData: BlogDocument[]}) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const [blogsData, setBlogsData] = useState<null | BlogDocument[]>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null);
-  useEffect(() => {
-    const fetchBlogsByViews = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get("/api/blogs");
-        if (response.status === 200) {
-          setBlogsData(response.data as BlogDocument[]);
-        }
-      } catch (error: any) {
-        setError(error.message || "Failed to fetch blogs");
-        alert(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBlogsByViews();
-  }, []);
+  // const [blogsData, setBlogsData] = useState<null | BlogDocument[]>(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState<null | string>(null);
+  // useEffect(() => {
+  //   const fetchBlogsByViews = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await api.get("/api/blogs");
+  //       if (response.status === 200) {
+  //         setBlogsData(response.data as BlogDocument[]);
+  //       }
+  //     } catch (error: any) {
+  //       setError(error.message || "Failed to fetch blogs");
+  //       alert(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchBlogsByViews();
+  // }, []);
 
   return (
     <section className="relative py-12">
@@ -53,12 +53,12 @@ export default function MostViewedBlogs() {
             ref={scrollContainerRef}
             className="flex gap-4 md:gap-x-20  overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
           >
-            {error && (
+            {/* {error && (
               <div className="flex justify-center items-center text-xl text-gray-600 w-full">
                 {error}
               </div>
             )}
-            {loading && [1, 2, 3].map((num) => <BlogCardSkeleton key={num} />)}
+            {loading && [1, 2, 3].map((num) => <BlogCardSkeleton key={num} />)} */}
             {blogsData &&
               blogsData.length > 0 &&
               blogsData.map((blog) => <BlogCard blog={blog} key={blog._id as string} />)}

@@ -24,7 +24,8 @@ const BlogSchema = new Schema<BlogDocument>({
   author: { type: String, required: true },
   description: { type: String, maxlength:2000 },
   blocks: [BlockSchema],
-  tags: [String]
+  tags: [String],
+  views: {type: Number, default:0}
 }, {
   timestamps: true,
 });
