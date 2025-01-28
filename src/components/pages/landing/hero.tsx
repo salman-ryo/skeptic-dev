@@ -1,4 +1,6 @@
+import ScrollReveal from "@/components/animation/ScrollReveal";
 import { BlogDocument } from "@/lib/types/blog";
+import { zoomInConf } from "@/utils/animationConfig";
 import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime } from "@/utils/text";
 import Image from "next/image";
@@ -11,7 +13,9 @@ export function Hero({ blog }: { blog: BlogDocument }) {
     "https://cdn.pixabay.com/photo/2024/05/16/20/21/digital-8766930_1280.png";
   const altText = imageBlock?.metadata?.alt || blog.title;
   return (
-    <div className="bg-cGray-dark pb-12 px-16">
+    <ScrollReveal animationVariants={zoomInConf.variant}>
+
+    <div className="bg-cGray-dark pb-12 px-16 darkBounce">
       <div className="container mx-auto">
         <div className="py-8 flex justify-start items-center">
           <h1 className="text-white text-9xl font-bold tracking-tight">
@@ -68,5 +72,6 @@ export function Hero({ blog }: { blog: BlogDocument }) {
         )}
       </div>
     </div>
+    </ScrollReveal>
   );
 }

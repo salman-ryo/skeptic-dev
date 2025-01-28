@@ -1,4 +1,3 @@
-import { NewsletterSection } from "@/components/pages/landing/newsletter-section";
 import { Hero } from "@/components/pages/landing/hero";
 import { ResourceRecommendationSection } from "@/components/pages/landing/resource-recommendation-section";
 import Footer from "@/components/layout/footer";
@@ -6,7 +5,6 @@ import MostViewedBlogs from "@/components/pages/landing/most-viewed-blogs";
 import MustReadBlogs from "@/components/pages/landing/must-read-section";
 import { ToolsRecommendationSection } from "@/components/pages/landing/tools-recommendation-section";
 import { fetchMostViewedBlogs, fetchRandomBlogs, fetchTopBlog } from "@/actions/blog";
-import { Suspense } from "react";
 
 export default async function Home() {
   const topBlog = await fetchTopBlog()
@@ -28,14 +26,8 @@ export default async function Home() {
         <ToolsRecommendationSection/>
 
         {/* Must-Read Section */}
-        <Suspense fallback={
-          <p>Loading......</p>
-        }>
         <MustReadBlogs blogsData={mustReadBlogs}/>
-        </Suspense>
       </div>
-      {/* Footer */}
-      <Footer/>
     </div>
   );
 }
