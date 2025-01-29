@@ -1,4 +1,5 @@
 import ScrollReveal from "@/components/animation/ScrollReveal";
+import { H3 } from "@/components/text/heading";
 import { BlogDocument } from "@/lib/types/blog";
 import { zoomInConf } from "@/utils/animationConfig";
 import { formatDateUS } from "@/utils/dateTime";
@@ -36,7 +37,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                 <time className="text-sm text-gray-500">
                   {formatDateUS(blog.createdAt)}
                 </time>
-                <h2 className="text-2xl font-semibold mb-1">{blog.title}</h2>
+                <H3 className="mb-1">{blog.title}</H3>
                 {blog.blocks && (
                   <time className="text-sm text-gray-500 mb-4 block">
                     {calculateReadTime(blog.blocks)} min read

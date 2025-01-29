@@ -14,6 +14,7 @@ import {
   slideInRightConf,
   zoomInConf,
 } from "@/utils/animationConfig";
+import { H2 } from "@/components/text/heading";
 
 export default function MostViewedBlogs({
   blogsData,
@@ -33,9 +34,9 @@ export default function MostViewedBlogs({
             <Card className="w-[400px] flex-shrink-0 h-full rounded-md bg-white p-2 border-2 border-cGray-light">
               <CardContent className="p-6 flex flex-col justify-between">
                 <div className="mb-4">
-                  <h2 className="text-4xl md:text-6xl font-bold leading-tight text-cGray-dark">
+                  <H2>
                     Most <br /> Viewed <br /> Blogs
-                  </h2>
+                  </H2>
                 </div>
                 <ScrollButtons ref={scrollContainerRef} />
               </CardContent>

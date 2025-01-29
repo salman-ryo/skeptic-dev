@@ -1,18 +1,22 @@
 "use client";
 import BlogCard from "@/components/blog/BlogCard";
 import ScrollButtons from "@/components/common/ScrollButtons";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { H2 } from "@/components/text/heading";
 import { BlogDocument } from "@/lib/types/blog";
-import { useRef} from "react";
+import { useRef } from "react";
 
-export default function MustReadBlogs({blogsData}:{blogsData: BlogDocument[]}) {
+export default function MustReadBlogs({
+  blogsData,
+}: {
+  blogsData: BlogDocument[];
+}) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   return (
     <section className="container mx-auto px-4">
       <div className="flex justify-between items-center">
-        <SectionHeading className="mb-8">Must-Read Blogs</SectionHeading>
-        <ScrollButtons ref={scrollContainerRef}/>
+        <H2 className="mb-8">Must-Read Blogs</H2>
+        <ScrollButtons ref={scrollContainerRef} />
       </div>
       {/* Scrollable Blog Cards */}
       <div
@@ -29,7 +33,9 @@ export default function MustReadBlogs({blogsData}:{blogsData: BlogDocument[]}) {
         } */}
         {blogsData &&
           blogsData.length > 0 &&
-          blogsData.map((blog) => <BlogCard blog={blog} key={blog._id as string} />)}
+          blogsData.map((blog) => (
+            <BlogCard blog={blog} key={blog._id as string} />
+          ))}
       </div>
     </section>
   );

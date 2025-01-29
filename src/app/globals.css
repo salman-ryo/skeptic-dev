@@ -137,6 +137,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     transition: filter 1s ease-in-out;
     /* Smooth transition */
   }
+ 
 }
 
 @layer base {

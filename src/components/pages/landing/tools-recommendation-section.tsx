@@ -1,4 +1,5 @@
 "use client"
+import { H2 } from "@/components/text/heading";
 import { Button } from "@/components/ui/button";
 import { toolsAndUtilities } from "@/lib/externalLinks";
 import { throttle } from "@/utils/performance";
@@ -55,9 +56,9 @@ export function ToolsRecommendationSection() {
         </div>
       </div>
       <div className="w-[40%] flex flex-col justify-start items-start  py-2 mt-8">
-        <h2 className="text-4xl md:text-6xl font-bold mb-10 mt-4 text-cGray-dark w-[80%] mx-auto">
+        <H2 className="mb-10 mt-4 w-[80%] mx-auto">
           Some Useful Tools For Developers
-        </h2>
+        </H2>
         <Button
           onClick={throttledDownload}
           className="w-full rounded-full py-5 font-bold border-2 border-cGray-light shadow-md shadow-black"

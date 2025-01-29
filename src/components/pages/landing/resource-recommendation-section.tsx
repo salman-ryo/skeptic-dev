@@ -1,4 +1,5 @@
 "use client"
+import { H2 } from "@/components/text/heading";
 import { Button } from "@/components/ui/button";
 import { resourceLinks } from "@/lib/externalLinks";
 import { throttle } from "@/utils/performance";
@@ -54,9 +55,9 @@ export function ResourceRecommendationSection() {
         </div>
       </div>
       <div className="w-[40%] flex flex-col justify-center items-center px-10 py-2">
-        <h2 className="text-4xl md:text-6xl font-bold mb-10 mt-4 text-cGray-dark">
+        <H2 className="mb-10 mt-4">
           Highly Recommended Resources For Learning
-        </h2>
+        </H2>
         <Button
           onClick={throttledDownload}
           className="w-full rounded-full py-5 font-bold border-2 border-cGray-light shadow-md shadow-black"
