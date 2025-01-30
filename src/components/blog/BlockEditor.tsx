@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Block, BlockType } from "@/lib/types/blog";
+import { nanoid } from "nanoid";
 
 interface BlockEditorProps {
   blocks: Block[];
@@ -31,7 +32,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
 
   const addBlock = (index: number) => {
     const newBlock: Block = {
-      id: crypto.randomUUID(),
+      id: nanoid(),
       type: "text",
       content: "",
     };

@@ -73,4 +73,36 @@ export async function DELETE(req: Request) {
       console.error('Error deleting :', error.message);
       return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
-}  
+}
+
+export async function PUT(req: Request) {
+  try {
+      await connectToDatabase();
+      
+      const { searchParams } = new URL(req.url);
+      const id = searchParams.get('id');
+      
+      if (!id) {
+          return NextResponse.json({ error: 'Blog Id is required' }, { status: 400 });
+      }
+      
+      const body = await req.json();
+      const { title, description, author, blocks, tags } = body;
+
+      const updatedBlog = await Blog.findByIdAndUpdate(
+          id,
+          { title, description, author, blocks, tags },
+          { new: true, runValidators: true } // Return updated document and ensure validation
+      );
+
+      if (!updatedBlog) {
+          return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
+      }
+
+      return NextResponse.json({ message: 'Blog updated successfully', blog: updatedBlog }, { status: 200 });
+
+  } catch (error: any) {
+      console.error('Error updating blog:', error.message);
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}

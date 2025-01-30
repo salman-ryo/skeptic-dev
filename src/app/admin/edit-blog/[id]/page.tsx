@@ -4,24 +4,47 @@ import { BlockEditor } from "@/components/blog/BlockEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Block } from "@/lib/types/blog";
-import { useState } from "react";
-import {nanoid} from "nanoid"
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function NewBlog() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+export default function EditBlog() {
+  const { id } = useParams(); // Get the blog ID from the URL
+  console.log("🚀 ~ EditBlog ~ id:", id)
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
-  const [newTag, setNewTag] = useState('');
-  const [blocks, setBlocks] = useState<Block[]>([
-    { id: nanoid(), type: "text", content: "" },
-  ]);
+  const [newTag, setNewTag] = useState("");
+  const [blocks, setBlocks] = useState<Block[]>([{ id: "1", type: "text", content: "" }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Fetch the existing blog data
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await fetch(`/api/blogs?id=${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blog");
+        }
+        const data = await response.json();
+        setTitle(data.title);
+        setDescription(data.description);
+        setTags(data.tags);
+        setBlocks(data.blocks);
+      } catch (error) {
+        console.error("Error fetching blog:", error);
+        alert("Failed to load blog data.");
+      }
+    };
+
+    fetchBlog();
+  }, [id]);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag)) {
       setTags((prev) => [...prev, newTag]);
-      setNewTag('');
+      setNewTag("");
     }
   };
 
@@ -33,54 +56,45 @@ export default function NewBlog() {
     if (isSubmitting) return;
     setIsSubmitting(true);
 
-    const blog = {
+    const updatedBlog = {
       title,
       description,
       tags,
       blocks,
-      author: "Ryo",
-      createdAt: new Date(),
       updatedAt: new Date(),
-      published: true,
     };
 
     try {
-      console.log("Blog to be saved:", blog);
-
-      const response = await fetch("/api/blogs", {
-        method: "POST",
+      const response = await fetch(`/api/blogs?id=${id}`, {
+        method: "PUT",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(blog),
-      });
+        body: JSON.stringify(updatedBlog),
+    });
+    console.log("🚀 ~ handleSubmit ~ response:", response)
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Failed to save blog:", errorData);
-        alert("Failed to save blog. Please try again.");
+        console.error("Failed to update blog:", errorData);
+        alert("Failed to update blog. Please try again.");
         return;
       }
 
       const responseData = await response.json();
-      console.log("Blog saved successfully:", responseData);
-
-      // Reset state
-      setTitle("");
-      setDescription("");
-      setTags([]);
-      setBlocks([{ id: "1", type: "text", content: "" }]);
-      alert("Blog published successfully!");
+      console.log("Blog updated successfully:", responseData);
+      alert("Blog updated successfully!");
+      router.push(`/blogs/${id}`); // Redirect to the blog detail page
     } catch (error) {
-      console.error("Error submitting blog:", error);
-      alert("An error occurred while saving the blog. Please try again.");
+      console.error("Error updating blog:", error);
+      alert("An error occurred while updating the blog. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="container mx-auto py-8 min-h-screen">
+    <div className="container mx-auto py-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <Input
           className="text-4xl font-bold"
@@ -121,10 +135,10 @@ export default function NewBlog() {
         </div>
         <BlockEditor blocks={blocks} onBlocksChange={setBlocks} />
         <div className="flex justify-end gap-4">
-          <Button variant="outline" onClick={() => console.log("Draft saved")}>
-            Save Draft
+          <Button variant="outline" onClick={() => router.push(`/blogs/${id}`)}>
+            Cancel
           </Button>
-          <Button onClick={handleSubmit}>Publish</Button>
+          <Button onClick={handleSubmit}>Update</Button>
         </div>
       </div>
     </div>

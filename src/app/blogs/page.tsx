@@ -1,125 +1,125 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { BlogDocument } from "@/lib/types/blog";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, ClockIcon } from "lucide-react";
+import RandomQuote from "@/components/pages/blogs/RandomQuote";
 import Image from "next/image";
-import { useRandomImage } from "@/hooks/useRandomImage";
-import { formatDateUS } from "@/utils/dateTime";
+import { useState } from "react";
+import BlogsSection from "./BlogsSection";
+import { H2 } from "@/components/text/heading";
+
+interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  category: string;
+  readTime: string;
+}
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<BlogDocument[]>([]);
-  const [loading, setLoading] = useState(true);
-  const fallbackImg = useRandomImage();
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch("/api/blogs");
-        const data = await response.json();
-        console.log("🚀 ~ fetchBlogs ~ data:", data);
-        setBlogs(data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      } finally {
-        setLoading(false);
+  const [featuredPost] = useState<BlogPost>({
+    id: 1,
+    title: "Breaking News: The Renaissance of Print in Digital Age",
+    excerpt:
+      "In an unexpected twist, millennials are driving a resurgence of physical newspapers...",
+    date: "September 28, 2023",
+    author: "Inkwell Montgomery",
+    category: "Media Trends",
+    readTime: "8 min read",
+  });
+
+  const newspaperAnimation = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.2
       }
-    };
+    }
+  };
 
-    fetchBlogs();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto p-6">
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader>
-                <div className="h-8 bg-gray-200 rounded w-2/3"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
+  const childAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-8">Latest Posts</h1>
-      {blogs && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {blogs.map((blog, index) =>{
-            return(
-                <Link href={`/blogs/${blog._id}`} key={index}>
-              <Card className="flex flex-col hover:shadow-lg transition-shadow duration-300 max-w-md">
-                <CardHeader>
-                  <CardTitle className="text-xl">{blog.title}</CardTitle>
-                  <CardDescription>by {blog.author}</CardDescription>
-                  {blog?.blocks &&
-                    Array.isArray(blog.blocks) &&
-                    blog.blocks.length > 0 && (
-                      <Image
-                        src={
-                          blog.blocks[0]?.type !== "image" &&
-                          blog.blocks[0]?.metadata?.url
-                            ? blog.blocks[0].metadata.url
-                            : fallbackImg.url
-                        }
-                        alt={blog.title}
-                        width={300}
-                        height={200}
-                        className="w-full h-52 object-cover rounded-lg"
-                      />
-                    )}
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-muted-foreground">{blog.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {blog.tags?.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="text-sm text-muted-foreground">
-                  <div className="flex items-center">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    <time dateTime={formatDateUS(new Date(blog.createdAt))}>
-                      {formatDateUS(new Date(blog.createdAt))}
-                    </time>
-                  </div>
-                  {blog.updatedAt && (
-                    <div className="flex items-center ml-4">
-                      <ClockIcon className="mr-2 h-4 w-4" />
-                      <time dateTime={formatDateUS(new Date(blog.updatedAt))}>
-                        Updated: {formatDateUS(new Date(blog.updatedAt))}
-                      </time>
-                    </div>
-                  )}
-                </CardFooter>
-              </Card>
-            </Link>
-            )
-          }
-            
-          )}
+    <div className="min-h-screen bg-white">
+      {/* Newspaper Hero Section */}
+      <div className="bg-cGray-dark w-full px-10 md:px-20 py-10">
+      <section className="relative py-12 px-6 md:px-12 bg-amber-50 blackNwhite">
+        {/* <section className="relative py-12 px-6 md:px-12 bg-[url('https://cdn.pixabay.com/photo/2014/11/28/09/13/paper-548650_1280.jpg')] bg-repeat"> */}
+        {/* Torn Edge Effect */}
+        {/* <div className="absolute inset-x-0 -bottom-2 h-6 bg-no-repeat bg-center bg-[url('https://cdn.pixabay.com/photo/2015/10/24/18/48/torn-paper-1004811_1280.jpg')]"></div> */}
+
+        <div className="max-w-5xl mx-auto">
+          {/* Vintage Header */}
+          <div className="border-b-2 border-black mb-8 pb-4">
+            <div className="flex justify-between items-center text-sm font-serif">
+              <span>THE SKEPTIC DEV</span>
+              <span>VOL. CXXI • No. 3{new Date().getDay()}</span>
+              <span>LATEST EDITION</span>
+            </div>
+          </div>
+
+          {/* Main Feature */}
+          <article className="space-y-6">
+            <h1 className="font-serif text-5xl leading-tight border-b-2 border-black pb-4 uppercase">
+              {featuredPost.title}
+            </h1>
+
+            {/* <Image
+            src={"/images/blogs/skhero.jpg"} alt="Nothing" width={1920} height={1080} className="blackNwhite h-96 object-cover w-full"
+            /> */}
+
+            <div className="flex gap-4 text-sm italic">
+              <span>By {featuredPost.author}</span>
+              <span className="font-bold">•</span>
+              <span>{featuredPost.date}</span>
+              <span className="font-bold">•</span>
+              <span>{featuredPost.category}</span>
+            </div>
+
+            {/* Newspaper Columns */}
+            <div className="grid md:grid-cols-2 font-serif text-lg leading-relaxed">
+              <div className="mr-6">
+                <p className="drop-cap">
+                  {featuredPost.excerpt} The smell of fresh ink on paper fills
+                  the air as young professionals are increasingly spotted
+                  carrying folded broadsheets...
+                </p>
+
+                <div className="space-y-4">
+                  <p>
+                    Coffee shops now offer newspaper subscriptions instead of
+                    WiFi passwords, creating a new social dynamic...
+                  </p>
+                  <RandomQuote />
+                </div>
+              </div>
+              <Image
+                src={"/images/blogs/skhero.jpg"}
+                alt="Nothing"
+                width={1920}
+                height={1080}
+                className="blackNwhite h-full object-cover w-auto"
+              />
+            </div>
+          </article>
         </div>
-      )}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center items-center gap-x-3 blackNwhite">
+          <div className="size-3 rounded-full bg-red-500"></div>
+          <div className="size-3 rounded-full bg-green-500"></div>
+          <div className="size-3 rounded-full bg-blue-500"></div>
+        </div>
+      </section>
+      </div>
+
+      <BlogsSection />
+      {/* Modern Blog Section */}
     </div>
   );
 }

@@ -1,8 +1,9 @@
-"use client"
+"use client";
+import { delay } from '@/utils/performance';
 import { useState, useEffect } from 'react';
 
 export function usePaginatedBlogs(page: number, limit: number) {
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState<any[]>([]);
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,9 +13,15 @@ export function usePaginatedBlogs(page: number, limit: number) {
             setLoading(true);
             try {
                 const res = await fetch(`/api/blogs/paginated?page=${page}&limit=${limit}`);
+                await delay(5000)
                 const data = await res.json();
                 if (res.ok) {
+                    // Append new blogs to the existing blogs
+                    if(page>1){
+                        setBlogs(prevBlogs => [...prevBlogs, ...data.blogs]);
+                    } else{
                     setBlogs(data.blogs);
+                    }
                     setTotalPages(data.totalPages);
                 } else {
                     throw new Error(data.error || 'Failed to fetch blogs');

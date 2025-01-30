@@ -8,6 +8,7 @@ import { useRandomImage } from "@/hooks/useRandomImage";
 import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime, limitWords } from "@/utils/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Eye } from "lucide-react";
 
 interface BlogCardProps {
   blog: BlogDocument; // Using BlogDocument as the type
@@ -57,11 +58,17 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
               <TooltipContent>{title}</TooltipContent>
             </TooltipTrigger>
           </Tooltip>
+          <div className="flex justify-start items-center gap-x-4 text-gray-500">
           {blog.blocks && (
-            <p className="text-gray-500">
+            <p>
               {calculateReadTime(blog.blocks)} min read
             </p>
           )}
+          <div className="flex justify-center items-center gap-x-1">
+            <Eye size={20}/>
+            800
+          </div>
+          </div>
           {description && (
             <p className="text-gray-600">{limitWords(description, 15)}</p>
           )}

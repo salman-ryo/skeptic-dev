@@ -12,7 +12,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, ClockIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  ClockIcon,
+  Delete,
+  DeleteIcon,
+  Edit,
+  Trash,
+} from "lucide-react";
 import { formatDateUS } from "@/utils/dateTime";
 
 export default function BlogsPage() {
@@ -81,76 +88,52 @@ export default function BlogsPage() {
       {blogs && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map((blog, index) => (
-            // <Card
-            //   key={blog._id as string}
-            //   className="hover:shadow-lg transition-shadow"
-            // >
-            //   <Link href={`/blogs/${blog._id}`}>
-            //     <CardHeader>
-            //       <CardTitle>{blog.title}</CardTitle>
-            //       <div className="text-sm text-gray-500">
-            //         By {blog.author} •{" "}
-            //         {new Date(blog.createdAt).toLocaleDateString()}
-            //       </div>
-            //     </CardHeader>
-            //     {blog.description && (
-            //       <CardContent>
-            //         <p className="text-gray-600 line-clamp-3">
-            //           {blog.description || "No content available"}
-            //         </p>
-            //       </CardContent>
-            //     )}
-            //   </Link>
-            //   <Button
-            //     className="mt-2"
-            //     onClick={() => handleDelete(blog._id as string)}
-            //   >
-            //     Delete
-            //   </Button>
-            // </Card>
-            <Link href={`/blogs/${blog._id}`} key={index}>
-              <Card
-                
-                className="flex flex-col hover:shadow-lg transition-shadow duration-300"
-              >
-                <CardHeader>
-                  <CardTitle className="text-xl">{blog.title}</CardTitle>
-                  <CardDescription>by {blog.author}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-muted-foreground">{blog.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {blog.tags?.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="text-sm text-muted-foreground">
-                  <div className="flex items-center">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    <time dateTime={formatDateUS(blog.createdAt)}>
-                      {formatDateUS(blog.createdAt)}
-                    </time>
-                  </div>
-                  {blog.updatedAt && (
-                    <div className="flex items-center ml-4">
-                      <ClockIcon className="mr-2 h-4 w-4" />
-                      <time dateTime={formatDateUS(blog.updatedAt)}>
+            <Card
+              className="flex flex-col hover:shadow-lg transition-shadow duration-300"
+              key={index}
+            >
+              <CardHeader>
+                <CardTitle className="text-xl">{blog.title}</CardTitle>
+                <CardDescription>by {blog.author}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground">{blog.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {blog.tags?.map((tag, tagIndex) => (
+                    <Badge key={tagIndex} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter className="text-sm text-muted-foreground">
+                <div className="flex items-center">
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <time dateTime={formatDateUS(blog.createdAt)}>
+                    {formatDateUS(blog.createdAt)}
+                  </time>
+                </div>
+                {blog.updatedAt && (
+                  <div className="flex items-center ml-4">
+                    <ClockIcon className="mr-2 h-4 w-4" />
+                    <time dateTime={formatDateUS(blog.updatedAt)}>
                       Updated: {formatDateUS(blog.updatedAt)}
                     </time>
-                    </div>
-                  )}
-                </CardFooter>
-                <Button
-                  className="mt-2"
+                  </div>
+                )}
+              </CardFooter>
+              <div className="flex justify-center items-center">
+                <button
+                  className="m-4 text-red-500"
                   onClick={() => handleDelete(blog._id as string)}
                 >
-                  Delete
-                </Button>
-              </Card>
-            </Link>
+                  <Trash />
+                </button>
+                <Link href={`/admin/edit-blog/${blog._id}`}>
+                  <Edit />
+                </Link>
+              </div>
+            </Card>
           ))}
         </div>
       )}

@@ -55,9 +55,10 @@ export default function BlogPage({ params }: { params: { id: string } }) {
               blog.tags.map((tag, index)=>{
                 return(
                   <div className="flex justify-center items-center gap-x-4" key={index}>
-                    <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300"> 
+                    <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300 capitalize"> 
                     {tag}
                     </span>
+                    {/* Add bars in between */}
                     {index < (blog.tags as string[]).length-1 && <Bar className="w-[2px]"/>}
                   </div>
                 )
