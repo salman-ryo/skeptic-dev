@@ -8,9 +8,7 @@ import { useState } from "react";
 
 export default function BlogsSection() {
   const [page, setPage] = useState(1);
-  console.log("🚀 ~ BlogsSection ~ page:", page)
   const { blogs, totalPages, loading, error } = usePaginatedBlogs(page, 6);
-  console.log("🚀 ~ BlogsSection ~ blogs:", blogs);
 
   // if (error) return <p>Error: {error}</p>;
   const handleFetchMoreBlogs = async()=>{

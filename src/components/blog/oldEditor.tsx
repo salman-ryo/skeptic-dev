@@ -1,7 +1,8 @@
 // components/BlockEditor.tsx
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus } from "lucide-react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -22,6 +23,7 @@ interface BlockEditorProps {
 }
 
 export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
+  // Add client-side rendering check
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -53,12 +55,14 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
     }
   };
 
-  const moveBlock = (index: number, direction: "up" | "down") => {
-    const newBlocks = [...blocks];
-    const targetIndex = direction === "up" ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= blocks.length) return;
-    [newBlocks[index], newBlocks[targetIndex]] = [newBlocks[targetIndex], newBlocks[index]];
-    onBlocksChange(newBlocks);
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    const items = Array.from(blocks);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    onBlocksChange(items);
   };
 
   const renderBlockContent = (block: Block) => {
@@ -190,47 +194,106 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
     }
   };
 
+  if (!mounted) {
+    return (
+      <div className="space-y-4">
+        {blocks.map((block, index) => (
+          <Card key={block.id} className="p-4">
+            <div className="flex gap-4">
+              <div className="cursor-move">⋮</div>
+              <div className="w-32">{block.type}</div>
+              <div className="flex-1">{renderBlockContent(block)}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-4">
-      {blocks.map((block, index) => (
-        <Card key={block.id} className="p-4 relative">
-          <div className="flex gap-4">
-            <Select
-              value={block.type}
-              onValueChange={(value: BlockType) => updateBlock(block.id, { type: value })}
-            >
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="text">Text</SelectItem>
-                <SelectItem value="heading1">Heading 1</SelectItem>
-                <SelectItem value="heading2">Heading 2</SelectItem>
-                <SelectItem value="image">Image</SelectItem>
-                <SelectItem value="youtube">YouTube</SelectItem>
-                <SelectItem value="code">Code</SelectItem>
-                <SelectItem value="quote">Quote</SelectItem>
-                <SelectItem value="divider">Divider</SelectItem>
-              </SelectContent>
-            </Select>
-            <div className="flex-1">{renderBlockContent(block)}</div>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <Droppable droppableId="blocks" type="BLOCK">
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="space-y-4"
+          >
+            {blocks.map((block, index) => (
+              <Draggable key={block.id} draggableId={block.id} index={index}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    className={`relative group ${
+                      snapshot.isDragging ? "z-50" : ""
+                    }`}
+                  >
+                    <Card className="p-4">
+                      <div className="flex gap-4">
+                        <div
+                          {...provided.dragHandleProps}
+                          className="cursor-move hover:text-primary"
+                        >
+                          ⋮
+                        </div>
+
+                        <Select
+                          value={block.type}
+                          onValueChange={(value: BlockType) =>
+                            updateBlock(block.id, { type: value })
+                          }
+                        >
+                          <SelectTrigger className="w-32">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="text">Text</SelectItem>
+                            <SelectItem value="heading1">Heading 1</SelectItem>
+                            <SelectItem value="heading2">Heading 2</SelectItem>
+                            <SelectItem value="image">Image</SelectItem>
+                            <SelectItem value="youtube">YouTube</SelectItem>
+                            <SelectItem value="code">Code</SelectItem>
+                            <SelectItem value="quote">Quote</SelectItem>
+                            <SelectItem value="divider">Divider</SelectItem>
+                          </SelectContent>
+                        </Select>
+
+                        <div className="flex-1">
+                          {renderBlockContent(block)}
+                        </div>
+                      </div>
+                    </Card>
+
+                    <div className="absolute -left-10 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => addBlock(index)}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    {blocks.length > 1 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="absolute -right-10 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => deleteBlock(block.id)}
+                      >
+                        ✕
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
           </div>
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col gap-1">
-            <Button variant="ghost" size="sm" onClick={() => moveBlock(index, "up")}> <ArrowUp className="h-4 w-4" /> </Button>
-            <Button variant="ghost" size="sm" onClick={() => moveBlock(index, "down")}> <ArrowDown className="h-4 w-4" /> </Button>
-          </div>
-          <div className="absolute left-2 top-1/2 -translate-y-1/2">
-            <Button variant="ghost" size="sm" onClick={() => addBlock(index)}>
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-          {blocks.length > 1 && (
-            <Button variant="ghost" size="sm" className="absolute right-10 top-1/2 -translate-y-1/2" onClick={() => deleteBlock(block.id)}>
-              ✕
-            </Button>
-          )}
-        </Card>
-      ))}
-    </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
+
 };

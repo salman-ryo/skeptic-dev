@@ -1,5 +1,4 @@
 "use client";
-import { delay } from '@/utils/performance';
 import { useState, useEffect } from 'react';
 
 export function usePaginatedBlogs(page: number, limit: number) {
@@ -13,7 +12,6 @@ export function usePaginatedBlogs(page: number, limit: number) {
             setLoading(true);
             try {
                 const res = await fetch(`/api/blogs/paginated?page=${page}&limit=${limit}`);
-                await delay(5000)
                 const data = await res.json();
                 if (res.ok) {
                     // Append new blogs to the existing blogs

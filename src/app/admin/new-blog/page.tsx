@@ -3,25 +3,28 @@
 import { BlockEditor } from "@/components/blog/BlockEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Block } from "@/lib/types/blog";
+import { Block, BlogDocument } from "@/lib/types/blog";
 import { useState } from "react";
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid";
 import { Textarea } from "@/components/ui/textarea";
+import BlogPreview from "@/app/blogs/[id]/BlogPreview";
+import { EyeIcon, XIcon } from "lucide-react";
 
 export default function NewBlog() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
-  const [newTag, setNewTag] = useState('');
+  const [newTag, setNewTag] = useState("");
   const [blocks, setBlocks] = useState<Block[]>([
     { id: nanoid(), type: "text", content: "" },
   ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false); // Toggle state
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag)) {
       setTags((prev) => [...prev, newTag]);
-      setNewTag('');
+      setNewTag("");
     }
   };
 
@@ -69,7 +72,7 @@ export default function NewBlog() {
       setTitle("");
       setDescription("");
       setTags([]);
-      setBlocks([{ id: "1", type: "text", content: "" }]);
+      setBlocks([{ id: nanoid(), type: "text", content: "" }]);
       alert("Blog published successfully!");
     } catch (error) {
       console.error("Error submitting blog:", error);
@@ -79,9 +82,22 @@ export default function NewBlog() {
     }
   };
 
+  // Construct a preview blog object
+  // @ts-expect-error
+  const previewBlog: BlogDocument = {
+    title,
+    description,
+    tags,
+    blocks,
+    author: "Ryo", // Use the logged-in author dynamically in a real scenario
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
   return (
     <div className="container mx-auto py-8 min-h-screen">
       <div className="max-w-4xl mx-auto space-y-6">
+        {/* Blog Input Fields */}
         <Input
           className="text-4xl font-bold"
           value={title}
@@ -126,6 +142,35 @@ export default function NewBlog() {
           </Button>
           <Button onClick={handleSubmit}>Publish</Button>
         </div>
+
+        {/* Toggle Preview Button */}
+        <button
+          className="fixed top-10 right-10 p-2 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition"
+          onClick={() => setIsPreviewOpen(true)}
+          title="Preview Blog"
+        >
+          <EyeIcon size={24} />
+        </button>
+
+        {/* Preview Modal */}
+        {isPreviewOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative">
+              {/* Close Button */}
+              <button
+                className="absolute top-4 right-4 p-1 bg-gray-300 rounded-full hover:bg-gray-400 transition"
+                onClick={() => setIsPreviewOpen(false)}
+              >
+                <XIcon size={20} />
+              </button>
+              
+              <h2 className="text-2xl font-semibold mb-4">Blog Preview</h2>
+              <div className="max-h-[80vh] overflow-auto p-2 border rounded">
+                <BlogPreview blog={previewBlog} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
