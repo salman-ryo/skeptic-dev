@@ -28,7 +28,6 @@ export default async function BlogsPage() {
   imageBlock?.metadata?.url ||
   "/images/blogs/skhero.jpg";
   
-  console.log("🚀 ~ BlogsPage ~ topBlog:", topBlog)
   return (
     <div className="min-h-screen bg-white">
       {topBlog && (

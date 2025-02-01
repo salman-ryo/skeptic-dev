@@ -99,20 +99,21 @@ export default function NewBlog() {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Blog Input Fields */}
         <Input
-          className="text-4xl font-bold"
+        className="focus-visible:outline-none focus-visible:ring-0"
+        
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Blog Title"
         />
         <Textarea
-          className="mt-4"
+          className="mt-4 focus-visible:outline-none focus-visible:ring-0"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Blog Description"
         />
         <div className="flex items-center gap-2 mt-4">
           <Input
-            className="flex-grow"
+            className="flex-grow focus-visible:outline-none focus-visible:ring-0"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
             placeholder="Add a tag"
@@ -145,7 +146,7 @@ export default function NewBlog() {
 
         {/* Toggle Preview Button */}
         <button
-          className="fixed top-10 right-10 p-2 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition"
+          className="fixed top-1/2 -translate-y-1/2 right-10 p-2 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition"
           onClick={() => setIsPreviewOpen(true)}
           title="Preview Blog"
         >

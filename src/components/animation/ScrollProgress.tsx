@@ -12,7 +12,7 @@ export default function ScrollProgress({ className }: ScrollProgressProps) {
   return (
       <motion.div
         id="scroll-indicator"
-        className={cn("bg-cyan-400 dark:bg-orange-600 h-1 z-[999]",className)}
+        className={cn("bg-black dark:bg-orange-600 h-1 z-[999]",className)}
         style={{
           scaleX: scrollYProgress,
           position: "fixed",

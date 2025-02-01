@@ -50,13 +50,13 @@ export default function Footer() {
             <nav className="flex flex-wrap justify-center md:justify-between gap-4 mb-4 md:mb-0 text-sm text-gray-400 w-full">
               <div className="flex justify-center items-center gap-4">
                 <Link
-                  href="#"
+                  href="/terms-and-conditions"
                   className="hover:text-gray-300 transition-colors"
                 >
                   Terms & Conditions
                 </Link>
                 <Link
-                  href="#"
+                  href="/cookies-and-policy"
                   className="hover:text-gray-300 transition-colors"
                 >
                   Cookie & Policy
@@ -64,19 +64,19 @@ export default function Footer() {
               </div>
               <div className="flex justify-center items-center gap-4">
                 <Link
-                  href="#"
+                  href="/blogs"
                   className="hover:text-gray-300 transition-colors"
                 >
                   Blogs
                 </Link>
                 <Link
-                  href="#"
+                  href="/about"
                   className="hover:text-gray-300 transition-colors"
                 >
                   About
                 </Link>
                 <Link
-                  href="#"
+                  href="/contact"
                   className="hover:text-gray-300 transition-colors"
                 >
                   Contact

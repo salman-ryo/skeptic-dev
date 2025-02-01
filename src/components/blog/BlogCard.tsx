@@ -41,7 +41,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
               <Badge
                 key={idx}
                 variant="secondary"
-                className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none"
+                className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none capitalize"
               >
                 {tag}
               </Badge>

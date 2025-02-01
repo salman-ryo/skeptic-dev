@@ -1,7 +1,7 @@
 // components/BlockEditor.tsx
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus, ArrowUp, ArrowDown, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -57,7 +57,10 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
     const newBlocks = [...blocks];
     const targetIndex = direction === "up" ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= blocks.length) return;
-    [newBlocks[index], newBlocks[targetIndex]] = [newBlocks[targetIndex], newBlocks[index]];
+    [newBlocks[index], newBlocks[targetIndex]] = [
+      newBlocks[targetIndex],
+      newBlocks[index],
+    ];
     onBlocksChange(newBlocks);
   };
 
@@ -70,7 +73,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
             onChange={(content) => updateBlock(block.id, { content })}
           />
         );
-  
+
       case "code":
         return (
           <div className="space-y-2">
@@ -109,18 +112,21 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
             <textarea
               className="w-full min-h-[200px] font-mono text-sm bg-gray-900 text-gray-100 p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
               value={block.content}
-              onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+              onChange={(e) =>
+                updateBlock(block.id, { content: e.target.value })
+              }
               placeholder="Enter code here..."
               spellCheck={false}
             />
           </div>
         );
-  
+
       case "image":
         return (
           <div className="space-y-2">
             <Input
               placeholder="Image URL"
+              className="focus-visible:outline-none focus-visible:ring-0"
               value={block.metadata?.url || ""}
               onChange={(e) =>
                 updateBlock(block.id, {
@@ -130,6 +136,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
             />
             <Input
               placeholder="Alt text"
+              className="focus-visible:outline-none focus-visible:ring-0"
               value={block.metadata?.alt || ""}
               onChange={(e) =>
                 updateBlock(block.id, {
@@ -151,6 +158,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
         return (
           <div className="space-y-2">
             <Input
+            className="focus-visible:outline-none focus-visible:ring-0"
               placeholder="YouTube Video ID"
               value={block.metadata?.embedId || ""}
               onChange={(e) =>
@@ -197,7 +205,9 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
           <div className="flex gap-4">
             <Select
               value={block.type}
-              onValueChange={(value: BlockType) => updateBlock(block.id, { type: value })}
+              onValueChange={(value: BlockType) =>
+                updateBlock(block.id, { type: value })
+              }
             >
               <SelectTrigger className="w-32">
                 <SelectValue />
@@ -215,20 +225,41 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
             </Select>
             <div className="flex-1">{renderBlockContent(block)}</div>
           </div>
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col gap-1">
-            <Button variant="ghost" size="sm" onClick={() => moveBlock(index, "up")}> <ArrowUp className="h-4 w-4" /> </Button>
-            <Button variant="ghost" size="sm" onClick={() => moveBlock(index, "down")}> <ArrowDown className="h-4 w-4" /> </Button>
+          <div className="absolute -right-24 top-1/2 -translate-y-1/2 flex justify-start items-center gap-x-2 w-24">
+            <div className="flex flex-col gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => moveBlock(index, "up")}
+              >
+                {" "}
+                <ArrowUp className="h-4 w-4" />{" "}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => moveBlock(index, "down")}
+              >
+                {" "}
+                <ArrowDown className="h-4 w-4" />{" "}
+              </Button>
+            </div>
+            {blocks.length > 1 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                title="Delete Block"
+                onClick={() => deleteBlock(block.id)}
+              >
+                <Trash />
+              </Button>
+            )}
           </div>
-          <div className="absolute left-2 top-1/2 -translate-y-1/2">
+          <div className="absolute -left-10 top-1/2 -translate-y-1/2">
             <Button variant="ghost" size="sm" onClick={() => addBlock(index)}>
               <Plus className="h-4 w-4" />
             </Button>
           </div>
-          {blocks.length > 1 && (
-            <Button variant="ghost" size="sm" className="absolute right-10 top-1/2 -translate-y-1/2" onClick={() => deleteBlock(block.id)}>
-              ✕
-            </Button>
-          )}
         </Card>
       ))}
     </div>
