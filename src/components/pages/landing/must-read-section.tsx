@@ -1,8 +1,10 @@
 "use client";
+import ScrollReveal from "@/components/animation/ScrollReveal";
 import BlogCard from "@/components/blog/BlogCard";
 import ScrollButtons from "@/components/common/ScrollButtons";
 import { H2 } from "@/components/text/heading";
 import { BlogDocument } from "@/lib/types/blog";
+import { slideInRightConf } from "@/utils/animationConfig";
 import { useRef } from "react";
 
 export default function MustReadBlogs({
@@ -34,7 +36,11 @@ export default function MustReadBlogs({
         {blogsData &&
           blogsData.length > 0 &&
           blogsData.map((blog) => (
-            <BlogCard blog={blog} key={blog._id as string} />
+            <ScrollReveal key={blog._id as string}
+                animationVariants={slideInRightConf.variant}
+                >
+              <BlogCard blog={blog} key={blog._id as string} />
+            </ScrollReveal>
           ))}
       </div>
     </section>

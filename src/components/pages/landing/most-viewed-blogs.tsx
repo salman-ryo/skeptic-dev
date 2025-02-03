@@ -58,7 +58,6 @@ export default function MostViewedBlogs({
                 blogsData.map((blog) => (
                 <ScrollReveal key={blog._id as string}
                 animationVariants={slideInRightConf.variant}
-                triggerOnce={true}
                 >
                   <BlogCard blog={blog} key={blog._id as string} />
                 </ScrollReveal>

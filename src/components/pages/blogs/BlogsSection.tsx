@@ -1,4 +1,5 @@
 "use client";
+import ScrollReveal from "@/components/animation/ScrollReveal";
 import BlogCard from "@/components/blog/BlogCard";
 import BlogCardSkeleton from "@/components/blog/BlogCardSkeleton";
 import { H2 } from "@/components/text/heading";
@@ -24,7 +25,10 @@ export default function BlogsSection() {
 
         <ul className="grid grid-cols-3 gap-y-8 justify-center items-center">
           {blogs?.map((blog: any) => (
-            <BlogCard key={blog._id} blog={blog} />
+            <ScrollReveal key={blog._id}>
+
+              <BlogCard blog={blog} />
+            </ScrollReveal>
           ))}
         </ul>
         <ul className="grid grid-cols-3 gap-y-8 mt-8 justify-center items-center">

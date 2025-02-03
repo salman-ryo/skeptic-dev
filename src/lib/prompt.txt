@@ -12,4 +12,4 @@ export type BlockType =
   | 'twitter'
   | 'divider';
 
-You job is to write a blog on "", keeping the words simple yet the blog must have good sense of humour. Make sure it has diferent blocks and is actually useful. Don't restrict yourself to any number of words, go as long as you can.
+You job is to write a blog on "", keeping the words simple yet the blog must have good sense of humour. Make sure it has diferent blocks and is actually useful. Don't restrict yourself to any number of words, go as long as you can. Don't forget to add a short description and tags.

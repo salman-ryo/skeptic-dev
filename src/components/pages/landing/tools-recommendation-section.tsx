@@ -1,7 +1,9 @@
 "use client"
+import ScrollReveal from "@/components/animation/ScrollReveal";
 import { H2 } from "@/components/text/heading";
 import { Button } from "@/components/ui/button";
 import { toolsAndUtilities } from "@/lib/externalLinks";
+import { staggeredConf } from "@/utils/animationConfig";
 import { throttle } from "@/utils/performance";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,6 +25,8 @@ export function ToolsRecommendationSection() {
   const throttledDownload = throttle(handleDownload,2000 )
 
   return (
+    <ScrollReveal animationVariants={staggeredConf.variant} transitionConfig={staggeredConf.transition} >
+
     <section className="flex flex-col md:flex-row-reverse justify-between gap-x-10  items-start rounded-md mx-auto">
       <div className="flex flex-row-reverse justify-start p-6 gap-6 h-[360px] rounded-md border-2 border-gray-300 w-[60%] ">
         <Image
@@ -68,5 +72,7 @@ export function ToolsRecommendationSection() {
         </Button>
       </div>
     </section>
+    </ScrollReveal>
+
   );
 }

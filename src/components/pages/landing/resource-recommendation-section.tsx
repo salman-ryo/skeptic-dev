@@ -1,7 +1,10 @@
 "use client"
+import AnimationWrapper from "@/components/animation/AnimationWrapper";
+import ScrollReveal from "@/components/animation/ScrollReveal";
 import { H2 } from "@/components/text/heading";
 import { Button } from "@/components/ui/button";
 import { resourceLinks } from "@/lib/externalLinks";
+import { fadeInScaleConf, staggeredConf } from "@/utils/animationConfig";
 import { throttle } from "@/utils/performance";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +26,9 @@ export function ResourceRecommendationSection() {
   const throttledDownload = throttle(handleDownload,2000 )
 
   return (
+    <ScrollReveal animationVariants={staggeredConf.variant} transitionConfig={staggeredConf.transition} >
     <div className="flex flex-col md:flex-row justify-start items-start rounded-md p-8 mx-auto">
+
       <div className="flex justify-start p-6 gap-6 h-[360px] rounded-md border-2 border-gray-300 w-[60%]">
         <Image
           src="/images/smallpc.jpg"
@@ -67,5 +72,6 @@ export function ResourceRecommendationSection() {
         </Button>
       </div>
     </div>
+    </ScrollReveal>
   );
 }

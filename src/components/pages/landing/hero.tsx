@@ -1,7 +1,8 @@
+import AnimationWrapper from "@/components/animation/AnimationWrapper";
 import ScrollReveal from "@/components/animation/ScrollReveal";
 import { H3 } from "@/components/text/heading";
 import { BlogDocument } from "@/lib/types/blog";
-import { zoomInConf } from "@/utils/animationConfig";
+import { blurInConf, customEasingConf, diagonalSlideConf, expandFadeConf, hoverLiftConf, popInConf, slideInLeftConf, slideInRightConf, swingInConf, waveConf, wiggleConf, zoomInConf } from "@/utils/animationConfig";
 import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime } from "@/utils/text";
 import Image from "next/image";
@@ -14,22 +15,24 @@ export function Hero({ blog }: { blog: BlogDocument }) {
     "https://cdn.pixabay.com/photo/2024/05/16/20/21/digital-8766930_1280.png";
   const altText = imageBlock?.metadata?.alt || blog.title;
   return (
-    <ScrollReveal animationVariants={zoomInConf.variant}>
-      <div className="bg-cGray-dark pb-12 px-16 darkBounce">
-        <div className="container mx-auto">
-          <div className="py-8 flex justify-start items-center">
-            <h1 className="text-white text-9xl font-bold tracking-tight">
-              SKEPTIC DEV
-            </h1>
-            <p className="text-gray-400 text-base font-bold ml-6">
-              Eat
-              <br />
-              Sleep <br />
-              Code <br />
-              Repeat
-            </p>
-          </div>
-          {blog && (
+    <div className="bg-cGray-dark pb-12 px-16 darkBounce">
+      <div className="container mx-auto">
+        <AnimationWrapper animationConfig={slideInLeftConf}>
+        <div className="py-8 flex justify-start items-center">
+          <h1 className="text-white text-9xl font-bold tracking-tight">
+            SKEPTIC DEV
+          </h1>
+          <p className="text-gray-400 text-base font-bold ml-6">
+            Eat
+            <br />
+            Sleep <br />
+            Code <br />
+            Repeat
+          </p>
+        </div>
+        </AnimationWrapper>
+        {blog && (
+          <AnimationWrapper animationConfig={slideInRightConf}>
             <div className="bg-gray-100 rounded-md overflow-hidden p-10">
               <div className="flex justify-between items-start gap-4">
                 <div className="w-1/3 mr-4">
@@ -71,9 +74,9 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                 />
               </div>
             </div>
-          )}
-        </div>
+          </AnimationWrapper>
+        )}
       </div>
-    </ScrollReveal>
+    </div>
   );
 }
