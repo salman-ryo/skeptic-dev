@@ -33,7 +33,7 @@ export interface BlogDocument extends Document {
   description?:string;
   blocks?: Block[];
   tags?:string[];
-  views?:number;
+  views:number;
   createdAt: Date;
   updatedAt?: Date;
 }

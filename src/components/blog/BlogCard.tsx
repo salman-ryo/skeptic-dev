@@ -24,9 +24,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   const altText = imageBlock?.metadata?.alt || "Blog image";
 
   return (
-    <Card
-      className="w-[400px] min-h-[520px] flex-shrink-0 bg-white h-full border-2 rounded-md border-cGray-light snap-center"
-    >
+    <Card className="w-[400px] min-h-[520px] flex-shrink-0 bg-white h-full border-2 rounded-md border-cGray-light snap-center">
       <CardContent className="p-6">
         <div className="mb-4">
           <img
@@ -59,15 +57,13 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
             </TooltipTrigger>
           </Tooltip>
           <div className="flex justify-start items-center gap-x-4 text-gray-500">
-          {blog.blocks && (
-            <p>
-              {calculateReadTime(blog.blocks)} min read
-            </p>
-          )}
-          <div className="flex justify-center items-center gap-x-1">
-            <Eye size={20}/>
-            800
-          </div>
+            {blog.blocks && <p>{calculateReadTime(blog.blocks)} min read</p>}
+            {blog.views > 0 && (
+              <div className="flex justify-center items-center gap-x-1">
+                <Eye size={20} />
+                {blog.views}
+              </div>
+            )}
           </div>
           {description && (
             <p className="text-gray-600">{limitWords(description, 15)}</p>
