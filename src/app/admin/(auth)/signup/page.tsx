@@ -17,8 +17,9 @@ import Link from "next/link";
 import { signupSchema, SignupValues } from "@/lib/validation/auth";
 import AuthLayout from "@/components/pages/auth/auth-layout";
 import { FcGoogle } from "react-icons/fc";
-import { SiSpinrilla } from "react-icons/si";
 import LoaderButton from "@/components/common/LoaderButton";
+import { useAuth } from "@/context/authContext";
+// import { signUpWithEmail } from "@/services/auth";
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,14 +32,26 @@ export default function SignupPage() {
       password: "",
     },
   });
+  const { signup, loginWithGoogle } = useAuth();
 
   async function onSubmit(data: SignupValues) {
     setIsLoading(true);
-    // Here you would typically send the data to your backend
-    console.log(data);
-    setIsLoading(false);
+    try {
+      
+      // Here you would typically send the data to your backend
+      console.log(data);
+      const response = await signup(data.email, data.password)
+      console.log("🚀 ~ onSubmit ~ response:", response)
+    } catch (error) {
+      console.error(error)
+    } finally{
+      setIsLoading(false);
+    }
   }
-
+const handleGoogleAuth = async() =>{
+  const res = await loginWithGoogle()
+  console.log("🚀 ~ handleGoogleAuth ~ res:", res)
+}
   return (
     <AuthLayout>
       <div className="space-y-6">
@@ -112,7 +125,7 @@ export default function SignupPage() {
                   </span>
               )}
             </Button>
-            <Button className="w-full" disabled={isLoading}>
+            <Button className="w-full" type="button" disabled={isLoading} onClick={handleGoogleAuth}>
               {isLoading ? (
                 <LoaderButton/>
               ) : (

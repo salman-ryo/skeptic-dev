@@ -18,7 +18,9 @@ import { loginSchema, LoginValues } from "@/lib/validation/auth";
 import AuthLayout from "@/components/pages/auth/auth-layout";
 import { FcGoogle } from "react-icons/fc";
 import LoaderButton from "@/components/common/LoaderButton";
-
+// import { signInWithEmail } from "@/services/auth";
+import { useAuth } from "@/context/authContext";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,8 +37,28 @@ export default function LoginPage() {
     setIsLoading(true);
     // Here you would typically send the data to your backend
     console.log(data);
+    const response = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect:false
+    });
+    console.log("🚀 ~ onSubmit ~ response:", response);
     setIsLoading(false);
   }
+
+  const handleGoogleLogin = async() =>{
+    try {
+    const response = await signIn("google")
+      console.log("🚀 ~ handleGoogleLogin ~ response:", response)
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const { data: session, status } = useSession();
+  console.log("🚀 ~ LoginPage ~ session:", session)
+  console.log("🚀 ~ LoginPage ~ status:", status)
 
   return (
     <AuthLayout>
@@ -78,17 +100,11 @@ export default function LoginPage() {
               )}
             />
             <Button className="w-full" type="submit" disabled={isLoading}>
-            {isLoading ? (
-                <LoaderButton/>
-              ) : (
-                  <span>
-                      Log in
-                  </span>
-              )}
+              {isLoading ? <LoaderButton /> : <span>Log in</span>}
             </Button>
-            <Button className="w-full" disabled={isLoading}>
+            <Button className="w-full" type="button" disabled={isLoading} onClick={handleGoogleLogin}>
               {isLoading ? (
-                <LoaderButton/>
+                <LoaderButton />
               ) : (
                 <>
                   <FcGoogle /> Log in with Google
