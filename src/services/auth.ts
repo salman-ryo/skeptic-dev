@@ -82,7 +82,7 @@ export const authOptions = {
     }
   },
   pages: {
-    signIn: '/admin/login',
+    signIn: '/login',
   },
   secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   session: {

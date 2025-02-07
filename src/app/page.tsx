@@ -4,13 +4,16 @@ import Footer from "@/components/layout/footer";
 import MostViewedBlogs from "@/components/pages/landing/most-viewed-blogs";
 import MustReadBlogs from "@/components/pages/landing/must-read-section";
 import { ToolsRecommendationSection } from "@/components/pages/landing/tools-recommendation-section";
-import { fetchMostViewedBlogs, fetchRandomBlogs, fetchTopBlog } from "@/actions/blog";
+import {
+  fetchMostViewedBlogs,
+  fetchRandomBlogs,
+  fetchTopBlog,
+} from "@/actions/blog";
 
 export default async function Home() {
-  const topBlog = await fetchTopBlog()
-  const mostViewedBlogs = await fetchMostViewedBlogs()
-  const mustReadBlogs = await fetchRandomBlogs()
-  console.log("🚀 ~ Home ~ mustReadBlogs:", mustReadBlogs.length)
+  const topBlog = await fetchTopBlog();
+  const mostViewedBlogs = await fetchMostViewedBlogs();
+  const mustReadBlogs = await fetchRandomBlogs();
   return (
     <div className="min-h-screen">
       <Hero blog={topBlog} />
@@ -19,14 +22,14 @@ export default async function Home() {
         <ResourceRecommendationSection />
 
         {/* Spotlight Section */}
-        
-        <MostViewedBlogs blogsData={mostViewedBlogs}/>
+
+        <MostViewedBlogs blogsData={mostViewedBlogs} />
 
         {/* Tools Section */}
-        <ToolsRecommendationSection/>
+        <ToolsRecommendationSection />
 
         {/* Must-Read Section */}
-        <MustReadBlogs blogsData={mustReadBlogs}/>
+        <MustReadBlogs blogsData={mustReadBlogs} />
       </div>
     </div>
   );

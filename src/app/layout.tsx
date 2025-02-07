@@ -8,6 +8,8 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Footer from "@/components/layout/footer";
 import ScrollProgress from "@/components/animation/ScrollProgress";
+import UserSessionProvider from "@/components/UserSessionProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const roboto = Roboto({
   subsets: ["latin", "greek", "cyrillic"],
@@ -27,22 +29,26 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} no-scrollbar`}>
-        <ScrollProgress/>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          // disableTransitionOnChange
-        >
-          <TooltipProvider>
-            <div className="fixed bottom-4 right-4 z-50">
-              <ThemeToggle />
-            </div>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </TooltipProvider>
-        </ThemeProvider>
+        <UserSessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            // disableTransitionOnChange
+          >
+          <ScrollProgress />
+
+            <TooltipProvider>
+              <div className="fixed bottom-4 right-4 z-50">
+                <ThemeToggle />
+              </div>
+              <Header />
+              <main>{children}</main>
+              <Toaster/>
+              <Footer />
+            </TooltipProvider>
+          </ThemeProvider>
+        </UserSessionProvider>
       </body>
     </html>
   );

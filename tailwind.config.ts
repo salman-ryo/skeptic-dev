@@ -32,7 +32,7 @@ const config: Config = {
 			cPeach: {
 				light: '#FF8178',
 				DEFAULT: '#FF8178',
-				dark: '#FF8178'
+				dark: '#cc463d'
 			},
 		}
   	}

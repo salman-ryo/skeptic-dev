@@ -19,8 +19,8 @@ import AuthLayout from "@/components/pages/auth/auth-layout";
 import { FcGoogle } from "react-icons/fc";
 import LoaderButton from "@/components/common/LoaderButton";
 // import { signInWithEmail } from "@/services/auth";
-import { useAuth } from "@/context/authContext";
-import { signIn, useSession } from "next-auth/react";
+// import { useAuth } from "@/context/authContext";
+import { signIn,useSession } from "next-auth/react";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,13 +37,18 @@ export default function LoginPage() {
     setIsLoading(true);
     // Here you would typically send the data to your backend
     console.log(data);
-    const response = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect:false
-    });
-    console.log("🚀 ~ onSubmit ~ response:", response);
-    setIsLoading(false);
+    try {
+      
+      const response = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect:false
+      });
+      console.log("🚀 ~ onSubmit ~ response:", response);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleGoogleLogin = async() =>{
@@ -80,7 +85,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="john@example.com" {...field} />
+                    <Input placeholder="kon@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,7 +120,7 @@ export default function LoginPage() {
         </Form>
         <div className="text-center text-sm">
           Don't have an account?{" "}
-          <Link href="/admin/signup" className="underline">
+          <Link href="/signup" className="underline">
             Sign up
           </Link>
         </div>

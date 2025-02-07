@@ -18,7 +18,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
     <div className="bg-cGray-dark pb-12 px-16 darkBounce">
       <div className="container mx-auto">
         <AnimationWrapper animationConfig={slideInLeftConf}>
-        <div className="py-8 flex justify-start items-center">
+        <div className="py-8 flex justify-start items-center select-none">
           <h1 className="text-white text-9xl font-bold tracking-tight">
             SKEPTIC DEV
           </h1>

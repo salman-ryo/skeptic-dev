@@ -21,7 +21,7 @@ import {
   Trash,
 } from "lucide-react";
 import { formatDateUS } from "@/utils/dateTime";
-import { calculateReadTime } from "@/utils/text";
+import { calculateReadTime, limitWords } from "@/utils/text";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogDocument[]>([]);
@@ -84,10 +84,10 @@ export default function BlogsPage() {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-8">Latest Posts</h1>
+    <div className="container mx-auto p-6 md:p-16">
+      <h1 className="text-4xl font-bold mb-8">All Blogs</h1>
       {blogs && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {blogs.map((blog, index) => {
             // Extract image from blocks if it exists
             const imageBlock = blog.blocks?.find(
@@ -113,7 +113,10 @@ export default function BlogsPage() {
                   <CardDescription>by {blog.author}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  <p className="text-muted-foreground">{blog.description}</p>
+                  {
+                    blog.description &&
+                  <p className="text-muted-foreground">{limitWords(blog.description,25)}</p>
+                  }
                   <div className="mt-4 flex flex-wrap gap-2">
                     {blog.tags?.map((tag, tagIndex) => (
                       <Badge key={tagIndex} variant="secondary">
