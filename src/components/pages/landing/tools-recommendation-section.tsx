@@ -28,7 +28,7 @@ export function ToolsRecommendationSection() {
     <ScrollReveal animationVariants={staggeredConf.variant} transitionConfig={staggeredConf.transition} >
 
     <section className="flex flex-col md:flex-row-reverse justify-between gap-x-10  items-start rounded-md mx-auto">
-      <div className="flex flex-row-reverse justify-start p-6 gap-6 h-[360px] rounded-md border-2 border-gray-300 w-[60%] ">
+      <div className="flex flex-row-reverse justify-start p-6 gap-6 h-[360px] rounded-md border-2 border-gray-300 w-[60%]">
         <Image
           src="/images/laptop-grad.jpg"
         //   src="/images/smallpc.jpg"
@@ -59,7 +59,7 @@ export function ToolsRecommendationSection() {
           ))}
         </div>
       </div>
-      <div className="w-[40%] flex flex-col justify-start items-start  py-2 mt-8">
+      <div className="w-[40%] flex flex-col justify-start items-start  py-2 px-10 mt-8">
         <H2 className="mb-10 mt-4 w-[80%] mx-auto">
           Some Useful Tools For Developers
         </H2>

@@ -22,15 +22,17 @@ const NewsHeroBlog = ({ topBlog }: { topBlog: BlogDocument }) => {
 
         {/* Main Feature */}
         <article className="space-y-6">
+          <div className="border-b-2 border-black pb-4">
           <Link
             href={`/blogs/${topBlog._id}`}
-            className="font-serif text-5xl border-b-2 border-black pb-4 uppercase"
+            className="font-serif text-5xl uppercase"
           >
             {topBlog.title}
           </Link>
+          </div>
 
           <div className="flex gap-4 text-sm italic">
-            <span>By {topBlog.author}</span>
+            <span>By {topBlog.author.name}</span>
             <span className="font-bold">•</span>
             <span>{formatDateUS(topBlog.createdAt)}</span>
             <span className="font-bold">•</span>

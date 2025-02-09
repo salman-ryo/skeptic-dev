@@ -2,12 +2,14 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongoose';
 import { Blog } from '@/models/Blog';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     await connectToDatabase();
 
     // Find the blog with the highest number of views
-    const mostViewedBlog = await Blog.findOne().sort({ views: -1 }).limit(1);
+    const mostViewedBlog = await Blog.findOne()
+    .populate('author', 'name email image')
+    .sort({ views: -1 }).limit(1);
 
     if (!mostViewedBlog) {
       return NextResponse.json({ error: 'No blogs found' }, { status: 404 });

@@ -11,7 +11,9 @@ export async function GET(req: Request) {
         const limit = parseInt(searchParams.get('limit') || '10', 10);
         
         const skip = (page - 1) * limit;
-        const blogs = await Blog.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
+        const blogs = await Blog.find()
+        .populate('author', 'name email image')
+        .sort({ createdAt: -1 }).skip(skip).limit(limit);
         const total = await Blog.countDocuments();
         
         return NextResponse.json({

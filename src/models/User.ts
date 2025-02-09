@@ -6,7 +6,7 @@ export interface IUser extends Document {
   email: string;
   password?: string;
   image?: string;
-  role: 'user' | 'admin';
+  role: 'user' | 'author' | 'admin';
   refreshToken?: string;
   createdAt: Date;
   comparePassword?(candidatePassword: string): Promise<boolean>;
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String },
   image: { type: String }, // Store Google profile picture
-  role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  role: { type: String, enum: ['user', 'author','admin'], default: 'user' },
   refreshToken: { type: String },
   createdAt: { type: Date, default: Date.now }
 });

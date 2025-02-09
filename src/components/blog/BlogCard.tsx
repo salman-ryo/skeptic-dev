@@ -9,6 +9,7 @@ import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime, limitWords } from "@/utils/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Eye } from "lucide-react";
+import SimpleTooltip from "../common/SimpleTooltip";
 
 interface BlogCardProps {
   blog: BlogDocument; // Using BlogDocument as the type
@@ -46,16 +47,13 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
             ))}
           </div>
           <p className="text-gray-500">{formatDateUS(createdAt)}</p>
-          <Tooltip>
-            <TooltipTrigger>
-              <Link href={`/blogs/${_id}`} className="block">
-                <h3 className="text-xl font-bold hover:text-gray-700 text-left text-pretty">
-                  {limitWords(title, 9)}
-                </h3>
-              </Link>
-              <TooltipContent>{title}</TooltipContent>
-            </TooltipTrigger>
-          </Tooltip>
+          <SimpleTooltip content={title}>
+            <Link href={`/blogs/${_id}`} className="block">
+              <h3 className="text-xl font-bold hover:text-gray-700 text-left text-pretty">
+                {limitWords(title, 9)}
+              </h3>
+            </Link>
+          </SimpleTooltip>
           <div className="flex justify-start items-center gap-x-4 text-gray-500">
             {blog.blocks && <p>{calculateReadTime(blog.blocks)} min read</p>}
             {blog.views > 0 && (

@@ -7,12 +7,7 @@ import BlogCard from "../../blog/BlogCard";
 import ScrollButtons from "../../common/ScrollButtons";
 import ScrollReveal from "@/components/animation/ScrollReveal";
 import {
-  bounceConf,
-  flipInConf,
-  rotateInConf,
-  slideInLeftConf,
   slideInRightConf,
-  zoomInConf,
 } from "@/utils/animationConfig";
 import { H2 } from "@/components/text/heading";
 
@@ -22,10 +17,6 @@ export default function MostViewedBlogs({
   blogsData: BlogDocument[];
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const ans = {
-    hidden: { opacity: 0, x: -200 },
-    visible: { opacity: 1, x: 0 },
-  };
   return (
       <section className="relative py-12">
         <div className="container mx-auto px-4">

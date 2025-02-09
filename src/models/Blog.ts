@@ -21,7 +21,7 @@ const BlockSchema = new Schema<Block>({
 
 const BlogSchema = new Schema<BlogDocument>({
   title: { type: String, required: true },
-  author: { type: String, required: true },
+  author: { type: Schema.Types.ObjectId, ref: 'User', required: true, index:true },
   description: { type: String, maxlength:2000 },
   blocks: [BlockSchema],
   tags: [String],

@@ -30,7 +30,7 @@ export default function BlogsPage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/api/blogs");
+        const response = await fetch("/api/admin/blogs");
         const data = await response.json();
         console.log("🚀 ~ fetchBlogs ~ data:", data);
         setBlogs(data);
@@ -46,7 +46,7 @@ export default function BlogsPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`/api/blogs?id=${id}`, {
+      const response = await fetch(`/api/admin/blogs?id=${id}`, {
         method: "DELETE",
       });
 
@@ -110,7 +110,7 @@ export default function BlogsPage() {
                 </div>
                 <CardHeader>
                   <CardTitle className="text-xl">{blog.title}</CardTitle>
-                  <CardDescription>by {blog.author}</CardDescription>
+                  <CardDescription>by {blog.author.name}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   {

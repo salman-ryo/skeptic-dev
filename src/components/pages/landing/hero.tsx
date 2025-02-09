@@ -1,8 +1,7 @@
 import AnimationWrapper from "@/components/animation/AnimationWrapper";
-import ScrollReveal from "@/components/animation/ScrollReveal";
 import { H3 } from "@/components/text/heading";
 import { BlogDocument } from "@/lib/types/blog";
-import { blurInConf, customEasingConf, diagonalSlideConf, expandFadeConf, hoverLiftConf, popInConf, slideInLeftConf, slideInRightConf, swingInConf, waveConf, wiggleConf, zoomInConf } from "@/utils/animationConfig";
+import {  slideInLeftConf, slideInRightConf } from "@/utils/animationConfig";
 import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime } from "@/utils/text";
 import Image from "next/image";

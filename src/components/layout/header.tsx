@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,13 +12,8 @@ import {
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { limitChars } from "@/utils/text";
-
-interface TSessionUser {
-  name: string;
-  email: string;
-  image?: string | null;
-  role: "user" | "admin";
-}
+import { TSessionUser } from "@/lib/types/user";
+import UserAvatar from "../common/UserAvatar";
 
 export function Header() {
   const { data: session } = useSession();
@@ -36,6 +29,7 @@ export function Header() {
     { name: "Blog Dashboard", link: "/admin/blogs" },
   ];
 
+  const userLinks = [{ name: "Saved Blogs", link: "/blogs/saved" }];
   return (
     <header className="w-full flex items-center justify-between px-6 md:px-10 bg-cGray-dark text-white py-4 select-none">
       {/* Logo */}
@@ -65,32 +59,39 @@ export function Header() {
         {session?.user ? (
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none border-none shadow-none ring-0">
-              <Avatar>
-                <AvatarImage
-                  src={session.user?.image || ""}
-                  alt="User Avatar"
-                />
-                <AvatarFallback>
-                  {session.user?.name?.charAt(0) || "U"}
-                </AvatarFallback>
-              </Avatar>
+              <UserAvatar user={session.user as TSessionUser} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-cGray-dark text-white">
-              <div  className="flex flex-col items-start justify-start gap-0 cursor-default p-2">
-                <span className="font-medium capitalize">{session.user?.name}</span>
+            <DropdownMenuContent
+              align="end"
+              className="bg-cGray-dark text-white"
+            >
+              <div className="flex flex-col items-start justify-start gap-0 cursor-default p-2">
+                <span className="font-medium capitalize">
+                  {session.user?.name}
+                </span>
                 {session.user?.email && (
                   <span className="text-xs">
                     {limitChars(session.user?.email, 25)}
                   </span>
                 )}
               </div>
-              <DropdownMenuItem>
-                <Link href="/saved-blogs" className="w-full">
-                  Saved Blogs
-                </Link>
-              </DropdownMenuItem>
 
-              {(session.user as TSessionUser)?.role === "admin" && (
+              {(session.user as TSessionUser)?.role === "user" ||
+              (session.user as TSessionUser)?.role === "admin" ||
+              (session.user as TSessionUser)?.role === "author" ? (
+                <>
+                  {userLinks.map((item) => (
+                    <DropdownMenuItem key={item.name}>
+                      <Link href={item.link} className="w-full">
+                        {item.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </>
+              ) : null}
+
+              {(session.user as TSessionUser)?.role === "admin" ||
+              (session.user as TSessionUser)?.role === "author" ? (
                 <>
                   {adminLinks.map((item) => (
                     <DropdownMenuItem key={item.name}>
@@ -100,7 +101,7 @@ export function Header() {
                     </DropdownMenuItem>
                   ))}
                 </>
-              )}
+              ) : null}
 
               <DropdownMenuItem
                 onClick={() => signOut()}
@@ -145,12 +146,25 @@ export function Header() {
                   <p className="font-bold">{session.user?.name}</p>
                   <p className="text-sm text-gray-400">{session.user?.email}</p>
                 </div>
-                <Link
+                {/* <Link
                   href="/saved-blogs"
                   className="hover:text-gray-300 transition-colors"
                 >
                   Saved Blogs
-                </Link>
+                </Link> */}
+
+                {(session.user as TSessionUser)?.role === "user" ||
+                  ((session.user as TSessionUser)?.role === "admin" && (
+                    <>
+                      {userLinks.map((item) => (
+                        <DropdownMenuItem key={item.name}>
+                          <Link href={item.link} className="w-full">
+                            {item.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </>
+                  ))}
 
                 {(session.user as TSessionUser)?.role === "admin" &&
                   adminLinks.map((item) => (

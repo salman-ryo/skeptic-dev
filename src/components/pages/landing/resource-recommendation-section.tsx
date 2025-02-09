@@ -65,7 +65,7 @@ export function ResourceRecommendationSection() {
         </H2>
         <Button
           onClick={throttledDownload}
-          className="w-full rounded-full py-5 font-bold border-2 border-cGray-light shadow-md shadow-black"
+          className="w-full rounded-full py-5 font-bold border-2 border-cGray-light shadow-md shadow-black/80 bg-black"
           size={"lg"}
         >
           Download Links

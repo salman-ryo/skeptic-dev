@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { TSessionUser } from "./user";
 
 // types/Blog.ts
 export type BlockType = 
@@ -28,8 +29,9 @@ export interface Block {
 }
 
 export interface BlogDocument extends Document {
+  _id:string;
   title: string;
-  author: string;
+  author: TSessionUser;
   description?:string;
   blocks?: Block[];
   tags?:string[];

@@ -19,7 +19,9 @@ export async function GET(req: Request) {
     );
 
     // Fetch random blogs using their indexes
-    const randomBlogs = await Blog.find().skip(randomIndexes[0]).limit(5);
+    const randomBlogs = await Blog.find()
+    .populate('author', 'name email image')
+    .skip(randomIndexes[0]).limit(5);
     return NextResponse.json(randomBlogs, { status: 200 });
   } catch (error: any) {
     console.error('Error fetching random blogs:', error.message);

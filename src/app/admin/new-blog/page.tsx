@@ -41,22 +41,21 @@ export default function NewBlog() {
       description,
       tags,
       blocks,
-      author: "Ryo",
       createdAt: new Date(),
       updatedAt: new Date(),
-      published: true,
     };
 
     try {
       console.log("Blog to be saved:", blog);
 
-      const response = await fetch("/api/blogs", {
+      const response = await fetch("/api/admin/blogs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(blog),
       });
+      console.log("🚀 ~ handleSubmit ~ response:", response)
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -65,8 +64,6 @@ export default function NewBlog() {
         return;
       }
 
-      const responseData = await response.json();
-      console.log("Blog saved successfully:", responseData);
 
       // Reset state
       setTitle("");
@@ -89,7 +86,6 @@ export default function NewBlog() {
     description,
     tags,
     blocks,
-    author: "Ryo", // Use the logged-in author dynamically in a real scenario
     createdAt: new Date(),
     updatedAt: new Date(),
   };

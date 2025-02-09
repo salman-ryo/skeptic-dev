@@ -7,7 +7,9 @@ export async function GET(req: Request) {
     await connectToDatabase();
 
     // Fetch top 5 most viewed blogs
-    const topBlogs = await Blog.find().sort({ views: -1 }).limit(5);
+    const topBlogs = await Blog.find()
+    .populate('author', 'name email image')
+    .sort({ views: -1 }).limit(5);
 
     if (!topBlogs.length) {
       return NextResponse.json({ error: 'No blogs found' }, { status: 404 });

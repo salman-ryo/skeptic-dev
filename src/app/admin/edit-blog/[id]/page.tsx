@@ -23,7 +23,7 @@ export default function EditBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`/api/blogs?id=${id}`);
+        const response = await fetch(`/api/admin/blogs?id=${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch blog");
         }
@@ -65,7 +65,7 @@ export default function EditBlog() {
     };
 
     try {
-      const response = await fetch(`/api/blogs?id=${id}`, {
+      const response = await fetch(`/api/admin/blogs?id=${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
