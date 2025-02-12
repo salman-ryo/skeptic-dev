@@ -65,7 +65,9 @@ export function ToolsRecommendationSection() {
         </H2>
         <Button
           onClick={throttledDownload}
-          className="w-full rounded-full py-5 font-bold border-2 border-cGray-light shadow-md shadow-black"
+          className="w-full rounded-br-3xl rounded-bl-3xl transition-all duration-500 py-5 font-bold border-2 border-cGray-light shadow-md shadow-gray-600 bg-black
+          hover:rounded-none hover:rounded-tr-3xl hover:rounded-tl-3xl hover:bg-white hover:text-black hover:border-black
+          "
           size={"lg"}
         >
           Download Links

@@ -1,97 +1,47 @@
-"use client";
-
-import { useState } from "react";
+import SimpleTooltip from "@/components/common/SimpleTooltip";
+import AuthorRequestForm from "@/components/pages/contact/AuthorRequestForm";
+import ContactForm from "@/components/pages/contact/ContactForm";
+import SocialsSection from "@/components/pages/contact/SocialsSection";
+import { H2, H3 } from "@/components/text/heading";
+import { MessageCircleQuestionIcon } from "lucide-react";
+import { FcQuestions } from "react-icons/fc";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your server or a third-party service
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
-  };
-
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
-        Contact Me
-      </h1>
-      <p className="mb-6 text-gray-700 dark:text-gray-300">
-        Have a question or want to collaborate? Feel free to reach out to me
-        using the form below.
-      </p>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          />
+    <main className="w-full bg-cGray-dark">
+    <div className="container w-full md:w-[80%] mx-auto px-4 py-8">
+      <H2 className="mb-8 text-center text-white">Contact Me</H2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-10">
+        <div className="p-10 border-4 border-black bg-white">
+          <SimpleTooltip content="Tell us what you think about this site">
+            <H3 className="mb-4 text-gray-800">
+              Got any Feedback for Us?{" "}
+              <span className="inline-flex ml-2 cursor-pointer hover:scale-110 transition-all duration-300">
+                <MessageCircleQuestionIcon />
+              </span>
+            </H3>
+          </SimpleTooltip>
+          <ContactForm />
         </div>
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          />
+
+        <div className="p-10 border-4 border-black bg-white">
+        <SimpleTooltip content="Authors can publish their blogs on this site">
+            <H3 className="mb-4 text-gray-800">
+              Wanna Become an Author?{" "}
+              <span className="inline-flex ml-2 cursor-pointer hover:scale-110 transition-all duration-300">
+                <MessageCircleQuestionIcon />
+              </span>
+            </H3>
+          </SimpleTooltip>
+          <AuthorRequestForm />
         </div>
-        <div>
-          <label
-            htmlFor="message"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          ></textarea>
-        </div>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 dark:bg-gray-600 dark:hover:bg-gray-500"
-        >
-          Send Message
-        </button>
-      </form>
+      </div>
+      <div className=" mt-12">
+        <H3 className="mb-4 text-white">Connect with Me</H3>
+        <SocialsSection />
+      </div>
     </div>
+    </main>
   );
 }

@@ -9,14 +9,17 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-html, body {
+html,
+body {
   overflow: hidden;
-  overflow-y: auto; /* Enable scrolling without a scrollbar */
+  overflow-y: auto;
+  /* Enable scrolling without a scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-html::-webkit-scrollbar, body::-webkit-scrollbar {
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
   display: none;
 }
 
@@ -30,6 +33,17 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .blackNwhiteContast {
+    filter: grayscale(100%) contrast(1.5) brightness(0.7);
+  }
+
+  .blackNwhiteContast:hover {
+    filter: grayscale(0%) contrast(1) brightness(1);
+    transition: filter 3s ease-in-out;
   }
 }
 
@@ -65,17 +79,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   }
 
   .no-scrollbar {
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
-  
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
+
     /* For WebKit browsers (Chrome, Safari, etc.) */
     &::-webkit-scrollbar {
       display: none;
     }
-  
+
     /* Prevent scrollbar space reservation */
     overflow: hidden;
-    overflow-y: auto; /* Enable vertical scrolling without scrollbar space */
+    overflow-y: auto;
+    /* Enable vertical scrolling without scrollbar space */
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -117,29 +134,14 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     /* Thumb color and track color */
   }
 
-  /* Apply grayscale filter */
-  .blackNwhiteContast {
-    filter: grayscale(100%) contrast(1.5) brightness(0.7);
-  }
-
-
-  /* Optionally add a hover effect */
-  .blackNwhiteContast:hover {
-    filter: grayscale(0%) contrast(1) brightness(1);
-    /* Restores the original color */
-    transition: filter 5s ease-in-out;
-    /* Smooth transition */
-  }
-
-  .blackNwhite {
-    filter: grayscale(100%);
-  }
-
-  .blackNwhite:hover {
-    filter: grayscale(0%);
-    /* Restores the original color */
-    transition: filter 1s ease-in-out;
-    /* Smooth transition */
+  .bgSpaceGradient {
+    background: linear-gradient(to bottom right,
+        #070424,
+        #4d015e,
+        #5e0901,
+        #04011c,
+        #010103
+      );
   }
 
   .noFocus {
@@ -148,7 +150,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     box-shadow: none !important;
     ring: 0 !important;
   }
- 
+
 }
 
 @layer base {

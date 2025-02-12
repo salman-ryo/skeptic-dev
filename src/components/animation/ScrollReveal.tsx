@@ -8,6 +8,7 @@ interface ScrollRevealProps {
   triggerOnce?: boolean; // Customizable "trigger once" behavior
   animationVariants?: Variants; // External animation variants
   transitionConfig?: Transition; // External transition configuration
+  className?:string;
 }
 
 const ScrollReveal = ({
@@ -18,6 +19,7 @@ const ScrollReveal = ({
     visible: { opacity: 1, y: 0 },
   }, // Default animation
   transitionConfig = { duration: 0.8 }, // Default transition
+  className
 }: ScrollRevealProps) => {
   const controls: AnimationControls = useAnimation();
   const [ref, inView] = useInView({ triggerOnce });
@@ -32,6 +34,7 @@ const ScrollReveal = ({
 
   return (
     <motion.div
+    className={className}
       ref={ref}
       initial="hidden"
       animate={controls}

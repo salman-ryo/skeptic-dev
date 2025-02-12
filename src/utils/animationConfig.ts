@@ -73,6 +73,15 @@ export const staggeredConf = {
     duration: 0.8,
   },
 };
+export const blackNwhiteConf = {
+  variant: {
+    hidden: { filter: "grayscale(100%) brightness(50%)" },
+    visible: { filter: "grayscale(0%) brightness(100%)" },
+  },
+  transition: {
+    duration: 2,
+  },
+};
 
 export const customEasingConf = {
   variant: {
