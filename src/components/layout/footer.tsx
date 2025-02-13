@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Facebook, FileUser, Github, Instagram, Linkedin, Youtube } from "lucide-react";
+import { socialLinks } from "@/lib/data";
 
 export default function Footer() {
   return (
-    <footer className="bg-cGray-dark w-full p-16 pb-8">
+    <footer className="bg-cGray-dark w-full p-16 pb-8 border-t border-cGray">
       <div className="container mx-auto">
         {/* Top section with logo and social icons */}
         <div className="flex flex-col md:flex-row justify-between items-center ">
@@ -21,25 +22,25 @@ export default function Footer() {
         </div>
           <div className="flex gap-4">
             <Link
-              href="#"
+              href={socialLinks.portfolio}
               className="bg-white hover:bg-white/80 transition-colors p-2 rounded-full"
             >
-              <Instagram className="w-6 h-6" />
-              <span className="sr-only">Instagram</span>
+              <FileUser  className="w-6 h-6" />
+              <span className="sr-only">Portfolio</span>
             </Link>
             <Link
-              href="#"
+              href={socialLinks.github}
               className="bg-white hover:bg-white/80 transition-colors p-2 rounded-full"
             >
-              <Youtube className="w-6 h-6" />
-              <span className="sr-only">YouTube</span>
+              <Github className="w-6 h-6" />
+              <span className="sr-only">Github</span>
             </Link>
             <Link
-              href="#"
+              href={socialLinks.linkedin}
               className="bg-white hover:bg-white/80 transition-colors p-2 rounded-full"
             >
-              <Facebook className="w-6 h-6" />
-              <span className="sr-only">Facebook</span>
+              <Linkedin className="w-6 h-6"/>
+              <span className="sr-only">LinkedIn</span>
             </Link>
           </div>
         </div>

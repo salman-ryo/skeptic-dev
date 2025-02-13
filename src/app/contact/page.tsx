@@ -4,11 +4,10 @@ import ContactForm from "@/components/pages/contact/ContactForm";
 import SocialsSection from "@/components/pages/contact/SocialsSection";
 import { H2, H3 } from "@/components/text/heading";
 import { MessageCircleQuestionIcon } from "lucide-react";
-import { FcQuestions } from "react-icons/fc";
 
 export default function ContactPage() {
   return (
-    <main className="w-full bg-cGray-dark">
+    <main className="w-full bg-cGray-dark pb-24">
     <div className="container w-full md:w-[80%] mx-auto px-4 py-8">
       <H2 className="mb-8 text-center text-white">Contact Me</H2>
 

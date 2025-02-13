@@ -1,10 +1,11 @@
+import { socialLinks } from "@/lib/data";
 import { Github, Linkedin, Globe } from "lucide-react";
 import Link from "next/link";
 
 export default function SocialsSection() {
   return (
-    <div className="mt-8 flex flex-wrap justify-start items-center gap-6">
-      {socialLinks.map(({ href, label, Icon }) => (
+    <div className="mt-8 flex flex-wrap justify-start items-center gap-6 test">
+      {links.map(({ href, label, Icon }) => (
         <Link
           key={label}
           href={href}
@@ -20,8 +21,8 @@ export default function SocialsSection() {
   );
 }
 
-const socialLinks = [
-  { href: "https://dev-salman.vercel.app", label: "My Portfolio", Icon: Globe },
-  { href: "https://github.com/yourusername", label: "GitHub", Icon: Github },
-  { href: "https://linkedin.com/in/yourusername", label: "LinkedIn", Icon: Linkedin },
+const links = [
+  { href: socialLinks.portfolio, label: "My Portfolio", Icon: Globe },
+  { href: socialLinks.github, label: "GitHub", Icon: Github },
+  { href: socialLinks.linkedin, label: "LinkedIn", Icon: Linkedin },
 ];

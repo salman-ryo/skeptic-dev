@@ -9,7 +9,7 @@ const NewsHeroBlog = ({ topBlog }: { topBlog: BlogDocument }) => {
   const imageBlock = topBlog?.blocks?.find((block) => block.type === "image");
   const imgSrc = imageBlock?.metadata?.url || "/images/blogs/skhero.jpg";
   return (
-    <section className="relative py-12 px-6 md:px-12 bg-amber-50 blackNwhite">
+    <section className="relative py-12 px-6 md:px-12 bg-amber-50 blackNwhiteContast">
       <div className="max-w-5xl mx-auto">
         {/* Vintage Header */}
         <div className="border-b-2 border-black mb-8 pb-4">
@@ -57,12 +57,12 @@ const NewsHeroBlog = ({ topBlog }: { topBlog: BlogDocument }) => {
               alt={topBlog.title}
               width={1920}
               height={1080}
-              className="blackNwhite h-96 object-cover w-[45%]"
+              className="h-96 object-cover w-[45%]"
             />
           </div>
         </article>
       </div>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center items-center gap-x-3 blackNwhite">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center items-center gap-x-3">
         <div className="size-3 rounded-full bg-red-500"></div>
         <div className="size-3 rounded-full bg-green-500"></div>
         <div className="size-3 rounded-full bg-blue-500"></div>

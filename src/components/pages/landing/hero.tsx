@@ -69,7 +69,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                   alt={altText}
                   width={1920}
                   height={1080}
-                  className="w-full h-[450px] object-cover blackNwhite rounded-sm p-1"
+                  className="w-full h-[450px] object-cover blackNwhiteContast rounded-sm p-1"
                 />
               </div>
             </div>

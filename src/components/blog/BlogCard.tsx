@@ -31,7 +31,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
           <img
             src={imgSrc}
             alt={altText}
-            className="w-full h-[210px] object-cover rounded-sm blackNwhite"
+            className="w-full h-[210px] object-cover rounded-sm blackNwhiteContast"
           />
         </div>
         <div className="space-y-3">
