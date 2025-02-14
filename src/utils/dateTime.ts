@@ -14,3 +14,13 @@ export function formatDateUS(date: Date): string {
     };
     return parseDate.toLocaleDateString('en-US', options);
   }
+
+  export function todayDateUS(): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
+    return new Date().toLocaleDateString("en-US", options);
+  }
+  

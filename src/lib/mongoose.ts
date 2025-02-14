@@ -14,7 +14,7 @@ interface GlobalWithMongoose extends Global {
 // Type-safe way to access global object
 declare const global: GlobalWithMongoose;
 
-const MONGODB_URI = process.env.NEXT_PUBLIC_MONGO_URI;
+const MONGODB_URI = process.env.MONGO_URI;
 
 if (!MONGODB_URI) {
   throw new Error(
