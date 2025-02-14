@@ -3,10 +3,11 @@ import { Resend } from 'resend';
 import React from 'react';
 import Feedback from '@/templates/email/feedback';
 import { getErrorMessage } from '@/utils/getError';
+import AuthorRequest from '@/templates/email/request';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-export const sendFeedbackEmail = async (formData: FormData) => {
+type TEmail = "feedback" | "request";
+export const sendFeedbackRequestEmail = async (formData: FormData, type: TEmail) => {
     const name = formData.get('name');
   const senderEmail = formData.get('email');
   const message = formData.get('message');
@@ -26,15 +27,15 @@ export const sendFeedbackEmail = async (formData: FormData) => {
     if (!process.env.RESEND_API_KEY) {
       throw new Error('RESEND_API_KEY is missing or invalid.');
     }
-
+    const isFeedback = type === "feedback";
     const data = await resend.emails.send({
-      from: 'dev.salman1508@gmail.com',
-      // from: 'onboarding@resend.dev',
+      // from: 'dev.salman1508@gmail.com',
+      from: 'onboarding@resend.dev',
       to: 'dev.salman1508@gmail.com',
       subject: 'The Skeptic Dev',
       replyTo: senderEmail,
     //   reply_to: senderEmail,
-      react: React.createElement(Feedback, {
+      react: React.createElement(isFeedback? Feedback : AuthorRequest, {
         name:name,
         email: senderEmail,
         message: message,

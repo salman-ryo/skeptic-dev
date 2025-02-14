@@ -4,6 +4,7 @@ import ContactForm from "@/components/pages/contact/ContactForm";
 import SocialsSection from "@/components/pages/contact/SocialsSection";
 import { H2, H3 } from "@/components/text/heading";
 import { MessageCircleQuestionIcon } from "lucide-react";
+import Image from "next/image";
 
 export default function ContactPage() {
   return (
@@ -23,7 +24,6 @@ export default function ContactPage() {
           </SimpleTooltip>
           <ContactForm />
         </div>
-
         <div className="p-10 border-4 border-black bg-white">
         <SimpleTooltip content="Authors can publish their blogs on this site">
             <H3 className="mb-4 text-gray-800">

@@ -18,13 +18,11 @@ import { loginSchema, LoginValues } from "@/lib/validation/auth";
 import AuthLayout from "@/components/pages/auth/auth-layout";
 import { FcGoogle } from "react-icons/fc";
 import LoaderButton from "@/components/common/LoaderButton";
-// import { signInWithEmail } from "@/services/auth";
-// import { useAuth } from "@/context/authContext";
-import { signIn,useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
-
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,38 +30,47 @@ export default function LoginPage() {
       password: "",
     },
   });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Get the callbackUrl from the query parameters, defaulting to "/blogs"
+  const callbackUrl = searchParams.get("callbackUrl") || "/blogs";
 
   async function onSubmit(data: LoginValues) {
     setIsLoading(true);
-    // Here you would typically send the data to your backend
-    console.log(data);
     try {
-      
+      // Pass the callbackUrl so that on success, next-auth returns it in the response
       const response = await signIn("credentials", {
         email: data.email,
         password: data.password,
-        redirect:false
+        redirect: false,
+        callbackUrl,
       });
-      console.log("🚀 ~ onSubmit ~ response:", response);
+
       setIsLoading(false);
+
+      // If signIn was successful, router.push to the returned URL
+      if (response?.url) {
+        router.push(response.url);
+      } else {
+        // Handle login failure (e.g., show an error message)
+        console.error("Login failed");
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      setIsLoading(false);
     }
   }
 
-  const handleGoogleLogin = async() =>{
+  const handleGoogleLogin = async () => {
     try {
-    const response = await signIn("google")
-      console.log("🚀 ~ handleGoogleLogin ~ response:", response)
-      
+      await signIn("google", { callbackUrl });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const { data: session, status } = useSession();
-  console.log("🚀 ~ LoginPage ~ session:", session)
-  console.log("🚀 ~ LoginPage ~ status:", status)
 
   return (
     <AuthLayout>
@@ -107,7 +114,12 @@ export default function LoginPage() {
             <Button className="w-full" type="submit" disabled={isLoading}>
               {isLoading ? <LoaderButton /> : <span>Log in</span>}
             </Button>
-            <Button className="w-full" type="button" disabled={isLoading} onClick={handleGoogleLogin}>
+            <Button
+              className="w-full"
+              type="button"
+              disabled={isLoading}
+              onClick={handleGoogleLogin}
+            >
               {isLoading ? (
                 <LoaderButton />
               ) : (

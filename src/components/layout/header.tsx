@@ -14,10 +14,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { limitChars } from "@/utils/text";
 import { TSessionUser } from "@/lib/types/user";
 import UserAvatar from "../common/UserAvatar";
+import { usePathname} from "next/navigation";
 
 export function Header() {
   const { data: session } = useSession();
-
+  const path = usePathname()
   const navLinks = [
     { name: "Blogs", link: "/blogs" },
     { name: "About", link: "/about" },
@@ -113,7 +114,7 @@ export function Header() {
           </DropdownMenu>
         ) : (
           <Link
-            href="/login"
+            href={`/login?callbackUrl=${encodeURIComponent(path)}`}
             className="text-sm hover:text-gray-300 transition-colors font-bold"
           >
             Login
@@ -186,7 +187,7 @@ export function Header() {
               </>
             ) : (
               <Link
-                href="/login"
+                href={`/login?callbackUrl=${encodeURIComponent(path)}`}
                 className="hover:text-gray-300 transition-colors"
               >
                 Login

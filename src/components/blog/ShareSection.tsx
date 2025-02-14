@@ -1,10 +1,13 @@
 // components/blog/ShareSection.tsx
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Mail, Facebook, Bookmark } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useSession, signIn } from 'next-auth/react';
+import React, { useState, useEffect } from "react";
+import { Mail, Facebook, Bookmark, Copy } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useSession, signIn } from "next-auth/react";
+import { useCustomToast } from "@/hooks/useCustomToast";
+import SimpleTooltip from "../common/SimpleTooltip";
+import { Button } from "../ui/button";
 
 interface ShareSectionProps {
   blogId: string;
@@ -15,10 +18,10 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const { successToast, errorToast } = useCustomToast();
 
   // Use the current URL for sharing and as a callback URL after login.
-  const currentUrl =
-    typeof window !== 'undefined' ? window.location.href : '';
+  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
   // On mount (or when session/blogId changes), check if this blog is already saved.
   useEffect(() => {
@@ -40,23 +43,30 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
     }
     setLoading(true);
     try {
-      const res = await fetch('/api/user/blogs/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/user/blogs/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ blogId }),
       });
       const data = await res.json();
       setIsSaved(data.saved);
-    } catch (error) {
-      console.error('Error saving blog:', error);
+      successToast(
+        data.saved ? "Saved" : "Removed",
+        `Blog has been ${data.saved ? "added to" : "removed from"} 'Saved Blogs'`
+      );
+    } catch (error: any) {
+      console.error("Error saving blog:", error);
+      errorToast("Failed to save", error.message);
     } finally {
       setLoading(false);
     }
   };
 
   const shareViaEmail = () => {
-    const subject = encodeURIComponent('Check out this blog!');
-    const body = encodeURIComponent(`I found this blog interesting: ${currentUrl}`);
+    const subject = encodeURIComponent("Check out this blog!");
+    const body = encodeURIComponent(
+      `I found this blog interesting: ${currentUrl}`
+    );
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
@@ -64,63 +74,87 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       currentUrl
     )}`;
-    window.open(facebookUrl, '_blank');
+    window.open(facebookUrl, "_blank");
   };
 
   const handleLogin = () => {
     // Using NextAuth’s signIn function with callbackUrl ensures that after login
     // the user is redirected back to the current page.
-    signIn(undefined, { callbackUrl: currentUrl });
+    signIn("credentials", { callbackUrl: currentUrl });
   };
 
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      successToast(
+        "Link Copied",
+        "The blog link has been copied to clipboard."
+      );
+    } catch (error) {
+      errorToast("Copy Failed", "Could not copy the link.");
+    }
+  };
   return (
     <>
       <div className="flex items-center space-x-4 mt-6">
-        <button
-          onClick={shareViaEmail}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
-          aria-label="Share via Email"
-        >
-          <Mail className="w-5 h-5" />
-        </button>
-        <button
-          onClick={shareToFacebook}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
-          aria-label="Share to Facebook"
-        >
-          <Facebook className="w-5 h-5" />
-        </button>
-        <button
-          onClick={toggleSave}
-          className={`flex items-center ${isSaved ? 'fill-current text-cyan-500' : 'text-white'} justify-center w-10 h-10 rounded-full bg-cBlack hover:bg-gray-600 transition`}
-          aria-label="Bookmark"
-        >
-          {/* Change icon appearance if saved */}
-          <Bookmark
-            className={`w-5 h-5`}
-          />
-        </button>
+        <SimpleTooltip content="Share Blog via Email">
+          <button
+            onClick={shareViaEmail}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
+            aria-label="Share via Email"
+          >
+            <Mail className="w-5 h-5" />
+          </button>
+        </SimpleTooltip>
+        <SimpleTooltip content="Share Blog to Facebook">
+          <button
+            onClick={shareToFacebook}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
+            aria-label="Share to Facebook"
+          >
+            <Facebook className="w-5 h-5" />
+          </button>
+        </SimpleTooltip>
+        <SimpleTooltip content="Copy Link">
+          <button
+            onClick={copyLink}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
+            aria-label="Copy Link"
+          >
+            <Copy className="w-5 h-5" />
+          </button>
+        </SimpleTooltip>
+        <SimpleTooltip content={isSaved ? "Unsave Blog" : "Save Blog"}>
+          <button
+            onClick={toggleSave}
+            className={`flex items-center ${isSaved ? "fill-current text-cyan-500" : "text-white"} justify-center w-10 h-10 rounded-full bg-cBlack hover:bg-gray-600 transition`}
+            aria-label="Bookmark"
+          >
+            {/* Change icon appearance if saved */}
+            <Bookmark className={`w-5 h-5`} />
+          </button>
+        </SimpleTooltip>
       </div>
 
       {/* Login Modal */}
       {showLoginModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+          <div className="bg-white p-10 rounded shadow-lg">
             <h2 className="text-xl font-bold mb-4">Login Required</h2>
-            <p className="mb-4">You need to log in to save blogs.</p>
+            <p className="mb-8">You need to log in to Save blogs.</p>
             <div className="flex justify-end space-x-4">
-              <button
+              <Button
                 onClick={() => setShowLoginModal(false)}
-                className="px-4 py-2 bg-gray-300 rounded"
+                variant={"secondary"}
+                className="border-gray-400 border-2"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleLogin}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
               >
                 Login
-              </button>
+              </Button>
             </div>
           </div>
         </div>

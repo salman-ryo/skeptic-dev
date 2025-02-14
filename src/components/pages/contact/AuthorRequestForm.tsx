@@ -1,57 +1,81 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/hooks/use-toast"
-import { requestAuthor } from "@/actions/contact"
-import { Mail, Send, User } from "lucide-react"
+import { useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Mail, Send, User } from "lucide-react";
+import { useFormStatus } from "react-dom";
+import { sendFeedbackRequestEmail } from "@/actions/sendFeedbackRequest";
+import { useCustomToast } from "@/hooks/useCustomToast";
 
-export default function AuthorRequestForm() {
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsLoading(true)
-
-    const formData = new FormData(event.currentTarget)
-    const response = await requestAuthor(formData)
-
-    setIsLoading(false)
-
-    if (response.success) {
-      toast({
-        title: "Request submitted!",
-        description: "Thank you for your interest. We'll review your request and get back to you soon.",
-      })
-      event.currentTarget.reset()
-    } else {
-      toast({
-        title: "Error",
-        description: "There was a problem submitting your request. Please try again.",
-        variant: "destructive",
-      })
-    }
-  }
+function SubmitButton() {
+  const { pending } = useFormStatus(); // Detects form submission status
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <Button
+      type="submit"
+      className="rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2"
+      disabled={pending}
+    >
+      {pending ? "Submitting..." : "Submit Request"} <Send />
+    </Button>
+  );
+}
+
+export default function AuthorRequestForm() {
+  const formRef = useRef<HTMLFormElement>(null); // Reference to reset form
+  const { errorToast, successToast } = useCustomToast();
+
+  return (
+    <form
+      ref={formRef}
+      action={async (formData) => {
+        const { error } = await sendFeedbackRequestEmail(formData, "request");
+        if (error) {
+          errorToast(
+            error + "\nIf error persists, please contact me via email."
+          );
+          return;
+        }
+        successToast(
+          "Email sent successfully!",
+          "Email has been sent. Please allow us 24 hours to reply."
+        );
+        formRef.current?.reset(); // Reset the form after successful submission
+      }}
+      className="space-y-6"
+    >
       <div className="border-b-2 border-gray-500 relative pl-8">
         <User className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500" />
-        <Input name="name" className="noFocus" placeholder="Your Name" required />
+        <Input
+          name="name"
+          className="noFocus"
+          placeholder="Your Name"
+          required
+        />
       </div>
       <div className="border-b-2 border-gray-500 relative pl-8">
         <Mail className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500" />
-        <Input name="email" className="noFocus" type="email" placeholder="Your Email" required />
+        <Input
+          name="email"
+          className="noFocus"
+          type="email"
+          placeholder="Your Email"
+          required
+        />
       </div>
       <div className="border-2 border-gray-500 rounded-lg">
-        <Textarea name="motivation" rows={6} placeholder="Tell us about yourself in brief..." required />
+        <Textarea
+          name="message"
+          rows={6}
+          placeholder="Tell us about yourself in brief..."
+          required
+        />
       </div>
-      <Button type="submit" className="rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2" disabled={isLoading}>
-        {isLoading ? "Submitting..." : "Submit Request"} <Send />
-      </Button>
+
+      {/* Submit button with loading state */}
+      <SubmitButton />
     </form>
-  )
+  );
 }
