@@ -23,7 +23,9 @@ const ScrollButtons = forwardRef<HTMLDivElement, {}>((_, ref) => {
         variant="outline"
         size="icon"
         onClick={() => scroll("left")}
-        className="rounded-full size-8 shadow-md shadow-gray-400 hover:shadow-gray-600 transition-shadow duration-300"
+        className="rounded-full size-8 shadow-md shadow-gray-400 hover:shadow-gray-600 transition-shadow duration-300
+        dark:bg-black dark:shadow-blue-400 border-2 dark:border-blue-600
+        "
       >
         <ChevronLeft className="h-6 w-6" />
       </Button>
@@ -31,7 +33,9 @@ const ScrollButtons = forwardRef<HTMLDivElement, {}>((_, ref) => {
         variant="outline"
         size="icon"
         onClick={() => scroll("right")}
-        className="rounded-full size-8 shadow-md shadow-gray-400 hover:shadow-gray-600 transition-shadow duration-300"
+        className="rounded-full size-8 shadow-md shadow-gray-400 hover:shadow-gray-600 transition-shadow duration-300
+        dark:bg-black dark:shadow-blue-400 border-2 dark:border-blue-600
+        "
       >
         <ChevronRight className="h-6 w-6" />
       </Button>

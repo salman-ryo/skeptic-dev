@@ -15,9 +15,9 @@ export default async function Home() {
   const mostViewedBlogs = await fetchMostViewedBlogs();
   const mustReadBlogs = await fetchRandomBlogs();
   return (
-    <div className="min-h-screen dark:bgSpaceGradient">
+    <div className="min-h-screen">
       <Hero blog={topBlog} />
-      <div className="container py-16 space-y-16 2xl:space-y-28 mx-auto md:px-16">
+      <div className="container py-16 mx-auto">
         {/* Resources Section */}
         <ResourceRecommendationSection />
 

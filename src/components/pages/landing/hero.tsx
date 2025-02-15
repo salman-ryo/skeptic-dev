@@ -14,14 +14,14 @@ export function Hero({ blog }: { blog: BlogDocument }) {
     "https://cdn.pixabay.com/photo/2024/05/16/20/21/digital-8766930_1280.png";
   const altText = imageBlock?.metadata?.alt || blog.title;
   return (
-    <div className="bg-cGray-dark pb-12 px-16 darkBounce">
+    <div className="pb-12 px-16">
       <div className="container mx-auto">
         <AnimationWrapper animationConfig={slideInLeftConf}>
         <div className="py-8 flex justify-start items-center select-none">
           <h1 className="text-white text-9xl font-bold tracking-tight">
             SKEPTIC DEV
           </h1>
-          <p className="text-gray-400 text-base font-bold ml-6">
+          <p className="text-gray-400 dark:text-gray-300 text-base font-bold ml-6">
             Eat
             <br />
             Sleep <br />
@@ -32,22 +32,22 @@ export function Hero({ blog }: { blog: BlogDocument }) {
         </AnimationWrapper>
         {blog && (
           <AnimationWrapper animationConfig={slideInRightConf}>
-            <div className="bg-gray-100 rounded-md overflow-hidden p-10">
+            <div className="bg-gray-100  dark:bg-slate-950 border-2 dark:border-blue-300 rounded-md overflow-hidden p-10">
               <div className="flex justify-between items-start gap-4">
                 <div className="w-1/3 mr-4">
-                  <time className="text-sm text-gray-500">
+                  <time className="text-sm text-gray-500 dark:text-gray-300">
                     {formatDateUS(blog.createdAt)}
                   </time>
                   <H3 className="mb-1">
                     <Link href={`/blogs/${blog._id}`}>{blog.title}</Link>
                   </H3>
                   {blog.blocks && (
-                    <time className="text-sm text-gray-500 mb-4 block">
+                    <time className="text-sm text-gray-500 dark:text-gray-300 mb-4 block">
                       {calculateReadTime(blog.blocks)} min read
                     </time>
                   )}
 
-                  <p className="text-gray-600 mb-4 text-pretty">
+                  <p className="text-gray-600 dark:text-gray-200 mb-4 text-pretty">
                     {blog.description}
                   </p>
                   <div className="flex gap-2">
@@ -56,7 +56,9 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                         return (
                           <span
                             key={tag}
-                            className="px-3 py-1 bg-black text-white text-xs rounded-full capitalize"
+                            className="px-3 py-1 font-medium bg-black text-white text-xs rounded-full capitalize
+                            dark:bg-cPeach-dark dark:text-black
+                            "
                           >
                             {tag}
                           </span>

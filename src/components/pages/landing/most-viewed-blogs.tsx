@@ -18,14 +18,16 @@ export default function MostViewedBlogs({
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   return (
-      <section className="relative py-12">
+      <section className="relative light:bg-gray-100 md:px-16 py-16">
         <div className="container mx-auto px-4">
           <div className="flex gap-x-4 md:gap-x-20">
             {/* Static Title Card */}
-            <Card className="w-[400px] flex-shrink-0 h-full rounded-md bg-white p-2 border-2 border-cGray-light">
+            <Card className="w-[400px] flex-shrink-0 h-full rounded-md bg-white p-2 border-2 border-cGray-light
+            dark:bg-slate-950 dark:border-blue-400
+            ">
               <CardContent className="p-6 flex flex-col justify-between">
                 <div className="mb-4">
-                  <H2>
+                  <H2 className="dark:text-gray-200">
                     Most <br /> Viewed <br /> Blogs
                   </H2>
                 </div>

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import {themeVariants, prefersLight, prefersDark} from "tailwindcss-theme-variants"
 
 const config: Config = {
     darkMode: ["class"],
@@ -31,14 +32,25 @@ const config: Config = {
 			},
 			cPeach: {
 				light: '#FF8178',
-				DEFAULT: '#FF8178',
-				dark: '#cc463d'
+				DEFAULT: '#ee594e',
+				dark: '#f54747'
 			},
 		}
   	}
   },
   plugins: [require("tailwindcss-animate"),
-	require('@tailwindcss/typography')
+	require('@tailwindcss/typography'),
+	
+	themeVariants({
+		themes: {
+		  light: {
+			selector: ".light",
+		  },
+		  dark: {
+			selector: ".dark",
+		  },
+		},
+	  }),
   ],
 };
 export default config;

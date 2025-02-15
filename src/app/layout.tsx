@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${roboto.className} no-scrollbar`}>
+      <body className={`${roboto.className} no-scrollbar light:bg-cGray-dark dark:bgSpaceGradient`}>
         <UserSessionProvider>
           <ThemeProvider
             attribute="class"

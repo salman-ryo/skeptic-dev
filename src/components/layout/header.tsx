@@ -14,11 +14,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { limitChars } from "@/utils/text";
 import { TSessionUser } from "@/lib/types/user";
 import UserAvatar from "../common/UserAvatar";
-import { usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
+import SimpleTooltip from "../common/SimpleTooltip";
 
 export function Header() {
   const { data: session } = useSession();
-  const path = usePathname()
+  const path = usePathname();
   const navLinks = [
     { name: "Blogs", link: "/blogs" },
     { name: "About", link: "/about" },
@@ -32,7 +33,7 @@ export function Header() {
 
   const userLinks = [{ name: "Saved Blogs", link: "/blogs/saved" }];
   return (
-    <header className="w-full flex items-center justify-between px-6 md:px-10 bg-cGray-dark text-white py-4 select-none">
+    <header className="w-full flex items-center justify-between px-6 md:px-10 text-white h-16 select-none">
       {/* Logo */}
       <Link href="/">
         <Image
@@ -67,13 +68,15 @@ export function Header() {
               className="bg-cGray-dark text-white"
             >
               <div className="flex flex-col items-start justify-start gap-0 cursor-default p-2">
-                <span className="font-medium capitalize">
+                <span className="font-medium capitalize dark:text-cyan-400">
                   {session.user?.name}
                 </span>
                 {session.user?.email && (
-                  <span className="text-xs">
-                    {limitChars(session.user?.email, 25)}
-                  </span>
+                  <SimpleTooltip content={session.user.email}>
+                    <span className="text-xs text-blue-400">
+                      {limitChars(session.user.email, 25)}
+                    </span>
+                  </SimpleTooltip>
                 )}
               </div>
 
@@ -83,7 +86,7 @@ export function Header() {
                 <>
                   {userLinks.map((item) => (
                     <DropdownMenuItem key={item.name}>
-                      <Link href={item.link} className="w-full">
+                      <Link href={item.link} className="w-full font-medium">
                         {item.name}
                       </Link>
                     </DropdownMenuItem>
@@ -106,7 +109,7 @@ export function Header() {
 
               <DropdownMenuItem
                 onClick={() => signOut()}
-                className="text-red-500 cursor-pointer"
+                className="text-cPeach-dark font-semibold cursor-pointer"
               >
                 Logout
               </DropdownMenuItem>
@@ -147,12 +150,6 @@ export function Header() {
                   <p className="font-bold">{session.user?.name}</p>
                   <p className="text-sm text-gray-400">{session.user?.email}</p>
                 </div>
-                {/* <Link
-                  href="/saved-blogs"
-                  className="hover:text-gray-300 transition-colors"
-                >
-                  Saved Blogs
-                </Link> */}
 
                 {(session.user as TSessionUser)?.role === "user" ||
                   ((session.user as TSessionUser)?.role === "admin" && (
