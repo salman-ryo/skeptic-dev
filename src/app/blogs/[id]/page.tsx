@@ -3,14 +3,10 @@ import { useEffect, useState } from "react";
 import { BlogDocument } from "@/lib/types/blog";
 import { BlockRenderer } from "@/components/blog/BlockRenderer";
 import { Bar } from "@/components/common/Bar";
-import Link from "next/link";
-import { extLink } from "@/lib/externalLinks";
 import ShareSection from "@/components/blog/ShareSection";
 import BlogSkeleton from "@/components/blog/BlogSkeleton";
 import { formatDateUS } from "@/utils/dateTime";
 import UserAvatar from "@/components/common/UserAvatar";
-import { useSession } from "next-auth/react";
-import { TSessionUser } from "@/lib/types/user";
 
 export default function BlogPage({ params }: { params: { id: string } }) {
   const [blog, setBlog] = useState<BlogDocument | null>(null);
@@ -62,6 +58,7 @@ export default function BlogPage({ params }: { params: { id: string } }) {
   }
 
   return (
+    <main className="w-full light:bg-white">
     <article className="w-full md:w-[70%] mx-auto p-6">
       <header className="mb-8">
         {blog.tags && blog.tags.length > 0 && (
@@ -71,7 +68,9 @@ export default function BlogPage({ params }: { params: { id: string } }) {
                 className="flex justify-center items-center gap-x-4"
                 key={index}
               >
-                <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300 capitalize">
+                <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300 capitalize
+                dark:text-cyan-400
+                ">
                   {tag}
                 </span>
                 {index < (blog.tags as string[]).length - 1 && (
@@ -81,9 +80,13 @@ export default function BlogPage({ params }: { params: { id: string } }) {
             ))}
           </div>
         )}
-        <h1 className="text-5xl font-bold mt-8 mb-4">{blog.title}</h1>
+        <h1 className="text-5xl font-bold mt-8 mb-4
+        dark:text-gray-200
+        ">{blog.title}</h1>
         {blog.description && (
-          <p className="text-cGray text-lg font-medium mb-4">
+          <p className="text-cGray text-lg font-medium mb-4
+          dark:text-cGray-light
+          ">
             {blog.description}
           </p>
         )}
@@ -94,14 +97,15 @@ export default function BlogPage({ params }: { params: { id: string } }) {
                   className="size-12"
                   user={blog.author}
                 />
-                <div className="flex flex-col justify-start items-start text-gray-500">
-                  <span className="font-semibold">{blog.author.name}</span>
-                  <span className="text-sm">Author</span>
+                <div className="flex flex-col justify-start items-start text-gray-500
+                ">
+                  <span className="font-semibold dark:text-blue-400">{blog.author.name}</span>
+                  <span className="text-sm dark:text-gray-400">Author</span>
                 </div>
               </div>
           </div>
           <Bar />
-          <span className="text-gray-500">{formatDateUS(new Date(blog.createdAt))}</span>
+          <span className="text-gray-500 dark:text-gray-400">{formatDateUS(new Date(blog.createdAt))}</span>
         </div>
         <ShareSection blogId={params.id} />
       </header>
@@ -113,5 +117,6 @@ export default function BlogPage({ params }: { params: { id: string } }) {
         </div>
       )}
     </article>
+    </main>
   );
 }

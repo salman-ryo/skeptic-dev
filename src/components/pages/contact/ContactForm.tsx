@@ -15,7 +15,9 @@ function SubmitButton() {
   return (
     <Button
       type="submit"
-      className="rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2"
+      className="rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2
+      dark:bg-black dark:border-blue-400 dark:text-white dark:border-t dark:border-r dark:hover:bg-black dark:hover:text-blue-400 transition-all duration-300
+      "
       disabled={pending}
     >
       {pending ? "Sending..." : "Share Feedback"} <Send />
@@ -43,15 +45,26 @@ export default function ContactForm() {
       }}
       className="space-y-6"
     >
-      <div className="border-b-2 border-gray-500 relative pl-8">
-        <User className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500" />
+      <div className="border-b-2 border-gray-500 relative pl-8
+      dark:border-blue-400
+      ">
+        <User className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500
+        dark:text-cyan-400
+        " />
         <Input name="name" className="noFocus" placeholder="Your Name" required />
       </div>
-      <div className="border-b-2 border-gray-500 relative pl-8">
-        <Mail className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500" />
+      <div className="border-b-2 border-gray-500 relative pl-8
+      dark:border-blue-400 dark:text-cyan-400
+      ">
+        <Mail className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-500
+        dark:text-cyan-400
+        " />
         <Input name="email" className="noFocus" type="email" placeholder="Your Email" required />
       </div>
-      <div className="border-2 border-gray-500 rounded-lg">
+      <div className="border-2 border-gray-500 rounded-lg
+      dark:border-blue-400
+      
+      ">
         <Textarea name="message" placeholder="Your Message" rows={6} required />
       </div>
 

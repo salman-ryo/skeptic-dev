@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Mail, Facebook, Bookmark, Copy } from "lucide-react";
+import { Mail, Facebook, Bookmark, Copy, Link } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { useCustomToast } from "@/hooks/useCustomToast";
@@ -37,6 +37,10 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
 
   const toggleSave = async () => {
     // If the user isn’t logged in, show the login modal.
+    if(!blogId){
+      errorToast("Failed","No actual blog ID")
+      return
+    }
     if (!session) {
       setShowLoginModal(true);
       return;
@@ -63,6 +67,10 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const shareViaEmail = () => {
+    if(!blogId){
+      errorToast("Failed","No actual blog ID")
+      return
+    }
     const subject = encodeURIComponent("Check out this blog!");
     const body = encodeURIComponent(
       `I found this blog interesting: ${currentUrl}`
@@ -71,6 +79,10 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const shareToFacebook = () => {
+    if(!blogId){
+      errorToast("Failed","No actual blog ID")
+      return
+    }
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       currentUrl
     )}`;
@@ -78,12 +90,20 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const handleLogin = () => {
+    if(!blogId){
+      errorToast("Failed","No actual blog ID")
+      return
+    }
     // Using NextAuth’s signIn function with callbackUrl ensures that after login
     // the user is redirected back to the current page.
     signIn("credentials", { callbackUrl: currentUrl });
   };
 
   const copyLink = async () => {
+    if(!blogId){
+      errorToast("Failed","No actual blog ID")
+      return
+    }
     try {
       await navigator.clipboard.writeText(window.location.href);
       successToast(
@@ -100,7 +120,9 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
         <SimpleTooltip content="Share Blog via Email">
           <button
             onClick={shareViaEmail}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white border-2 hover:bg-black transition
+            dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:border-cPeach-dark dark:hover:text-white
+            "
             aria-label="Share via Email"
           >
             <Mail className="w-5 h-5" />
@@ -109,7 +131,9 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
         <SimpleTooltip content="Share Blog to Facebook">
           <button
             onClick={shareToFacebook}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white border-2 hover:bg-black transition
+            dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:border-cPeach-dark dark:hover:text-white
+            "
             aria-label="Share to Facebook"
           >
             <Facebook className="w-5 h-5" />
@@ -118,16 +142,19 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
         <SimpleTooltip content="Copy Link">
           <button
             onClick={copyLink}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white hover:bg-black transition"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-cBlack text-white border-2 hover:bg-black transition
+            dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:border-cPeach-dark dark:hover:text-white
+            "
             aria-label="Copy Link"
           >
-            <Copy className="w-5 h-5" />
+            <Link className="w-5 h-5" />
           </button>
         </SimpleTooltip>
         <SimpleTooltip content={isSaved ? "Unsave Blog" : "Save Blog"}>
           <button
             onClick={toggleSave}
-            className={`flex items-center ${isSaved ? "fill-current text-cyan-500" : "text-white"} justify-center w-10 h-10 rounded-full bg-cBlack hover:bg-gray-600 transition`}
+            className={`flex items-center ${isSaved ? "fill-current text-cyan-500 dark:bg-black dark:border-cPeach-dark" : "text-white dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:border-cPeach-dark dark:hover:text-white"} border-2 justify-center w-10 h-10 rounded-full bg-cBlack hover:bg-gray-600 transition
+            `}
             aria-label="Bookmark"
           >
             {/* Change icon appearance if saved */}

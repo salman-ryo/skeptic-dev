@@ -66,8 +66,8 @@ export const CodeBlock = ({ content, language = 'javascript' }: CodeBlockProps) 
       </button>
       <pre className={cn(
         "p-4 rounded-lg overflow-x-auto",
-        "bg-gray-900 text-gray-100",
-        "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900"
+        "bg-gray-900 text-gray-100 border",
+        "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 dark:bg-slate-950 dark:border-cyan-950"
       )}>
         <code className={`language-${language}`}>{content}</code>
       </pre>

@@ -12,7 +12,7 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
       return <h1 className="text-4xl font-bold mb-4">{renderHTML(block.content)}</h1>;
     
     case 'heading2':
-      return <h2 className="text-3xl font-semibold mb-3">{renderHTML(block.content)}</h2>;
+      return <h2 className="text-3xl font-semibold mb-3 dark:text-gray-300">{renderHTML(block.content)}</h2>;
     
     case 'image':
       return (
@@ -23,7 +23,7 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
             className="w-full max-h-[500px] object-cover rounded-lg"
           />
           {block.metadata?.alt && (
-            <figcaption className="text-center text-gray-600 mt-2">
+            <figcaption className="text-center text-gray-600 mt-2 dark:text-gray-400">
               {block.metadata.alt}
             </figcaption>
           )}
@@ -42,7 +42,9 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
     
     case 'quote':
       return (
-        <blockquote className="border-l-4 border-gray-300 pl-4 my-6 italic">
+        <blockquote className="border-l-4 border-gray-300 pl-4 my-6 italic
+        dark:border-blue-400 dark:text-cPeach
+        ">
           {renderHTML(block.content)}
         </blockquote>
       );
@@ -62,9 +64,9 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
       );
     
     case 'divider':
-      return <hr className="my-8 border-gray-200" />;
+      return <hr className="my-8 border-gray-200 dark:border-gray-700" />;
     
-    default:
-      return <div className="mb-4">{renderHTML(block.content)}</div>;
+    default: //text
+      return <div className="mb-4 dark:text-gray-300">{renderHTML(block.content)}</div>;
   }
 };

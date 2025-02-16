@@ -8,9 +8,9 @@ import BlogsSection from "@/components/pages/blogs/BlogsSection";
 export default async function BlogsPage() {
   const topBlog: BlogDocument = await fetchTopBlog();
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen light:bg-white">
       {topBlog && (
-        <div className="bg-cGray-dark w-full px-10 md:px-20 py-10">
+        <div className="light:bg-cGray-dark w-full px-10 md:px-20 py-10">
           <AnimationWrapper animationConfig={flipInConf}>
             <NewsHeroBlog topBlog={topBlog} />
           </AnimationWrapper>

@@ -62,7 +62,7 @@ export const RichTextEditor = ({
           <Code className="h-4 w-4" />
         </Button> */}
       </div>
-      <EditorContent editor={editor} className="p-4" />
+      <EditorContent  editor={editor} className="p-2 min-h-10 noFocus" />
     </div>
   );
 };

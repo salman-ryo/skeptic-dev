@@ -33,7 +33,9 @@ const RandomQuote = () => {
   }, []);
 
   return (
-    <div className="p-4 bg-amber-200 border-l-4 border-black blackNwhite">
+    <div className="p-4 bg-amber-200 border-l-4 border-black
+    dark:bg-black dark:text-amber-200 dark:border-cPeach-dark
+    ">
       <blockquote className="italic text-sm">"{quote.text}"</blockquote>
       <p className="mt-2 text-xs">- {quote.author}</p>
     </div>

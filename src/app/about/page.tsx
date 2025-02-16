@@ -6,15 +6,17 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <main className="w-full bg-cGray-dark text-white">
+    <main
+      className="w-full light:bg-cGray-dark text-white
+    dark:text-gray-200
+    "
+    >
       <div className="flex min-h-screen container w-full md:w-[80%] mx-auto flex-col items-center justify-between p-24">
         <section className="mb-16">
           <H2 className="mb-4 text-white">About</H2>
           <p className="text-lg text-gray-200">
             Welcome to{" "}
-            <span className="font-semibold text-gray-300">
-              The Skeptic Dev
-            </span>{" "}
+            <span className="font-semibold text-gray-300">The Skeptic Dev</span>{" "}
             , a micro blogging site created by me (Ryo). I created this project
             to learn Blogging as well as create a platform for others who may be
             interested in doing the same. I'm a passionate software developer
@@ -34,28 +36,34 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <SkillBadge
-                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm"
-                icon={<Code className="w-5 h-5" />}
+                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm
+                dark:bg-slate-950 dark:border-blue-400 dark:text-gray-200
+                "
+                icon={<Code className="w-5 h-5 dark:text-cPeach-dark" />}
                 label="Full-stack Development"
               />
               <SkillBadge
-                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm"
-                icon={<Cloud className="w-5 h-5" />}
+                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm
+                dark:bg-slate-950 dark:border-blue-400 dark:text-gray-200
+                
+                "
+                icon={<Cloud className="w-5 h-5 dark:text-cPeach-dark" />}
                 label="Cloud Computing"
               />
               <SkillBadge
-                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm"
-                icon={<GitBranch className="w-5 h-5" />}
+                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm
+                dark:bg-slate-950 dark:border-blue-400 dark:text-gray-200
+                
+                "
+                icon={<GitBranch className="w-5 h-5 dark:text-cPeach-dark" />}
                 label="DevOps"
               />
               <SkillBadge
-                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm"
-                icon={<Smartphone className="w-5 h-5" />}
-                label="Mobile Development"
-              />
-              <SkillBadge
-                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm"
-                icon={<Database className="w-5 h-5" />}
+                className="text-black rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2 text-sm
+                dark:bg-slate-950 dark:border-blue-400 dark:text-gray-200
+                
+                "
+                icon={<Database className="w-5 h-5 dark:text-cPeach-dark" />}
                 label="Database Design"
               />
             </div>
@@ -89,8 +97,7 @@ export default function AboutPage() {
             >
               GitHub
             </Link>{" "}
-            or through the
-            {" "}
+            or through the{" "}
             <Link
               href={"/contact"}
               className="underline text-blue-500"

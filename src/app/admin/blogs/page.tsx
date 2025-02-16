@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   CalendarIcon,
@@ -22,6 +21,8 @@ import {
 } from "lucide-react";
 import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime, limitWords } from "@/utils/text";
+import { H2 } from "@/components/text/heading";
+import BlogCardSkeleton from "@/components/blog/BlogCardSkeleton";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogDocument[]>([]);
@@ -63,29 +64,20 @@ export default function BlogsPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="container mx-auto p-6">
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader>
-                <div className="h-8 bg-gray-200 rounded w-2/3"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto p-6 md:p-16">
-      <h1 className="text-4xl font-bold mb-8">All Blogs</h1>
+      <H2 className="mb-16 text-white dark:text-gray-200">All Blogs</H2>
+      {loading && (
+        <ul className="w-full flex justify-between items-center gap-x-10">
+          {Array.from({ length: 3 }).map((_, index) => {
+            return <BlogCardSkeleton key={index} />;
+          })}
+        </ul>
+      )}
+      {blogs && blogs.length === 0 && (
+        <p className="text-center text-white text-lg">No blogs found</p>
+      )}
+
       {blogs && (
         <div className="grid gap-6 md:grid-cols-3">
           {blogs.map((blog, index) => {
@@ -113,10 +105,11 @@ export default function BlogsPage() {
                   <CardDescription>by {blog.author.name}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  {
-                    blog.description &&
-                  <p className="text-muted-foreground">{limitWords(blog.description,25)}</p>
-                  }
+                  {blog.description && (
+                    <p className="text-muted-foreground">
+                      {limitWords(blog.description, 25)}
+                    </p>
+                  )}
                   <div className="mt-4 flex flex-wrap gap-2">
                     {blog.tags?.map((tag, tagIndex) => (
                       <Badge key={tagIndex} variant="secondary">
@@ -151,10 +144,10 @@ export default function BlogsPage() {
                     className="m-4 text-red-500"
                     onClick={() => handleDelete(blog._id as string)}
                   >
-                    <Trash />
+                    <Trash className="hover:scale-110 transition-transform duration-300" />
                   </button>
                   <Link href={`/admin/edit-blog/${blog._id}`}>
-                    <Edit />
+                    <Edit className="hover:scale-110 transition-transform duration-300" />
                   </Link>
                 </div>
               </Card>

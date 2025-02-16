@@ -9,10 +9,14 @@ const NewsHeroBlog = ({ topBlog }: { topBlog: BlogDocument }) => {
   const imageBlock = topBlog?.blocks?.find((block) => block.type === "image");
   const imgSrc = imageBlock?.metadata?.url || "/images/blogs/skhero.jpg";
   return (
-    <section className="relative py-12 px-6 md:px-12 bg-amber-50 blackNwhiteContast">
+    <section className="relative py-12 px-6 md:px-12 bg-amber-50 blackNwhiteContast
+    dark:bg-slate-950 dark:text-gray-300
+    ">
       <div className="max-w-5xl mx-auto">
         {/* Vintage Header */}
-        <div className="border-b-2 border-black mb-8 pb-4">
+        <div className="border-b-2 border-black mb-8 pb-4
+        dark:border-cPeach-dark
+        ">
           <div className="flex justify-between items-center text-sm font-serif">
             <span>THE SKEPTIC DEV</span>
             <span>VOL. CXXI • No. {topBlog.title.length}</span>
@@ -22,7 +26,9 @@ const NewsHeroBlog = ({ topBlog }: { topBlog: BlogDocument }) => {
 
         {/* Main Feature */}
         <article className="space-y-6">
-          <div className="border-b-2 border-black pb-4">
+          <div className="border-b-2 border-black pb-4
+          dark:border-cPeach-dark
+          ">
           <Link
             href={`/blogs/${topBlog._id}`}
             className="font-serif text-5xl uppercase"

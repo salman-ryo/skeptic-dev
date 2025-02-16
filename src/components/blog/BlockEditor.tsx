@@ -148,7 +148,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
               <img
                 src={block.metadata.url}
                 alt={block.metadata.alt}
-                className="max-h-40 object-cover rounded"
+                className="max-h-40 object-cover rounded border dark:border-white"
               />
             )}
           </div>

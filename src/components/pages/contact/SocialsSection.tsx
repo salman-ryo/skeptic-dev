@@ -11,9 +11,13 @@ export default function SocialsSection() {
           href={href}
           target="_blank"
           referrerPolicy="no-referrer"
-          className="flex items-center gap-3 px-4 py-2 bg-white text-black hover:bg-white/80 transition-all duration-300 rounded-tr-3xl rounded-bl-3xl"
+          className="group flex items-center border gap-3 px-4 py-2 bg-white text-black hover:bg-white/80 transition-all duration-300 rounded-tr-3xl rounded-bl-3xl
+              dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:border-cPeach-dark dark:hover:text-white dark:hover:border-cPeach-dark
+          "
         >
-          <Icon className="w-6 h-6 text-black" />
+          <Icon className="w-6 h-6 text-black
+          dark:group-hover:text-white transition-all duration-300
+          " />
           <span className="font-medium">{label}</span>
         </Link>
       ))}

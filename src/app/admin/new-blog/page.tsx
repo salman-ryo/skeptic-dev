@@ -8,7 +8,7 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 import { Textarea } from "@/components/ui/textarea";
 import BlogPreview from "@/app/blogs/[id]/BlogPreview";
-import { EyeIcon, XIcon } from "lucide-react";
+import { CrossIcon, EyeIcon, X, XIcon } from "lucide-react";
 
 export default function NewBlog() {
   const [title, setTitle] = useState("");
@@ -91,25 +91,25 @@ export default function NewBlog() {
   };
 
   return (
-    <div className="container mx-auto py-8 min-h-screen">
+    <div className="container mx-auto py-16 min-h-screen light:bg-white">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Blog Input Fields */}
         <Input
-        className="focus-visible:outline-none focus-visible:ring-0"
+        className="focus-visible:outline-none focus-visible:ring-0 border-2 border-gray-300 dark:border-cyan-800"
         
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Blog Title"
         />
         <Textarea
-          className="mt-4 focus-visible:outline-none focus-visible:ring-0"
+          className="mt-4 focus-visible:outline-none focus-visible:ring-0 border-2 border-gray-300 dark:border-cyan-800"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Blog Description"
         />
         <div className="flex items-center gap-2 mt-4">
           <Input
-            className="flex-grow focus-visible:outline-none focus-visible:ring-0"
+            className="flex-grow focus-visible:outline-none focus-visible:ring-0 border-2 border-gray-300 dark:border-cyan-800"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
             placeholder="Add a tag"
@@ -120,14 +120,16 @@ export default function NewBlog() {
           {tags.map((tag) => (
             <div
               key={tag}
-              className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full flex items-center gap-2"
+              className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full flex items-center gap-2
+              dark:bg-cPeach-dark dark:text-black
+              "
             >
               {tag}
               <button
                 onClick={() => handleRemoveTag(tag)}
-                className="text-red-500"
+                className="text-red-500 dark:text-black"
               >
-                ×
+                <X className="hover:scale-110" size={20} />
               </button>
             </div>
           ))}
@@ -152,17 +154,19 @@ export default function NewBlog() {
         {/* Preview Modal */}
         {isPreviewOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative">
+            <div className="bg-white dark:bgSpaceGradient w-full max-w-3xl p-6 rounded-lg shadow-lg relative">
               {/* Close Button */}
               <button
-                className="absolute top-4 right-4 p-1 bg-gray-300 rounded-full hover:bg-gray-400 transition"
+                className="absolute top-4 right-4 p-1 bg-gray-300 rounded-full hover:bg-gray-400 transition
+                dark:bg-black
+                "
                 onClick={() => setIsPreviewOpen(false)}
               >
                 <XIcon size={20} />
               </button>
               
               <h2 className="text-2xl font-semibold mb-4">Blog Preview</h2>
-              <div className="max-h-[80vh] overflow-auto p-2 border rounded">
+              <div className="max-h-[80vh] overflow-auto p-2 border rounded dark:border-black">
                 <BlogPreview blog={previewBlog} />
               </div>
             </div>
