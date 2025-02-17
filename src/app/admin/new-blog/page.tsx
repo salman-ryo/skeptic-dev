@@ -7,8 +7,8 @@ import { Block, BlogDocument } from "@/lib/types/blog";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { Textarea } from "@/components/ui/textarea";
-import BlogPreview from "@/app/blogs/[id]/BlogPreview";
-import { CrossIcon, EyeIcon, X, XIcon } from "lucide-react";
+import BlogPreview from "@/components/pages/blogs/BlogPreview";
+import {  EyeIcon, X, XIcon } from "lucide-react";
 
 export default function NewBlog() {
   const [title, setTitle] = useState("");

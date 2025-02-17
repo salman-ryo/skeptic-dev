@@ -20,6 +20,7 @@ import { FcGoogle } from "react-icons/fc";
 import LoaderButton from "@/components/common/LoaderButton";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +33,11 @@ export default function LoginPage() {
   });
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   
   // Get the callbackUrl from the query parameters, defaulting to "/blogs"
   const callbackUrl = searchParams.get("callbackUrl") || "/blogs";
@@ -92,7 +98,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="kon@example.com" {...field} />
+                    <Input placeholder="kon@example.com" className="noOutline border-0 rounded-none border-b-2 dark:border-blue-400" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,17 +111,27 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" {...field} />
+                  <div className="relative">
+                      <Input type={showPassword ? "text" : "password"} placeholder="********" className="noOutline border-0 rounded-none border-b-2 dark:border-blue-400 pr-10" {...field} />
+                      <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center pr-3">
+                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full" type="submit" disabled={isLoading}>
+            <Button className="w-full border mt-10 mb-4
+              dark:bg-black dark:border-cyan-400 dark:text-white dark:hover:bg-black dark:hover:border-cPeach-dark
+            " type="submit" disabled={isLoading}>
               {isLoading ? <LoaderButton /> : <span>Log in</span>}
             </Button>
             <Button
-              className="w-full"
+              className="w-full border
+              dark:bg-black dark:border-cyan-400 dark:text-white dark:hover:bg-black dark:hover:border-cPeach-dark
+              
+              "
               type="button"
               disabled={isLoading}
               onClick={handleGoogleLogin}
@@ -132,7 +148,7 @@ export default function LoginPage() {
         </Form>
         <div className="text-center text-sm">
           Don't have an account?{" "}
-          <Link href="/signup" className="underline">
+          <Link href="/signup" className="underline dark:text-cPeach">
             Sign up
           </Link>
         </div>

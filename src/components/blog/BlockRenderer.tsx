@@ -1,6 +1,11 @@
 // components/BlockRenderer.tsx
 import { Block } from "@/lib/types/blog";
-import { CodeBlock } from './CodeBlock';
+import dynamic from "next/dynamic";
+
+const DynamicCodeBlock = dynamic(
+  () => import('./CodeBlock').then(mod => mod.CodeBlock), 
+  { ssr: false }
+);
 
 export const BlockRenderer = ({ block }: { block: Block }) => {
   const renderHTML = (content: string) => {
@@ -30,15 +35,15 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
         </figure>
       );
     
-    case 'code':
-      return (
-        <div className="my-4">
-          <CodeBlock 
-            content={block.content} 
-            language={block.metadata?.language || 'javascript'} 
-          />
-        </div>
-      );
+      case 'code':
+        return (
+          <div className="my-4">
+            <DynamicCodeBlock 
+              content={block.content} 
+              language={block.metadata?.language?.toLowerCase() || 'javascript'} // Ensure lowercase
+            />
+          </div>
+        );
     
     case 'quote':
       return (

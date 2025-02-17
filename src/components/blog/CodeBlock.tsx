@@ -24,7 +24,6 @@ import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-yaml';
 import 'prismjs/components/prism-markdown';
-
 interface CodeBlockProps {
   content: string;
   language?: string;
@@ -32,10 +31,11 @@ interface CodeBlockProps {
 
 export const CodeBlock = ({ content, language = 'javascript' }: CodeBlockProps) => {
   const [isCopied, setIsCopied] = useState(false);
+  const processedLanguage = language.toLowerCase();
 
   useEffect(() => {
     Prism.highlightAll();
-  }, [content]);
+  }, [content, processedLanguage]); // Add processedLanguage as dependency
 
   const copyToClipboard = async () => {
     try {
@@ -67,9 +67,11 @@ export const CodeBlock = ({ content, language = 'javascript' }: CodeBlockProps) 
       <pre className={cn(
         "p-4 rounded-lg overflow-x-auto",
         "bg-gray-900 text-gray-100 border",
-        "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 dark:bg-slate-950 dark:border-cyan-950"
+        "scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900",
+        "dark:bg-slate-950 dark:border-cyan-950",
+        `language-${processedLanguage}` // Add language class to pre element
       )}>
-        <code className={`language-${language}`}>{content}</code>
+        <code className={`language-${processedLanguage}`}>{content}</code>
       </pre>
     </div>
   );

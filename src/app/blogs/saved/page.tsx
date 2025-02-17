@@ -38,7 +38,7 @@ export default function SavedBlogsPage() {
 
   return (
     <div
-      className={`mx-auto p-6 min-h-screen flex ${savedBlogs.length === 0 ? "justify-center items-center" : "justify-start items-start"} flex-col
+      className={`mx-auto p-6 min-h-screen flex ${savedBlogs.length === 0 ? "justify-start items-center pt-10" : "justify-start items-start"} flex-col
     md:px-16
     `}
     >
@@ -53,7 +53,9 @@ export default function SavedBlogsPage() {
       {savedBlogs.length === 0 ? (
         <p className="text-gray-500">No saved blogs yet.</p>
       ) : (
-        <ul className={`space-y-4 flex w-full items-center ${savedBlogs.length > 2? "justify-center" : "justify-start"}`}>
+        <ul
+          className={`space-y-4 flex w-full items-center ${savedBlogs.length > 2 ? "justify-center" : "justify-start"}`}
+        >
           {savedBlogs.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}
