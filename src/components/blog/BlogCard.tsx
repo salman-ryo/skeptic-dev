@@ -26,7 +26,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   const altText = imageBlock?.metadata?.alt || "Blog image";
 
   return (
-    <Card className="w-[400px] min-h-[520px] flex-shrink-0 bg-white h-full border-2 rounded-md shadow-md border-cGray-light snap-center
+    <Card className="max-md:w-[360px] w-[400px] min-h-[520px] flex-shrink-0 bg-white h-full border-2 rounded-md shadow-md border-cGray-light snap-center
     dark:bg-slate-950 dark:border-purple-600 dark:shadow-blue-400
     ">
       <CardContent className="p-6">
@@ -60,7 +60,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
           <SimpleTooltip content={title}>
             <Link href={`/blogs/${_id}`} className="block">
               <h3 className="text-xl font-bold hover:text-gray-700 text-left text-pretty
-              dark:text-gray-200
+              dark:text-gray-200 dark:hover:text-cyan-400 transition-colors duration-300
               ">
                 {limitWords(title, 9)}
               </h3>

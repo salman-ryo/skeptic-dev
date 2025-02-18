@@ -27,16 +27,18 @@ export function ToolsRecommendationSection() {
   return (
     <ScrollReveal animationVariants={staggeredConf.variant} transitionConfig={staggeredConf.transition} >
 
-    <section className="flex flex-col md:flex-row-reverse justify-between gap-x-10  items-start rounded-md mx-auto light:bg-gray-100 md:px-16 py-16">
-      <div className="flex flex-row-reverse justify-start p-6 gap-6 h-[360px] rounded-md border-2 border-gray-300 w-[60%]
+    <section className="flex flex-col-reverse md:flex-row-reverse justify-between gap-x-10  items-start rounded-md p-2 mx-auto light:bg-gray-100 md:px-16 py-16">
+      <div className="flex flex-row-reverse justify-start p-6 gap-6 h-[460px] md:h-[360px] rounded-md border-2 border-gray-300 md:w-[60%]
       dark:border-blue-400 dark:bg-slate-950
+      max-md:flex-col
+
       ">
         <Image
           src="/images/laptop-grad.jpg"
           alt="Recommended tools"
           width={800}
           height={800}
-          className="h-full w-[40%] object-cover rounded-md mb-4 blackNwhiteContast"
+          className="h-full max-md:h-[200px] md:w-[40%] object-cover rounded-md mb-4 blackNwhiteContast"
         />
         <div className="flex flex-col items-start w-full h-full custom-scrollbar overflow-hidden hover:overflow-y-scroll">
           <span className="font-bold text-gray-400 mb-1 dark:text-gray-300">Tools</span>
@@ -62,7 +64,7 @@ export function ToolsRecommendationSection() {
           ))}
         </div>
       </div>
-      <div className="w-[40%] flex flex-col justify-start items-start  py-2 px-10 mt-8">
+      <div className="md:w-[40%] flex flex-col justify-center items-center px-4 md:px-10 py-2 max-md:mb-6">
         <H2 className="mb-10 mt-4 w-[80%] mx-auto dark:text-gray-200">
           Some Useful Tools For Developers
         </H2>

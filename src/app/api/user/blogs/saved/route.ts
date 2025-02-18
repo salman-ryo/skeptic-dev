@@ -1,14 +1,13 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import SavedBlog from "@/models/SavedBlog";
 import { connectToDatabase } from "@/lib/mongoose";
 import { authOptions } from "@/services/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   await connectToDatabase();
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession({ req: req, ...authOptions });
 
   if (!session?.user?.email) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

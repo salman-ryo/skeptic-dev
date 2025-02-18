@@ -32,6 +32,10 @@ export function Header() {
   ];
 
   const userLinks = [{ name: "Saved Blogs", link: "/blogs/saved" }];
+
+  // Extract role for easier conditionals
+  const role = (session?.user as TSessionUser)?.role;
+
   return (
     <header className="w-full flex items-center justify-between px-6 md:px-10 text-white h-16 select-none">
       {/* Logo */}
@@ -51,7 +55,7 @@ export function Header() {
           <Link
             key={item.name}
             href={item.link}
-            className="text-sm hover:text-gray-300 transition-colors font-bold"
+            className="text-sm font-bold hover:text-gray-300 transition-colors"
           >
             {item.name}
           </Link>
@@ -63,10 +67,7 @@ export function Header() {
             <DropdownMenuTrigger className="outline-none border-none shadow-none ring-0">
               <UserAvatar user={session.user as TSessionUser} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="bg-cGray-dark text-white"
-            >
+            <DropdownMenuContent align="end" className="bg-cGray-dark text-white">
               <div className="flex flex-col items-start justify-start gap-0 cursor-default p-2">
                 <span className="font-medium capitalize dark:text-cyan-400">
                   {session.user?.name}
@@ -80,32 +81,23 @@ export function Header() {
                 )}
               </div>
 
-              {(session.user as TSessionUser)?.role === "user" ||
-              (session.user as TSessionUser)?.role === "admin" ||
-              (session.user as TSessionUser)?.role === "author" ? (
-                <>
-                  {userLinks.map((item) => (
-                    <DropdownMenuItem key={item.name}>
-                      <Link href={item.link} className="w-full font-medium">
-                        {item.name}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </>
-              ) : null}
+              {(role === "user" || role === "admin" || role === "author") &&
+                userLinks.map((item) => (
+                  <DropdownMenuItem key={item.name}>
+                    <Link href={item.link} className="w-full font-medium">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
 
-              {(session.user as TSessionUser)?.role === "admin" ||
-              (session.user as TSessionUser)?.role === "author" ? (
-                <>
-                  {adminLinks.map((item) => (
-                    <DropdownMenuItem key={item.name}>
-                      <Link href={item.link} className="w-full">
-                        {item.name}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </>
-              ) : null}
+              {(role === "admin" || role === "author") &&
+                adminLinks.map((item) => (
+                  <DropdownMenuItem key={item.name}>
+                    <Link href={item.link} className="w-full">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
 
               <DropdownMenuItem
                 onClick={() => signOut()}
@@ -118,7 +110,7 @@ export function Header() {
         ) : (
           <Link
             href={`/login?callbackUrl=${encodeURIComponent(path)}`}
-            className="text-sm hover:text-gray-300 transition-colors font-bold"
+            className="text-sm font-bold hover:text-gray-300 transition-colors"
           >
             Login
           </Link>
@@ -133,43 +125,60 @@ export function Header() {
           </button>
         </SheetTrigger>
         <SheetContent side="right" className="bg-cGray-dark text-white">
-          <nav className="flex flex-col gap-4 text-lg">
+          {/* If logged in, show user info header with avatar */}
+          {session?.user && (
+            <div className="p-4 border-b border-gray-700 flex items-center gap-4">
+              <UserAvatar
+                user={session.user as TSessionUser}
+                className="h-10 w-10"
+              />
+              <div className="flex flex-col">
+                <span className="font-medium capitalize dark:text-cyan-400">
+                  {session.user?.name}
+                </span>
+                {session.user?.email && (
+                  <SimpleTooltip content={session.user.email}>
+                    <span className="text-xs text-blue-400">
+                      {limitChars(session.user.email, 25)}
+                    </span>
+                  </SimpleTooltip>
+                )}
+              </div>
+            </div>
+          )}
+
+          <nav className="flex flex-col gap-4 p-4">
             {navLinks.map((item) => (
               <Link
                 key={item.name}
                 href={item.link}
-                className="hover:text-gray-300 transition-colors"
+                className="text-sm font-bold hover:text-gray-300 transition-colors"
               >
                 {item.name}
               </Link>
             ))}
 
-            {session ? (
+            {session?.user ? (
               <>
-                <div className="mt-4 border-t border-gray-700 pt-4">
-                  <p className="font-bold">{session.user?.name}</p>
-                  <p className="text-sm text-gray-400">{session.user?.email}</p>
-                </div>
-
-                {(session.user as TSessionUser)?.role === "user" ||
-                  ((session.user as TSessionUser)?.role === "admin" && (
-                    <>
-                      {userLinks.map((item) => (
-                        <DropdownMenuItem key={item.name}>
-                          <Link href={item.link} className="w-full">
-                            {item.name}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </>
+                {(role === "user" ||
+                  role === "admin" ||
+                  role === "author") &&
+                  userLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.link}
+                      className="text-sm font-bold hover:text-gray-300 transition-colors"
+                    >
+                      {item.name}
+                    </Link>
                   ))}
 
-                {(session.user as TSessionUser)?.role === "admin" &&
+                {(role === "admin" || role === "author") &&
                   adminLinks.map((item) => (
                     <Link
                       key={item.name}
                       href={item.link}
-                      className="hover:text-gray-300 transition-colors"
+                      className="text-sm font-bold hover:text-gray-300 transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -177,7 +186,7 @@ export function Header() {
 
                 <button
                   onClick={() => signOut()}
-                  className="text-red-500 hover:text-red-400 mt-4"
+                  className="text-cPeach-dark w-fit font-semibold cursor-pointer text-sm hover:text-gray-300 transition-colors"
                 >
                   Logout
                 </button>
@@ -185,7 +194,7 @@ export function Header() {
             ) : (
               <Link
                 href={`/login?callbackUrl=${encodeURIComponent(path)}`}
-                className="hover:text-gray-300 transition-colors"
+                className="text-sm font-bold hover:text-gray-300 transition-colors"
               >
                 Login
               </Link>

@@ -10,7 +10,6 @@ import { useState } from "react";
 export default function BlogsSection() {
   const [page, setPage] = useState(1);
   const { blogs, totalPages, loading, error } = usePaginatedBlogs(page, 6);
-  console.log("🚀 ~ BlogsSection ~ blogs:", blogs);
 
   // if (error) return <p>Error: {error}</p>;
   const handleFetchMoreBlogs = async () => {
@@ -30,7 +29,7 @@ export default function BlogsSection() {
           Latest Blogs
         </H2>
 
-        <ul className="grid grid-cols-3 gap-y-8 justify-center items-center">
+        <ul className="grid grid-cols-3 justify-center items-center md:gap-10">
           {blogs?.map((blog: any) => (
             <ScrollReveal key={blog._id}>
               <BlogCard blog={blog} />

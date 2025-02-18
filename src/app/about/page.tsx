@@ -19,7 +19,7 @@ export default function AboutPage() {
             <span className="font-semibold text-gray-300">The Skeptic Dev</span>{" "}
             , a micro blogging site created by me (Ryo). I created this project
             to learn Blogging as well as create a platform for others who may be
-            interested in doing the same. I'm a passionate software developer
+            interested in doing the same. The focus of the blogs on this site is all about questioning "Why" and "How" (i.e. Skepticism). I'm a passionate software developer
             with a focus on building scalable and user-friendly applications. I
             enjoy exploring new technologies and sharing my knowledge with
             others.

@@ -28,7 +28,6 @@ export async function sendEmail(formData: FormData) {
 
   // Here you would typically send an email using your preferred method
   // For example, using a service like SendGrid or AWS SES
-  console.log("Sending email:", validatedFields.data)
 
   // Simulating an API call
   await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -50,7 +49,6 @@ export async function requestAuthor(formData: FormData) {
 
   // Here you would typically store the author request in your database
   // and potentially send a notification email to the admin
-  console.log("Author request:", validatedFields.data)
 
   // Simulating an API call
   await new Promise((resolve) => setTimeout(resolve, 1000))

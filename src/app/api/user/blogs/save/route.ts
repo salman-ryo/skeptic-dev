@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
     if (!blogId) {
       return NextResponse.json({ error: 'Blog ID is required' }, { status: 400 });
     }
-    console.log("🚀 ~ POST ~ blogId:", blogId)
     const userId = session.user.id;
     const existing = await SavedBlog.findOne({ user: userId, blog: blogId });
     if (existing) {

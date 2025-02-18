@@ -30,14 +30,15 @@ export function ResourceRecommendationSection() {
       animationVariants={staggeredConf.variant}
       transitionConfig={staggeredConf.transition}
     >
-      <div
-        className="flex flex-col md:flex-row justify-start items-start p-8 mx-auto light:bg-gray-100 md:px-16 py-16 
+      <section
+        className="flex flex-col-reverse md:flex-row justify-start items-start  p-2 mx-auto light:bg-gray-100 md:px-16 py-16 
     
     "
       >
         <div
-          className="flex justify-start p-6 gap-6 h-[360px] rounded-md border-2 border-gray-300 w-[60%]
+          className="flex justify-start p-6 gap-6 h-[460px] md:h-[360px] rounded-md border-2 border-gray-300 md:w-[60%]
       dark:border-blue-400 dark:bg-slate-950
+      max-md:flex-col
       "
         >
           <Image
@@ -45,7 +46,7 @@ export function ResourceRecommendationSection() {
             alt="Recommended resources"
             width={800}
             height={800}
-            className="h-full w-[40%] object-cover rounded-md mb-4 blackNwhiteContast"
+            className="h-full max-md:h-[200px] md:w-[40%] object-cover rounded-md mb-4 blackNwhiteContast"
           />
           <div className="flex flex-col items-start w-full h-full custom-scrollbar overflow-hidden hover:overflow-y-scroll">
             <span
@@ -78,8 +79,8 @@ export function ResourceRecommendationSection() {
             ))}
           </div>
         </div>
-        <div className="w-[40%] flex flex-col justify-center items-center px-10 py-2">
-          <H2 className="mb-10 mt-4 dark:text-gray-200">
+        <div className="md:w-[40%] flex flex-col justify-center items-center px-4 md:px-10 py-2 max-md:mb-6">
+          <H2 className="mb-10 mt-4 dark:text-gray-200 max-md:text-balance max-md:text-center">
             Highly Recommended Resources For Learning
           </H2>
           <Button
@@ -93,7 +94,7 @@ export function ResourceRecommendationSection() {
             Download Links
           </Button>
         </div>
-      </div>
+      </section>
     </ScrollReveal>
   );
 }

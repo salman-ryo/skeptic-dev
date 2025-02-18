@@ -33,7 +33,6 @@ export default function BlogsPage() {
       try {
         const response = await fetch("/api/admin/blogs");
         const data = await response.json();
-        console.log("🚀 ~ fetchBlogs ~ data:", data);
         setBlogs(data);
       } catch (error) {
         console.error("Error fetching blogs:", error);

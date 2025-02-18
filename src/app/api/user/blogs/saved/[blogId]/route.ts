@@ -1,22 +1,23 @@
 import { connectToDatabase } from "@/lib/mongoose";
 import SavedBlog from "@/models/SavedBlog";
 import { authOptions } from "@/services/auth";
+import { error } from "console";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { blogId: string } }
+  { params }: { params: Promise<{ blogId: string }> }
 ) {
-  const { blogId } = params;
-  console.log("🚀 ~ blogId:", blogId)
+  const blogId  = (await params).blogId;
+  if (!blogId) return NextResponse.json({ error:"No blog found" },{status:404});
+
 
     await connectToDatabase();
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ saved: false });
     }
-    if (!blogId) return NextResponse.json({ saved: false });
     const userId = session.user.id; // adjust based on your session object
     const existing = await SavedBlog.
     findOne({ user: userId, blog: blogId })

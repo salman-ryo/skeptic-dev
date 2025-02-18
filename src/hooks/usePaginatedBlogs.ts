@@ -13,7 +13,6 @@ export function usePaginatedBlogs(page: number, limit: number) {
             try {
                 const res = await fetch(`/api/public/blogs/paginated?page=${page}&limit=${limit}`);
                 const data = await res.json();
-                console.log("🚀 ~ fetchBlogs ~ data:", data)
                 if (res.ok) {
                     // Append new blogs to the existing blogs
                     if(page>1){

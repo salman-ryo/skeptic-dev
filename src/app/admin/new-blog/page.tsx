@@ -46,7 +46,6 @@ export default function NewBlog() {
     };
 
     try {
-      console.log("Blog to be saved:", blog);
 
       const response = await fetch("/api/admin/blogs", {
         method: "POST",
@@ -55,7 +54,6 @@ export default function NewBlog() {
         },
         body: JSON.stringify(blog),
       });
-      console.log("🚀 ~ handleSubmit ~ response:", response)
 
       if (!response.ok) {
         const errorData = await response.json();
