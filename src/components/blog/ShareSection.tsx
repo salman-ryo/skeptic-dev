@@ -166,7 +166,9 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
       {/* Login Modal */}
       {showLoginModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
-          <div className="bg-white p-10 rounded shadow-lg">
+          <div className="bg-white p-10 rounded-lg shadow-md border-2
+          dark:bg-slate-950 dark:border-blue-400 dark:shadow-cyan-400
+          ">
             <h2 className="text-xl font-bold mb-4">Login Required</h2>
             <p className="mb-8">You need to log in to Save blogs.</p>
             <div className="flex justify-end space-x-4">

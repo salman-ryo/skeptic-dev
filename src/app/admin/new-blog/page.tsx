@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 import { Textarea } from "@/components/ui/textarea";
 import BlogPreview from "@/components/pages/blogs/BlogPreview";
 import {  EyeIcon, X, XIcon } from "lucide-react";
+import { useCustomToast } from "@/hooks/useCustomToast";
 
 export default function NewBlog() {
   const [title, setTitle] = useState("");
@@ -20,7 +21,8 @@ export default function NewBlog() {
   ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false); // Toggle state
-
+  const {successToast, errorToast} = useCustomToast()
+  
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag)) {
       setTags((prev) => [...prev, newTag]);
@@ -58,7 +60,7 @@ export default function NewBlog() {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Failed to save blog:", errorData);
-        alert("Failed to save blog. Please try again.");
+        errorToast("Failed to save blog. Please try again.");
         return;
       }
 
@@ -68,10 +70,10 @@ export default function NewBlog() {
       setDescription("");
       setTags([]);
       setBlocks([{ id: nanoid(), type: "text", content: "" }]);
-      alert("Blog published successfully!");
+      successToast("Blog published successfully!");
     } catch (error) {
       console.error("Error submitting blog:", error);
-      alert("An error occurred while saving the blog. Please try again.");
+      errorToast("An error occurred while saving the blog. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

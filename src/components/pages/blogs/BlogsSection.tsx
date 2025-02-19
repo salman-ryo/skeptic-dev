@@ -53,7 +53,7 @@ export default function BlogsSection() {
               onClick={handleFetchMoreBlogs}
               disabled={loading}
             >
-              Load More Articles
+              Load More Blogs
             </Button>
           </div>
         )}

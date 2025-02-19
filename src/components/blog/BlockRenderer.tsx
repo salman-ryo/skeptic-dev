@@ -1,4 +1,4 @@
-// components/BlockRenderer.tsx
+"use client"
 import { Block } from "@/lib/types/blog";
 import dynamic from "next/dynamic";
 

@@ -1,4 +1,5 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
+console.log("🚀 ~ BASE_URL:", BASE_URL)
 export async function fetchTopBlog() {
     const response = await fetch(`${BASE_URL}/api/public/blogs/top`);
   
@@ -41,4 +42,19 @@ export async function fetchTopBlog() {
   
     const blogs = await response.json();
     return blogs;
+  }
+
+  export async function getBlogData(id: string) {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/public/blogs?id=${id}`,
+        {
+          next: { revalidate: 60 },
+        }
+      );
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching blog:", error);
+      return null;
+    }
   }

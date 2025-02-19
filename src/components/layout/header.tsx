@@ -62,7 +62,7 @@ export function Header() {
         ))}
 
         {/* Conditional Rendering for Authenticated Users */}
-        {session?.user ? (
+        {session?.user? (
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none border-none shadow-none ring-0">
               <UserAvatar user={session.user as TSessionUser} />

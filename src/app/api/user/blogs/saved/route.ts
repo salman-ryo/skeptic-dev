@@ -4,10 +4,11 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { authOptions } from "@/services/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: Request) {
   await connectToDatabase();
 
-  const session = await getServerSession({ req: req, ...authOptions });
+  const session = await getServerSession(authOptions);
+  console.log("🚀 ~ GET ~ session:", session)
 
   if (!session?.user?.email) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

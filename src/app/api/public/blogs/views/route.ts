@@ -5,6 +5,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { Blog } from "@/models/Blog";
 
 export async function POST(req: NextRequest) {
+  console.log("View===================================")
   try {
     const { blogId } = await req.json();
     if (!blogId) {
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
 
     // Check for existing view
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     let uniqueVisitorId = cookieStore.get(`viewed_${blogId}`)?.value;
 
     if (!uniqueVisitorId) {

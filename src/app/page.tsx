@@ -1,6 +1,5 @@
 import { Hero } from "@/components/pages/landing/hero";
 import { ResourceRecommendationSection } from "@/components/pages/landing/resource-recommendation-section";
-import Footer from "@/components/layout/footer";
 import MostViewedBlogs from "@/components/pages/landing/most-viewed-blogs";
 import MustReadBlogs from "@/components/pages/landing/must-read-section";
 import { ToolsRecommendationSection } from "@/components/pages/landing/tools-recommendation-section";

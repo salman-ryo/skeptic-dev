@@ -7,12 +7,16 @@ interface UserAvatarProps {
 }
 
 const UserAvatar = ({ user, className }: UserAvatarProps) => {
+  if (!user) return null;
   return (
-    <Avatar className={className}>
-      <AvatarImage
-        src={user.image || ""}
-        alt={user.name || "User Avatar"}
-      />
+    <Avatar className={className} key={`${user.name || "User or author"}`}>
+      {user.image && (
+        <AvatarImage
+          src={user.image}
+          key="User avatar"
+          alt={user.name || "User Avatar"}
+        />
+      )}
       <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
     </Avatar>
   );
