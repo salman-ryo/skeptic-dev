@@ -83,7 +83,8 @@ export const authOptions = {
     }
   },
   pages: {
-    signIn: `${getBaseUrl()}/login`,
+    signIn: `https://theskepticdev.vercel.app/login`,
+    // signIn: `${getBaseUrl()}/login`,
   },
   secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   session: {
