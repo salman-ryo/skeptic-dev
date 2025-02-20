@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '@/models/User';
 import { connectToDatabase } from '@/lib/mongoose';
 import { generateAccessToken, generateRefreshToken } from '@/lib/tokens';
+import { getBaseUrl } from '@/utils/getBaseUrl';
 
 export const authOptions = {
   providers: [
@@ -82,7 +83,7 @@ export const authOptions = {
     }
   },
   pages: {
-    signIn: '/login',
+    signIn: `${getBaseUrl()}/login`,
   },
   secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   session: {
