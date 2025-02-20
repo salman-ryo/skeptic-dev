@@ -22,7 +22,6 @@ const CustomAvatar: React.FC<AvatarProps> = ({ user, className }) => {
 
   // When image loading fails, mark the error to trigger fallback.
   const handleImageError = () => {
-    console.log("EEEEEEEErrrrrrrrrrrrrrrrrrrrr=====")
     setImageError(true);
   };
 

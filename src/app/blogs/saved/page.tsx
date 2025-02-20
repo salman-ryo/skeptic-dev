@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { BlogDocument } from "@/lib/types/blog";
 import BlogCard from "@/components/blog/BlogCard";
 import BlogCardSkeleton from "@/components/blog/BlogCardSkeleton";
@@ -22,7 +21,7 @@ export default function SavedBlogsPage() {
 
     const fetchSavedBlogs = async () => {
       try {
-        const response = await fetch("/api/user/blogs/saved");
+        const response = await fetch("/api/user/blogs/saved",{cache:"no-store"});
         if (!response.ok) throw new Error("Failed to fetch saved blogs");
         const data = await response.json();
         setSavedBlogs(data.map((item: { blog: BlogDocument }) => item.blog)); // Extract blog details

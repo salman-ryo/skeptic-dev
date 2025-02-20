@@ -20,7 +20,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const user = session.user;
-    console.log("🚀 ~ POST ~ user:", user._id)
     if (user.role !== "author" && user.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

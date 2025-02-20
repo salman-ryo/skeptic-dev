@@ -7,6 +7,7 @@ import BlogsSection from "@/components/pages/blogs/BlogsSection";
 
 export default async function BlogsPage() {
   const topBlog: BlogDocument = await fetchTopBlog();
+  
   return (
     <div className="min-h-screen light:bg-white">
       {topBlog && (

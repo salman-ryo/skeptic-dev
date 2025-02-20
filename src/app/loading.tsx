@@ -1,3 +1,4 @@
+"use client"
 import LoadingSquaresFour from "@/components/common/Loader";
 
 export default function LoadingPage(){

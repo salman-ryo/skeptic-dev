@@ -5,7 +5,6 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { Blog } from "@/models/Blog";
 
 export async function POST(req: NextRequest) {
-  console.log("View===================================")
   try {
     const { blogId } = await req.json();
     if (!blogId) {

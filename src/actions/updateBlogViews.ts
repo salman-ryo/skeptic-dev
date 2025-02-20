@@ -1,10 +1,13 @@
 // actions/blog-actions.ts
 "use server";
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
+
+import { getBaseUrl } from "@/utils/getBaseUrl";
+
+// const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
+const BASE_URL = getBaseUrl()
 
 export async function updateBlogViews(blogId: string) {
-  if(!blogId)return
-  console.log("Serf============================",blogId)
+  if(!blogId)return null
   try {
     const res = await fetch(`${BASE_URL}/api/public/blogs/views`, {
       method: "POST",
@@ -15,7 +18,6 @@ export async function updateBlogViews(blogId: string) {
     });
 
     const dat = await res.json()
-    console.log("🚀 ~ updateBlogViews ~ dat:", dat)
   } catch (error) {
     console.error("Error updating blog views:", error);
   }

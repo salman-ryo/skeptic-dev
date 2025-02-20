@@ -1,7 +1,14 @@
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
+import { getBaseUrl } from "@/utils/getBaseUrl";
+
+// const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
+const BASE_URL = getBaseUrl()
 console.log("🚀 ~ BASE_URL:", BASE_URL)
 export async function fetchTopBlog() {
-    const response = await fetch(`${BASE_URL}/api/public/blogs/top`);
+    const response = await fetch(`${BASE_URL}/api/public/blogs/top`,
+      {
+        cache: 'no-store',
+      }
+    );
   
     if (!response.ok) {
       throw new Error(`Failed to fetch the top blog: ${response.statusText}`);
