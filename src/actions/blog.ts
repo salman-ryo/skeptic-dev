@@ -2,7 +2,6 @@ import { getBaseUrl } from "@/utils/getBaseUrl";
 
 // const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
 const BASE_URL = getBaseUrl()
-console.log("🚀 ~ BASE_URL:", BASE_URL)
 export async function fetchTopBlog() {
     const response = await fetch(`${BASE_URL}/api/public/blogs/top`,
       {
