@@ -21,6 +21,7 @@ export function estimateReadTime(text: string, wordsPerMinute: number = 200): st
   }
 
   export function calculateReadTime(blocks: Block[], wordsPerMinute: number = 200): number {
+    if(!blocks) return 0;
     let totalWords = 0;
     let additionalTime = 0; // Additional time in seconds for non-text blocks
   

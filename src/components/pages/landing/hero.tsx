@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function Hero({ blog }: { blog: BlogDocument }) {
-  const imageBlock = blog.blocks?.find((block) => block.type === "image");
+  const imageBlock = blog?.blocks?.find((block) => block.type === "image");
   const imgSrc =
     imageBlock?.metadata?.url ||
     "https://cdn.pixabay.com/photo/2024/05/16/20/21/digital-8766930_1280.png";
@@ -42,7 +42,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                   <H3 className="mb-1">
                     <Link href={`/blogs/${blog._id}`}>{blog.title}</Link>
                   </H3>
-                  {blog.blocks && (
+                  {blog?.blocks && (
                     <time className="text-sm text-gray-500 dark:text-gray-300 mb-4 block">
                       {calculateReadTime(blog.blocks)} min read
                     </time>
