@@ -7,6 +7,7 @@ export async function fetchTopBlog() {
     const response = await fetch(`${BASE_URL}/api/public/blogs/top`,
       {
         cache: 'no-store',
+        credentials:"include"
       }
     );
   
@@ -22,10 +23,10 @@ export async function fetchTopBlog() {
 
   export async function fetchMostViewedBlogs() {
     const response = await fetch(`${BASE_URL}/api/public/blogs/top/viewed`
-    //   , {
-    //   method: 'GET',
-    //   cache: 'no-store', // Ensures the data is fresh
-    // }
+      , {
+      cache: 'no-store', // Ensures the data is fresh
+      credentials:"include"
+    }
   );
   
     if (!response.ok) {
@@ -39,10 +40,10 @@ export async function fetchTopBlog() {
 
   export async function fetchRandomBlogs() {
     const response = await fetch(`${BASE_URL}/api/public/blogs/random`
-    //   , {
-    //   method: 'GET',
-    //   cache: 'no-store', // Ensures fresh data
-    // }
+      , {
+      cache: 'no-store', // Ensures fresh data
+      credentials:"include"
+    }
   );
   
     if (!response.ok) {
@@ -60,6 +61,7 @@ export async function fetchTopBlog() {
         `${BASE_URL}/api/public/blogs?id=${id}`,
         {
           next: { revalidate: 60 },
+          credentials:"include"
         }
       );
       return await response.json();
