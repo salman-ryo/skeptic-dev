@@ -3,8 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
-  const { pathname, origin } = req.nextUrl;
-  // Retrieve token from NextAuth; ensure NEXTAUTH_SECRET is set in your env
+  // Construct a proper origin using headers.
+  const proto = req.headers.get("x-forwarded-proto") || "https";
+  const host = req.headers.get("host");
+  const origin = `${proto}://${host}`;
+
+  const { pathname } = req.nextUrl;
+  // Retrieve token from NextAuth; ensure NEXTAUTH_SECRET is set in your environment
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   // Redirect logged-in users away from /login and /signup.
