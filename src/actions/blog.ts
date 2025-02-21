@@ -1,3 +1,4 @@
+"use server"
 import { getBaseUrl } from "@/utils/getBaseUrl";
 
 // const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to localhost for dev
