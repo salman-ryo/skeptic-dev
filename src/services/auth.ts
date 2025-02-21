@@ -4,7 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '@/models/User';
 import { connectToDatabase } from '@/lib/mongoose';
 import { generateAccessToken, generateRefreshToken } from '@/lib/tokens';
-import { getBaseUrl } from '@/utils/getBaseUrl';
 
 export const authOptions = {
   providers: [
@@ -20,18 +19,26 @@ export const authOptions = {
       },
       async authorize(credentials) {
         await connectToDatabase();
-        const user = await User.findOne({ email: credentials?.email });
-
-        if (user && await user.comparePassword(credentials?.password)) {
-          return {
-            id: user._id.toString(),
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            role: user.role
-          };
+        try {
+          
+          const user = await User.findOne({ email: credentials?.email });
+          if (!user) {
+            throw new Error('User not found');
+          }
+          if (await user.comparePassword(credentials?.password)) {
+            return {
+              id: user._id.toString(),
+              name: user.name,
+              email: user.email,
+              image: user.image,
+              role: user.role
+            };
+          } else{
+            return null;
+          }
+        } catch (error: any) {
+          throw new Error(error);
         }
-        return null;
       }
     })
   ],
@@ -83,10 +90,11 @@ export const authOptions = {
     }
   },
   pages: {
-    signIn: `https://theskepticdev.vercel.app/login`,
+    signIn: '/login',
+    // signIn: `https://theskepticdev.vercel.app/login`,
     // signIn: `${getBaseUrl()}/login`,
   },
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt' as SessionStrategy,
   },

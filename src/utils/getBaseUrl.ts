@@ -3,6 +3,6 @@ export function getBaseUrl() {
       return "http://localhost:3000";
     }
     // In production, Vercel automatically sets the VERCEL_URL variable.
-    return `https://${process.env.VERCEL_URL}`;
+    return process.env.VERCEL_URL;
   }
   

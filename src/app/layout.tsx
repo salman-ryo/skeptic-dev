@@ -10,6 +10,8 @@ import Footer from "@/components/layout/footer";
 import ScrollProgress from "@/components/animation/ScrollProgress";
 import UserSessionProvider from "@/components/UserSessionProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/services/auth";
 
 const roboto = Roboto({
   subsets: ["latin", "greek", "cyrillic"],
@@ -21,15 +23,16 @@ export const metadata: Metadata = {
   description: "Your go to blog for tech solutions",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} no-scrollbar light:bg-cGray-dark dark:bgSpaceGradient`}>
-        <UserSessionProvider>
+        <UserSessionProvider session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

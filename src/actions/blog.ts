@@ -11,7 +11,8 @@ export async function fetchTopBlog() {
     );
   
     if (!response.ok) {
-      throw new Error(`Failed to fetch the top blog: ${response.statusText}`);
+      console.error(`Failed to fetch the top blog: ${response.statusText}`);
+      return null;
     }
   
     const blog = await response.json();
@@ -28,7 +29,8 @@ export async function fetchTopBlog() {
   );
   
     if (!response.ok) {
-      throw new Error(`Failed to fetch the top 5 blogs: ${response.statusText}`);
+      console.error(`Failed to fetch the top 5 blogs: ${response.statusText}`);
+      return null;
     }
   
     const blogs = await response.json();
@@ -44,7 +46,8 @@ export async function fetchTopBlog() {
   );
   
     if (!response.ok) {
-      throw new Error(`Failed to fetch random blogs: ${response.statusText}`);
+      console.error(`Failed to fetch random blogs: ${response.statusText}`);
+      return null;
     }
   
     const blogs = await response.json();
