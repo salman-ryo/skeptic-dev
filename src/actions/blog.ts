@@ -11,14 +11,16 @@ export async function fetchTopBlog() {
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch the top blog: ${response.statusText}`);
+      const errorBody = await response.text();
+      console.error(
+        `Error fetching top blog. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
+      );
       return null;
     }
 
-    const blog = await response.json();
-    return blog;
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching top blog:", error);
+    console.error("Network or server error when fetching top blog:", error);
     return null;
   }
 }
@@ -31,14 +33,16 @@ export async function fetchMostViewedBlogs() {
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch the top 5 blogs: ${response.statusText}`);
+      const errorBody = await response.text();
+      console.error(
+        `Error fetching most viewed blogs. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
+      );
       return null;
     }
 
-    const blogs = await response.json();
-    return blogs;
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching most viewed blogs:", error);
+    console.error("Network or server error when fetching most viewed blogs:", error);
     return null;
   }
 }
@@ -51,14 +55,16 @@ export async function fetchRandomBlogs() {
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch random blogs: ${response.statusText}`);
+      const errorBody = await response.text();
+      console.error(
+        `Error fetching random blogs. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
+      );
       return null;
     }
 
-    const blogs = await response.json();
-    return blogs;
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching random blogs:", error);
+    console.error("Network or server error when fetching random blogs:", error);
     return null;
   }
 }
@@ -69,9 +75,18 @@ export async function getBlogData(id: string) {
       next: { revalidate: 60 },
       credentials: "include",
     });
+    
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error(
+        `Error fetching blog data for id ${id}. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
+      );
+      return null;
+    }
+    
     return await response.json();
   } catch (error) {
-    console.error("Error fetching blog:", error);
+    console.error(`Network or server error when fetching blog data for id ${id}:`, error);
     return null;
   }
 }
