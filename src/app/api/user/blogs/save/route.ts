@@ -3,6 +3,8 @@ import SavedBlog from "@/models/SavedBlog";
 import { authOptions } from "@/services/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import '@/models/User';
+
 
 export async function POST(request: NextRequest) {
     await connectToDatabase();

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 import { connectToDatabase } from "@/lib/mongoose";
 import { Blog } from "@/models/Blog";
+import '@/models/User';
 
 export async function POST(req: NextRequest) {
   try {

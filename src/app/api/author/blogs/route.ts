@@ -4,6 +4,8 @@ import { authOptions } from "@/services/auth";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import '@/models/User';
+
 
 export async function GET(req: Request) {
   try {

@@ -3,6 +3,8 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { Blog } from "@/models/Blog";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/services/auth";
+import '@/models/User';
+
 
 export async function POST(req: Request) {
   const body = await req.json();

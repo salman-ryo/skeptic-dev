@@ -3,6 +3,8 @@ import SavedBlog from "@/models/SavedBlog";
 import { connectToDatabase } from "@/lib/mongoose";
 import { authOptions } from "@/services/auth";
 import {  NextResponse } from "next/server";
+import '@/models/User';
+
 
 export async function GET(req: Request) {
   await connectToDatabase();

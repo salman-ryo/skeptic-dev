@@ -1,9 +1,10 @@
 import { connectToDatabase } from "@/lib/mongoose";
 import SavedBlog from "@/models/SavedBlog";
 import { authOptions } from "@/services/auth";
-import { error } from "console";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import '@/models/User';
+
 
 export async function GET(
   request: NextRequest,
