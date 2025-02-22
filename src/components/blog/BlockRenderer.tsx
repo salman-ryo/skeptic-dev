@@ -9,7 +9,7 @@ const DynamicCodeBlock = dynamic(
 
 export const BlockRenderer = ({ block }: { block: Block }) => {
   const renderHTML = (content: string) => {
-    return <div dangerouslySetInnerHTML={{ __html: content }} />;
+    return <div className="light:text-black dark:text-white" dangerouslySetInnerHTML={{ __html: content }} />;
   };
 
   switch (block.type) {

@@ -28,11 +28,11 @@ body::-webkit-scrollbar {
 } */
 
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* Dark styles */
+html.dark{
+
+  p > strong{
+    color: cyan;
   }
 }
 

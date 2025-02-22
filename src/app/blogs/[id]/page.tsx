@@ -5,15 +5,54 @@ import ShareSection from "@/components/blog/ShareSection";
 import { formatDateUS } from "@/utils/dateTime";
 import UserAvatar from "@/components/common/UserAvatar";
 import { getBlogData } from "@/actions/blog";
+import { Metadata, ResolvingMetadata } from "next";
+import { getBaseUrl } from "@/utils/getBaseUrl";
+import { getBlogImage } from "@/utils/getBlogImage";
 
-
-
-export default async function BlogPage({
-  params,
-}: {
+type ParamProps = {
   params: Promise<{ id: string }>;
-}) {
-  const {id} = await params;
+};
+
+export async function generateMetadata(
+  { params }: ParamProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { id } = await params;
+  const blog = await getBlogData(id);
+
+  if (!blog) {
+    return {
+      title: "Blog Not Found",
+    };
+  }
+
+  const previousImages = (await parent).openGraph?.images || [];
+  const coverImageUrl = getBlogImage(blog.blocks,"/images/blogs/skhero.jpg").url
+  return {
+    metadataBase: new URL(getBaseUrl() as string),
+    title: blog.title,
+    description: blog.description,
+    openGraph: {
+      title: blog.title,
+      description: blog.description,
+      type: "article",
+      publishedTime: new Date(blog.createdAt).toISOString(),
+      authors: [blog?.author?.name || "Anonymous"],
+      images:coverImageUrl
+        ? [{ url: coverImageUrl }, ...previousImages]
+        : previousImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.description,
+      images: coverImageUrl ? [coverImageUrl] : [],
+    },
+  };
+}
+
+export default async function BlogPage({ params }: ParamProps) {
+  const { id } = await params;
   const blog: BlogDocument = await getBlogData(id);
 
   if (!blog) {
