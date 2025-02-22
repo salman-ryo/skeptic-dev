@@ -28,11 +28,13 @@ export async function generateMetadata(
 
   const previousImages = (await parent).openGraph?.images || [];
   const coverImageUrl = getBlogImage(blog.blocks,"/images/blogs/skhero.jpg").url
+  const url = `${getBaseUrl()}/blog/${id}`; //for opengraph
   return {
     metadataBase: new URL(getBaseUrl() as string),
     title: blog.title,
     description: blog.description,
     openGraph: {
+      url,
       title: blog.title,
       description: blog.description,
       type: "article",
