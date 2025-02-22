@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import {
   DropdownMenu,
@@ -20,7 +21,11 @@ import SimpleTooltip from "../common/SimpleTooltip";
 export function Header() {
   const { data: session } = useSession();
   const path = usePathname();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const navLinks = [
+    { name: "Home", link: "/" },
     { name: "Blogs", link: "/blogs" },
     { name: "About", link: "/about" },
     { name: "Contact", link: "/contact" },
@@ -36,10 +41,27 @@ export function Header() {
   // Extract role for easier conditionals
   const role = (session?.user as TSessionUser)?.role;
 
+  // Helper to set active class for desktop and mobile nav links
+  const linkClass = (link: string) =>
+    `text-sm font-bold transition-colors ${
+      link === path
+        ? "underline underline-offset-8 decoration-2 text-white dark:text-cyan-400"
+        : "hover:underline hover:underline-offset-8 hover:decoration-2 hover:text-white hover:dark:text-cyan-400"
+    }`;
+
+  // For dropdown items, the active route should mimic the hover state.
+  const dropdownLinkClass = "bg-slate-100 text-slate-900 dark:bg-cPeach dark:text-black"
+
   return (
     <header className="w-full flex items-center justify-between px-6 md:px-10 text-white h-16 select-none">
       {/* Logo */}
-      <Link href="/">
+      <Link
+        href="/"
+        onClick={() => {
+          setDropdownOpen(false);
+          setMobileMenuOpen(false);
+        }}
+      >
         <Image
           src="/logo/skepticgrd.png"
           alt="Skeptic Dev Logo"
@@ -55,19 +77,26 @@ export function Header() {
           <Link
             key={item.name}
             href={item.link}
-            className="text-sm font-bold hover:text-gray-300 transition-colors"
+            className={linkClass(item.link)}
+            onClick={() => {
+              setDropdownOpen(false);
+              setMobileMenuOpen(false);
+            }}
           >
             {item.name}
           </Link>
         ))}
 
         {/* Conditional Rendering for Authenticated Users */}
-        {session?.user? (
-          <DropdownMenu>
+        {session?.user ? (
+          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
             <DropdownMenuTrigger className="outline-none border-none shadow-none ring-0">
               <UserAvatar user={session.user as TSessionUser} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-cGray-dark text-white">
+            <DropdownMenuContent
+              align="end"
+              className="bg-cGray-dark text-white"
+            >
               <div className="flex flex-col items-start justify-start gap-0 cursor-default p-2">
                 <span className="font-medium capitalize dark:text-cyan-400">
                   {session.user?.name}
@@ -81,10 +110,18 @@ export function Header() {
                 )}
               </div>
 
-              {(role === "user" || role === "admin" || role === "author") &&
+              {(role === "user" ||
+                role === "admin" ||
+                role === "author") &&
                 userLinks.map((item) => (
-                  <DropdownMenuItem key={item.name}>
-                    <Link href={item.link} className="w-full font-medium">
+                  <DropdownMenuItem
+                    key={item.name}
+                    onClick={() => setDropdownOpen(false)}
+                    className={item.link === path? dropdownLinkClass : ""}
+                  >
+                    <Link
+                      href={item.link}
+                    >
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
@@ -92,15 +129,26 @@ export function Header() {
 
               {(role === "admin" || role === "author") &&
                 adminLinks.map((item) => (
-                  <DropdownMenuItem key={item.name}>
-                    <Link href={item.link} className="w-full">
+                  <DropdownMenuItem
+                    key={item.name}
+                    onClick={() => setDropdownOpen(false)}
+                    className={item.link === path? dropdownLinkClass : ""}
+
+
+                  >
+                    <Link
+                      href={item.link}
+                    >
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
                 ))}
 
               <DropdownMenuItem
-                onClick={() => signOut()}
+                onClick={() => {
+                  setDropdownOpen(false);
+                  signOut();
+                }}
                 className="text-cPeach-dark font-semibold cursor-pointer"
               >
                 Logout
@@ -110,7 +158,11 @@ export function Header() {
         ) : (
           <Link
             href={`/login?callbackUrl=${encodeURIComponent(path)}`}
-            className="text-sm font-bold hover:text-gray-300 transition-colors"
+            className={linkClass("/login")}
+            onClick={() => {
+              setDropdownOpen(false);
+              setMobileMenuOpen(false);
+            }}
           >
             Login
           </Link>
@@ -118,14 +170,14 @@ export function Header() {
       </nav>
 
       {/* Mobile Menu */}
-      <Sheet>
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <SheetTrigger asChild>
           <button className="md:hidden">
             <Menu size={24} />
           </button>
         </SheetTrigger>
         <SheetContent side="right" className="bg-cGray-dark text-white">
-          {/* If logged in, show user info header with avatar */}
+          {/* Logged-in User Info */}
           {session?.user && (
             <div className="p-4 border-b border-gray-700 flex items-center gap-4">
               <UserAvatar
@@ -152,7 +204,8 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.link}
-                className="text-sm font-bold hover:text-gray-300 transition-colors"
+                className={linkClass(item.link)}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
@@ -167,7 +220,8 @@ export function Header() {
                     <Link
                       key={item.name}
                       href={item.link}
-                      className="text-sm font-bold hover:text-gray-300 transition-colors"
+                      className={linkClass(item.link)}
+                      onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
                     </Link>
@@ -178,14 +232,18 @@ export function Header() {
                     <Link
                       key={item.name}
                       href={item.link}
-                      className="text-sm font-bold hover:text-gray-300 transition-colors"
+                      className={linkClass(item.link)}
+                      onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
                     </Link>
                   ))}
 
                 <button
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    signOut();
+                  }}
                   className="text-cPeach-dark w-fit font-semibold cursor-pointer text-sm hover:text-gray-300 transition-colors"
                 >
                   Logout
@@ -194,7 +252,8 @@ export function Header() {
             ) : (
               <Link
                 href={`/login?callbackUrl=${encodeURIComponent(path)}`}
-                className="text-sm font-bold hover:text-gray-300 transition-colors"
+                className={linkClass("/login")}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Login
               </Link>
