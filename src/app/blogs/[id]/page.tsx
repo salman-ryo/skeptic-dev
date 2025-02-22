@@ -8,6 +8,7 @@ import { getBlogData } from "@/actions/blog";
 import { Metadata, ResolvingMetadata } from "next";
 import { getBaseUrl } from "@/utils/getBaseUrl";
 import { getBlogImage } from "@/utils/getBlogImage";
+import { limitChars } from "@/utils/text";
 
 type ParamProps = {
   params: Promise<{ id: string }>;
@@ -31,12 +32,12 @@ export async function generateMetadata(
   const url = `${getBaseUrl()}/blog/${id}`; //for opengraph
   return {
     metadataBase: new URL(getBaseUrl() as string),
-    title: blog.title,
-    description: blog.description,
+    title: limitChars(blog.title,60),
+    description: limitChars(blog.description,155),
     openGraph: {
       url,
-      title: blog.title,
-      description: blog.description,
+      title: limitChars(blog.title,60),
+      description: limitChars(blog.description,155),
       type: "article",
       publishedTime: new Date(blog.createdAt).toISOString(),
       authors: [blog?.author?.name || "Anonymous"],
@@ -46,8 +47,8 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      title: blog.title,
-      description: blog.description,
+      title: limitChars(blog.title,60),
+      description: limitChars(blog.description,155),
       images: coverImageUrl ? [coverImageUrl] : [],
     },
   };

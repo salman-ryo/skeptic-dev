@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     url: getBaseUrl(), // Replace with your actual URL or use a helper if available
     title: "Skeptic Dev",
-    description: "Your go to blog for tech solutions",
+    description: "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
     siteName: "The Skeptic Dev",
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Skeptic Dev",
-    description: "Your go to blog for tech solutions",
+    description: "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
     images: ["/the-skeptic-dev.webp"],
   },
 };
