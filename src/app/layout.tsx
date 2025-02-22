@@ -19,10 +19,15 @@ const roboto = Roboto({
   weight: ["700", "500", "400", "300", "100"],
 });
 
-export const metadata: Metadata = {
-  title: "The Skeptic Dev",
+const SITE_DATA = {
+  title: "The Skeptic Dev | Micro Blogging for Full Stack Developers",
   description:
-    "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
+    "The Skeptic Dev is a micro blogging platform for full stack software development enthusiasts, offering expert insights, tutorials, and a vibrant tech community.",
+};
+
+export const metadata: Metadata = {
+  title: SITE_DATA.title,
+  description: SITE_DATA.description,
   metadataBase: new URL(getBaseUrl() as string), // Replace with your actual domain
   alternates: {
     canonical: "./",
@@ -30,19 +35,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: getBaseUrl(), // Replace with your actual URL or use a helper if available
-    title: "The Skeptic Dev",
-    description:
-      "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
-    siteName: "The Skeptic Dev",
-
-    images: [
-      {
-        url: "/the-skeptic-dev.webp",
-        width: 1200,
-        height: 630,
-        alt: "The Skeptic Dev",
-      },
-    ],
+    title: SITE_DATA.title,
+    description: SITE_DATA.description,
+    siteName: SITE_DATA.title,
     // Uncomment and set your Facebook App ID if needed:
     // fb: {
     //   app_id: "YOUR_FACEBOOK_APP_ID",
@@ -50,10 +45,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Skeptic Dev",
-    description:
-      "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
-    images: ["/the-skeptic-dev.webp"],
+    title: SITE_DATA.title,
+    description: SITE_DATA.description,
   },
 };
 
