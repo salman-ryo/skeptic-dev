@@ -21,14 +21,20 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "The Skeptic Dev",
-  description: "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
+  description:
+    "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
   metadataBase: new URL(getBaseUrl() as string), // Replace with your actual domain
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     type: "website",
     url: getBaseUrl(), // Replace with your actual URL or use a helper if available
     title: "The Skeptic Dev",
-    description: "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
+    description:
+      "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
     siteName: "The Skeptic Dev",
+
     images: [
       {
         url: "/the-skeptic-dev.webp",
@@ -45,7 +51,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "The Skeptic Dev",
-    description: "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
+    description:
+      "The Skeptic Dev is a micro blogging platform for blogs related to full stack software development",
     images: ["/the-skeptic-dev.webp"],
   },
 };
