@@ -82,7 +82,7 @@ export default async function BlogPage({ params }: ParamProps) {
 
   return (
     <>
-     {/* Inject the JSON‑LD into the head */}
+     {/* Inject the JSON‑LD into the head for SEO */}
      <Script
         id="blog-json-ld"
         type="application/ld+json"
