@@ -85,7 +85,7 @@ export default function BlogsPage() {
 
   return (
     <div className="container mx-auto p-6 md:p-16">
-      <H2 className="mb-16 text-white dark:text-gray-200">All Blogs</H2>
+      <H2 className="mb-16 max-md:mb-8 text-white dark:text-gray-200">All Blogs</H2>
       {loading && (
         <ul className="w-full flex justify-between items-center gap-x-10">
           {Array.from({ length: 3 }).map((_, index) => (
@@ -97,7 +97,7 @@ export default function BlogsPage() {
         <p className="text-center text-white text-lg">No blogs found</p>
       )}
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {blogs.map((blog, index) => {
           // Extract image from blocks if it exists
           const imageBlock = blog.blocks?.find(
@@ -119,7 +119,7 @@ export default function BlogsPage() {
                 />
               </div>
               <CardHeader>
-                <CardTitle className="text-xl">{blog.title}</CardTitle>
+                <CardTitle className="text-xl">{limitWords(blog.title,10)}</CardTitle>
                 {blog?.author?.name && (
                   <CardDescription>by {blog.author.name}</CardDescription>
                 )}
@@ -127,7 +127,7 @@ export default function BlogsPage() {
               <CardContent className="flex-grow">
                 {blog.description && (
                   <p className="text-muted-foreground">
-                    {limitWords(blog.description, 25)}
+                    {limitWords(blog.description, 15)}
                   </p>
                 )}
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -139,17 +139,17 @@ export default function BlogsPage() {
                 </div>
               </CardContent>
               <CardFooter className="text-sm text-muted-foreground">
-                <div className="flex items-center">
+                <div className="flex items-center text-xs">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   <time dateTime={formatDateUS(blog.createdAt)}>
                     {formatDateUS(blog.createdAt)}
                   </time>
                 </div>
                 {blog.updatedAt && (
-                  <div className="flex items-center ml-4">
+                  <div className="flex items-center ml-4 text-xs">
                     <ClockIcon className="mr-2 h-4 w-4" />
                     <time dateTime={formatDateUS(blog.updatedAt)}>
-                      Updated: {formatDateUS(blog.updatedAt)}
+                      {formatDateUS(blog.updatedAt)}
                     </time>
                   </div>
                 )}

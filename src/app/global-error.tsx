@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { ShieldAlert } from 'lucide-react';
 import { useEffect } from 'react';
 
 interface ErrorProps {
@@ -14,19 +16,21 @@ export default function GlobalError({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 bg-gray-50 dark:bg-gray-900">
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100">
-        Oops! Something went wrong.
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 light:bg-white">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 flex justify-center items-center">
+       <span><ShieldAlert className='mr-2 size-10 mt-1' /></span> <span>Oops! Something went wrong.</span>
       </h1>
-      <p className="mt-4 text-gray-600 dark:text-gray-300 text-center">
+      <p className="text-cPeach-dark dark:text-gray-300 text-center mt-4 mb-8">
         An unexpected error has occurred. Please try again or come back later.
       </p>
-      <button
+      <Button
         onClick={reset}
-        className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition"
+        className='bg-cGray-dark border-2
+        dark:bg-black dark:hover:bg-black/80 dark:border-cPeach-dark dark:text-white dark:hover:text-cPeach-dark
+        '
       >
         Try Again
-      </button>
+      </Button>
     </div>
   );
 }

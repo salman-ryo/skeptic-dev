@@ -16,7 +16,7 @@ function SubmitButton() {
     <Button
       type="submit"
       className="rounded-none rounded-tr-3xl rounded-bl-3xl border-gray-600 border-l-4 border-b-2
-      dark:bg-black dark:border-blue-400 dark:text-white dark:border-t dark:border-r dark:hover:bg-black dark:hover:text-blue-400 transition-all duration-300
+      dark:bg-black dark:border-blue-400 dark:text-white dark:border-t dark:border-r dark:hover:bg-black dark:hover:text-blue-400 transition-all duration-300 max-md:text-xs
       "
       disabled={pending}
     >

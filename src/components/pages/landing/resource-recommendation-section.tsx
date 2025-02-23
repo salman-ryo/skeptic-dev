@@ -31,7 +31,8 @@ export function ResourceRecommendationSection() {
       transitionConfig={staggeredConf.transition}
     >
       <section
-        className="flex flex-col-reverse md:flex-row justify-start items-start  p-2 mx-auto light:bg-gray-100 md:px-16 py-16 
+        className="flex flex-col-reverse md:flex-row justify-start items-start  p-2 mx-auto md:px-16 py-16
+        max-md:py-8 
     
     "
       >

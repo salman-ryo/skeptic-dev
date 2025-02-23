@@ -4,7 +4,6 @@ import ContactForm from "@/components/pages/contact/ContactForm";
 import SocialsSection from "@/components/pages/contact/SocialsSection";
 import { H2, H3 } from "@/components/text/heading";
 import { MessageCircleQuestionIcon } from "lucide-react";
-import Image from "next/image";
 
 export default function ContactPage() {
   return (
@@ -17,7 +16,7 @@ export default function ContactPage() {
         dark:bg-slate-950 dark:border-purple-900
         ">
           <SimpleTooltip content="Tell us what you think about this site">
-            <H3 className="mb-4 text-gray-800 dark:text-gray-200">
+            <H3 className="mb-4 text-gray-800 dark:text-gray-200 max-md:text-xl">
               Got any Feedback for Us?{" "}
               <span className="inline-flex ml-2 cursor-pointer hover:scale-110 transition-all duration-300">
                 <MessageCircleQuestionIcon className="dark:text-cyan-400"/>
@@ -30,7 +29,7 @@ export default function ContactPage() {
         dark:bg-slate-950 dark:border-purple-900
         ">
         <SimpleTooltip content="Authors can publish their blogs on this site">
-            <H3 className="mb-4 text-gray-800 dark:text-gray-200">
+            <H3 className="mb-4 text-gray-800 dark:text-gray-200 max-md:text-xl">
               Wanna Become an Author?{" "}
               <span className="inline-flex ml-2 cursor-pointer hover:scale-110 transition-all duration-300">
                 <MessageCircleQuestionIcon className="dark:text-cyan-400"/>
@@ -41,7 +40,7 @@ export default function ContactPage() {
         </div>
       </div>
       <div className=" mt-12">
-        <H3 className="mb-4 text-white">Connect with Me</H3>
+        <H3 className="mb-4 text-white max-md:text-xl">Connect with Me</H3>
         <SocialsSection />
       </div>
     </div>

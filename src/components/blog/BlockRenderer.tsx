@@ -9,7 +9,7 @@ const DynamicCodeBlock = dynamic(
 
 export const BlockRenderer = ({ block }: { block: Block }) => {
   const renderHTML = (content: string) => {
-    return <div className="light:text-black dark:text-white" dangerouslySetInnerHTML={{ __html: content }} />;
+    return <div className="light:text-gray-700 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: content }} />;
   };
 
   switch (block.type) {
@@ -17,7 +17,9 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
       return <h1 className="text-4xl font-bold mb-4">{renderHTML(block.content)}</h1>;
     
     case 'heading2':
-      return <h2 className="text-3xl font-semibold mb-3 dark:text-gray-300">{renderHTML(block.content)}</h2>;
+      return <h2 className="text-3xl font-semibold mb-3 dark:text-gray-300
+      max-md:text-2xl
+      ">{renderHTML(block.content)}</h2>;
     
     case 'image':
       return (
@@ -48,6 +50,7 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
     case 'quote':
       return (
         <blockquote className="border-l-4 border-gray-300 pl-4 my-6 italic
+        max-md:text-sm
         dark:border-blue-400 dark:text-cPeach
         ">
           {renderHTML(block.content)}

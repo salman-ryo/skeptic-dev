@@ -94,7 +94,9 @@ export default function EditBlog() {
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8
+    max-md:px-10
+    ">
       <div className="max-w-4xl mx-auto space-y-6">
         <Input
           className="focus-visible:outline-none focus-visible:ring-0 border-2 border-gray-300 dark:border-cyan-800"

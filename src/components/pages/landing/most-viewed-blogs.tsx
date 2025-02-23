@@ -16,7 +16,7 @@ export default function MostViewedBlogs({
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   return (
-    <section className="relative light:bg-gray-100 md:px-16 py-16">
+    <section className="relative md:px-16 py-16">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-4 md:gap-x-20">
           {/* Static Title Card */}

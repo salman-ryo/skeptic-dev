@@ -15,7 +15,7 @@ export default function MustReadBlogs({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="container mx-auto light:bg-gray-100 md:px-16 py-16">
+    <section className="container mx-auto md:px-16 py-16">
       <div className="flex flex-col md:flex-row justify-between items-center max-md:mb-8">
         <H2 className="mb-4 md:mb-8 dark:text-gray-200">Must-Read Blogs</H2>
         <ScrollButtons ref={scrollContainerRef} />

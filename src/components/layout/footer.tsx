@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="light:bg-cGray-dark w-full p-8 md:p-16 pb-6 border-t border-cGray">
       <div className="container mx-auto">
         {/* Top section with logo and social icons */}
-        <div className="flex flex-col md:flex-row justify-between items-center max-md:mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-center max-md:mb-8 mb-4">
           {/* Logo and tagline */}
           <div className="flex flex-row justify-start items-center text-left mb-8 md:mb-0">
             <h1
@@ -66,7 +66,7 @@ export default function Footer() {
         {/* Bottom section with navigation and copyright */}
         <div className="border-t border-gray-700 pt-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <nav className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between gap-4 mb-4 md:mb-0 text-sm text-gray-400 dark:text-gray-200">
+            <nav className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between gap-4 mb-4 md:mb-0 text-sm text-gray-400 dark:text-gray-200 w-full">
               <div className="flex justify-center items-center gap-4">
                 <Link
                   href="/terms-and-conditions"
@@ -101,7 +101,7 @@ export default function Footer() {
                   Contact
                 </Link>
               </div>
-              <p className="text-sm text-gray-400 dark:text-gray-200">
+              <p className="text-sm text-gray-400 dark:text-gray-200 max-md:text-center">
                 All rights reserved. © {new Date().getFullYear()} The Skeptic Dev
               </p>
             </nav>

@@ -17,7 +17,7 @@ const UserAvatar = ({ user, className }: UserAvatarProps) => {
           alt={user.name || "User Avatar"}
         />
       )}
-      <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
+      <AvatarFallback className="light:text-cGray-dark font-semibold">{user?.name?.charAt(0) || "U"}</AvatarFallback>
     </Avatar>
   );
 };

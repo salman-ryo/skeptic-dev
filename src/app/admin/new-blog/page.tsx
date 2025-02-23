@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import BlogPreview from "@/components/pages/blogs/BlogPreview";
 import {  EyeIcon, X, XIcon } from "lucide-react";
 import { useCustomToast } from "@/hooks/useCustomToast";
+import SimpleTooltip from "@/components/common/SimpleTooltip";
 
 export default function NewBlog() {
   const [title, setTitle] = useState("");
@@ -91,7 +92,8 @@ export default function NewBlog() {
   };
 
   return (
-    <div className="container mx-auto py-16 min-h-screen light:bg-white">
+    <div className="container mx-auto py-16 min-h-screen light:bg-white
+    max-md:px-10">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Blog Input Fields */}
         <Input
@@ -140,16 +142,23 @@ export default function NewBlog() {
             Save Draft
           </Button>
           <Button onClick={handleSubmit}>Publish</Button>
-        </div>
-
-        {/* Toggle Preview Button */}
-        <button
-          className="fixed top-1/2 -translate-y-1/2 right-10 p-2 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition"
+          <button
+          className="hidden max-md:block p-2 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition"
           onClick={() => setIsPreviewOpen(true)}
-          title="Preview Blog"
         >
           <EyeIcon size={24} />
         </button>
+        </div>
+
+        {/* Toggle Preview Button */}
+        <SimpleTooltip content="Preview Blog">
+        <button
+          className="max-md:hidden fixed top-1/2 -translate-y-1/2 right-10 p-2 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition"
+          onClick={() => setIsPreviewOpen(true)}
+        >
+          <EyeIcon size={24} />
+        </button>
+        </SimpleTooltip>
 
         {/* Preview Modal */}
         {isPreviewOpen && (
@@ -166,7 +175,10 @@ export default function NewBlog() {
               </button>
               
               <h2 className="text-2xl font-semibold mb-4">Blog Preview</h2>
-              <div className="max-h-[80vh] overflow-auto p-2 border rounded dark:border-black">
+              <div className="max-h-[80dvh] overflow-auto p-2 border rounded
+              max-md:max-h-[92vh]
+              dark:border-cyan-800
+              ">
                 <BlogPreview blog={previewBlog} />
               </div>
             </div>

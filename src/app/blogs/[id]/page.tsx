@@ -9,6 +9,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { getBaseUrl } from "@/utils/getBaseUrl";
 import { getBlogImage } from "@/utils/getBlogImage";
 import { limitChars } from "@/utils/text";
+import Script from "next/script";
 
 type ParamProps = {
   params: Promise<{ id: string }>;
@@ -66,7 +67,27 @@ export default async function BlogPage({ params }: ParamProps) {
     );
   }
 
+    // JSON‑LD structured data for this blog post
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: blog.title,
+      description: blog.description,
+      datePublished: new Date(blog.createdAt).toISOString(),
+      author: {
+        "@type": "Person",
+        name: blog.author?.name || "Anonymous",
+      },
+    };
+
   return (
+    <>
+     {/* Inject the JSON‑LD into the head */}
+     <Script
+        id="blog-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <main className="w-full light:bg-white">
       {blog && (
         <article className="w-full md:w-[70%] mx-auto p-6">
@@ -88,7 +109,9 @@ export default async function BlogPage({ params }: ParamProps) {
                 ))}
               </div>
             )}
-            <h1 className="text-5xl font-bold mt-8 mb-4 dark:text-gray-200">
+            <h1 className="text-5xl font-bold mt-8 mb-4 dark:text-gray-200
+            max-md:text-4xl
+            ">
               {blog.title}
             </h1>
             {blog.description && (
@@ -101,18 +124,26 @@ export default async function BlogPage({ params }: ParamProps) {
               {blog && blog.author && (
                 <div className="flex justify-start items-center space-x-2">
                   <div className="flex gap-x-2">
-                    <UserAvatar className="size-12" user={blog.author} />
+                    <UserAvatar className="size-12
+                    max-md:size-10
+                    " user={blog.author} />
                     <div className="flex flex-col justify-start items-start text-gray-500">
-                      <span className="font-semibold dark:text-blue-400">
+                      <span className="font-semibold dark:text-blue-400
+                      max-md:text-sm
+                      ">
                         {blog?.author?.name || "Anonymous"}
                       </span>
-                      <span className="text-sm dark:text-gray-400">Author</span>
+                      <span className="text-sm dark:text-gray-400
+                      max-md:text-xs
+                      ">Author</span>
                     </div>
                   </div>
                 </div>
               )}
               <Bar />
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className="text-gray-500 dark:text-gray-400
+              max-md:text-sm
+              ">
                 {formatDateUS(new Date(blog.createdAt))}
               </span>
             </div>
@@ -128,5 +159,6 @@ export default async function BlogPage({ params }: ParamProps) {
         </article>
       )}
     </main>
+    </>
   );
 }

@@ -11,16 +11,14 @@ export default async function BlogsPage() {
   return (
     <div className="min-h-screen light:bg-white">
       {topBlog && (
-        <div className="light:bg-cGray-dark w-full px-10 md:px-20 py-10">
+        // Changed padding for mobile
+        <div className="light:bg-cGray-dark w-full px-4 sm:px-10 md:px-20 py-6 md:py-10">
           <AnimationWrapper animationConfig={flipInConf}>
             <NewsHeroBlog topBlog={topBlog} />
           </AnimationWrapper>
         </div>
       )}
-      {/* Newspaper Hero Section */}
-
       <BlogsSection />
-      {/* Modern Blog Section */}
     </div>
   );
 }

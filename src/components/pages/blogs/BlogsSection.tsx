@@ -18,40 +18,34 @@ export default function BlogsSection() {
     }
     setPage((prev) => prev + 1);
   };
-  return (
-    <section className="py-16 px-6 md:px-12 light:bg-white mt-20">
+   return (
+    <section className="py-12 px-4 sm:px-6 md:px-12 light:bg-white mt-12 md:mt-20">
       <div className="max-w-7xl mx-auto">
-        <H2
-          className="mb-8
-        dark:text-gray-200
-        "
-        >
-          Latest Blogs
-        </H2>
+        <H2 className="mb-6 md:mb-8 text-gray-200">Latest Blogs</H2>
 
-        <ul className="grid grid-cols-3 justify-center items-center md:gap-10">
+        {/* Responsive grid */}
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-8 max-md:justify-items-center items-center w-full">
           {blogs?.map((blog: any) => (
             <ScrollReveal key={blog._id}>
               <BlogCard blog={blog} />
             </ScrollReveal>
           ))}
         </ul>
+
         {loading && (
-          <ul className="grid grid-cols-3 gap-y-8 mt-8 justify-center items-center">
-            {Array.from({ length: 3 }).map((_, index) => {
-              return <BlogCardSkeleton key={index} />;
-            })}
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-8 max-md:justify-items-center items-center w-full">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <BlogCardSkeleton key={index} />
+            ))}
           </ul>
         )}
-        {/* Load More Button */}
+
+        {/* Responsive button */}
         {page !== totalPages && !loading && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-8 md:mt-12 flex justify-center">
             <Button
-              className="rounded-full border-2
-            dark:bg-black dark:text-white dark:border-blue-400 dark:hover:bg-black dark:hover:shadow-md dark:hover:shadow-cyan-400 transition-all duration-300
-            "
+              className="rounded-full w-full sm:w-auto ..."
               onClick={handleFetchMoreBlogs}
-              disabled={loading}
             >
               Load More Blogs
             </Button>

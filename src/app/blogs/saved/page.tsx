@@ -11,7 +11,7 @@ import { H2 } from "@/components/text/heading";
 export default function SavedBlogsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [savedBlogs, setSavedBlogs] = useState<BlogDocument[]>([]);
+  const [savedBlogs, setSavedBlogs] = useState<BlogDocument[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function SavedBlogsPage() {
 
     const fetchSavedBlogs = async () => {
       try {
-        const response = await fetch("/api/user/blogs/saved",{cache:"no-store"});
+        const response = await fetch("/api/user/blogs/saved", { cache: "no-store" });
         if (!response.ok) throw new Error("Failed to fetch saved blogs");
         const data = await response.json();
         setSavedBlogs(data.map((item: { blog: BlogDocument }) => item.blog)); // Extract blog details
@@ -36,29 +36,22 @@ export default function SavedBlogsPage() {
   }, [session, status, router]);
 
   return (
-    <div
-      className={`mx-auto p-6 min-h-screen flex ${savedBlogs.length === 0 ? "justify-start items-center pt-10" : "justify-start items-start"} flex-col
-    md:px-16
-    `}
-    >
-      <H2 className="mb-16 dark:text-gray-200">Saved Blogs</H2>
-      {loading && (
-        <ul className="w-full flex justify-between items-center gap-x-10">
-          {Array.from({ length: 3 }).map((_, index) => {
-            return <BlogCardSkeleton key={index} />;
-          })}
-        </ul>
-      )}
-      {savedBlogs.length === 0 ? (
+    <div className="container mx-auto min-h-screen flex flex-col px-4 sm:px-10 md:px-20 py-6 md:py-10">
+      <H2 className="mb-16 text-gray-200">Saved Blogs</H2>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <BlogCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : savedBlogs?.length === 0 ? (
         <p className="text-gray-500">No saved blogs yet.</p>
       ) : (
-        <ul
-          className={`space-y-4 flex w-full items-center ${savedBlogs.length > 2 ? "justify-center" : "justify-start"}`}
-        >
-          {savedBlogs.map((blog) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-md:justify-items-center items-center w-full">
+          {savedBlogs?.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

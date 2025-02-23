@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { limitChars } from "@/utils/text";
 import { TSessionUser } from "@/lib/types/user";
 import UserAvatar from "../common/UserAvatar";
@@ -67,7 +67,7 @@ export function Header() {
           alt="Skeptic Dev Logo"
           width={300}
           height={100}
-          className="h-8 w-auto object-contain"
+          className="h-8 w-auto object-contain max-md:h-6"
         />
       </Link>
 
@@ -171,6 +171,12 @@ export function Header() {
 
       {/* Mobile Menu */}
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetTitle className="sr-only">
+          Menu
+        </SheetTitle>
+        <SheetDescription className="sr-only">
+          Sidebar for navigation
+        </SheetDescription>
         <SheetTrigger asChild>
           <button className="md:hidden">
             <Menu size={24} />

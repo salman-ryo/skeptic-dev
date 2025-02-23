@@ -8,7 +8,7 @@ export const H2 = ({ children, className }: HeadingProps) => {
   return (
     <h2
       className={cn(
-        "text-4xl md:text-6xl leading-tight font-bold text-cGray-dark",
+        "text-3xl sm:text-4xl md:text-6xl leading-tight font-bold text-cGray-dark",
         className
       )}
     >

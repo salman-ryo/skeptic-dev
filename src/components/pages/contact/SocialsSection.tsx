@@ -15,10 +15,10 @@ export default function SocialsSection() {
               dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:border-cPeach-dark dark:hover:text-white dark:hover:border-cPeach-dark
           "
         >
-          <Icon className="w-6 h-6 text-black
+          <Icon className="size-6 max-md:size-4 text-black
           dark:group-hover:text-white transition-all duration-300
           " />
-          <span className="font-medium">{label}</span>
+          <span className="font-medium max-md:text-xs">{label}</span>
         </Link>
       ))}
     </div>

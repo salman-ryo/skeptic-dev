@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen">
       <Hero blog={topBlog} />
-      <div className="container py-16 mx-auto">
+      <div className="container py-16 mx-auto max-md:py-0 light:bg-gray-100">
         {/* Resources Section */}
         <ResourceRecommendationSection />
 

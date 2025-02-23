@@ -158,7 +158,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
         return (
           <div className="space-y-2">
             <Input
-            className="focus-visible:outline-none focus-visible:ring-0"
+              className="focus-visible:outline-none focus-visible:ring-0"
               placeholder="YouTube Video ID"
               value={block.metadata?.embedId || ""}
               onChange={(e) =>
@@ -201,15 +201,18 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
   return (
     <div className="space-y-4">
       {blocks.map((block, index) => (
-        <Card key={block.id} className="p-4 relative">
-          <div className="flex gap-4">
+        <Card key={block.id} className="p-4 relative
+        max-md:p-3
+        ">
+          <div className="flex gap-4 
+          max-md:flex-col">
             <Select
               value={block.type}
               onValueChange={(value: BlockType) =>
                 updateBlock(block.id, { type: value })
               }
             >
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-32 max-md:w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
