@@ -31,9 +31,9 @@ export default function LoginPage() {
       password: "",
     },
   });
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -58,9 +58,6 @@ export default function LoginPage() {
       // If signIn was successful, router.push to the returned URL
       if (response?.url) {
         router.push(response.url);
-      } else {
-        // Handle login failure (e.g., show an error message)
-        console.error("Login failed");
       }
     } catch (error) {
       console.error(error);
@@ -76,7 +73,8 @@ export default function LoginPage() {
     }
   };
 
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
+
 
   return (
     <AuthLayout>

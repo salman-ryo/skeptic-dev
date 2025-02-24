@@ -1,6 +1,6 @@
 // app/api/auth/signup/route.ts
 import { connectToDatabase } from "@/lib/mongoose";
-import OTP from "@/models/OTP";
+// import OTP from "@/models/OTP";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 
