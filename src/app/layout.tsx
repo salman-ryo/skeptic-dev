@@ -48,6 +48,10 @@ export const metadata: Metadata = {
     title: SITE_DATA.title,
     description: SITE_DATA.description,
   },
+
+   // Add additional SEO fields
+   keywords: ["web development", "full stack", "software engineering", "blogging platform"],
+   category: "technology",
 };
 
 export default async function RootLayout({

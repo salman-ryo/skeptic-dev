@@ -26,8 +26,11 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   const altText = imageBlock?.metadata?.alt || "Blog image";
 
   return (
-    <Card className="max-md:w-[380px] w-[400px] min-h-[530px] flex-shrink-0 bg-white h-full border-2 rounded-md shadow-md border-cGray-light snap-center
-    dark:bg-slate-950 dark:border-blue-400 dark:shadow-cyan-400
+    <Card className="max-md:w-[380px] w-[400px] min-h-[530px] flex-shrink-0 bg-white h-full border-2 rounded-md shadow-md border-cGray-light snap-center transition-all duration-300
+    hover:scale-[101%] hover:shadow-gray-600
+
+    dark:bg-slate-950 dark:border-cyan-950 dark:shadow-black
+    dark:hover:dark:border-blue-600 dark:hover:shadow-cyan-400
     ">
       <CardContent className="p-6">
         <div className="mb-4">

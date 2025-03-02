@@ -22,7 +22,7 @@ export default function MostViewedBlogs({
           {/* Static Title Card */}
           <Card
             className="w-full md:w-[400px] flex-shrink-0 h-full rounded-md bg-white p-2 border-2 border-cGray-light
-            dark:bg-slate-950 dark:border-blue-400"
+            dark:bg-slate-950 dark:border-blue-400 mt-4"
           >
             <CardContent className="p-6 flex flex-col justify-between">
               <div className="mb-4">
@@ -37,7 +37,7 @@ export default function MostViewedBlogs({
           {/* Scrollable Blog Cards */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 md:gap-x-20 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 max-md:px-0"
+            className="flex gap-4 md:gap-x-16 overflow-x-auto scrollbar-hide snap-x snap-mandatory max-md:px-0 p-4"
           >
             {blogsData &&
               blogsData.length > 0 &&

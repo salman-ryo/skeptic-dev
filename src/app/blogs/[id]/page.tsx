@@ -45,6 +45,8 @@ export async function generateMetadata(
       images:coverImageUrl
         ? [{ url: coverImageUrl }, ...previousImages]
         : previousImages,
+      
+        tags:blog.tags
     },
     twitter: {
       card: "summary_large_image",

@@ -21,7 +21,7 @@ export default function BlogsSection() {
    return (
     <section className="py-12 px-4 sm:px-6 md:px-12 light:bg-white mt-12 md:mt-20">
       <div className="max-w-7xl mx-auto">
-        <H2 className="mb-6 md:mb-8 text-gray-200">Latest Blogs</H2>
+        <H2 className="mb-6 md:mb-8 dark:text-gray-200">Latest Blogs</H2>
 
         {/* Responsive grid */}
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-8 max-md:justify-items-center items-center w-full">

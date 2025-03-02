@@ -6,10 +6,16 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/$", "/blogs", "/blogs/*","/about","/contact", "/login", "/signup"],
-        disallow: ["/admin/", "/api/", "/blogs/saved", "/_next/static"],
-      },
+        allow: "/",
+        disallow: [
+          "/admin", 
+          "/api/private", 
+          "/_next/static",
+          "/blogs/saved"
+        ],
+      }
     ],
     sitemap: `${getBaseUrl()}/sitemap.xml`,
+    host: getBaseUrl() // Add explicit host declaration
   };
 }
