@@ -7,7 +7,7 @@ const REFRESH_EXPIRES_IN = '7d';
 
 export const generateAccessToken = (user: any) => {
   return jwt.sign(
-    { userId: user.id, role: user.role },
+    { id: user.id, role: user.role }, // Use "id" consistently
     JWT_SECRET,
     { expiresIn: ACCESS_EXPIRES_IN }
   );
@@ -15,7 +15,7 @@ export const generateAccessToken = (user: any) => {
 
 export const generateRefreshToken = async (user: any) => {
   const refreshToken = jwt.sign(
-    { userId: user.id },
+    { id: user.id },
     JWT_SECRET,
     { expiresIn: REFRESH_EXPIRES_IN }
   );

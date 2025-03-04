@@ -6,6 +6,17 @@ import { connectToDatabase } from '@/lib/mongoose';
 import { generateAccessToken, generateRefreshToken } from '@/lib/tokens';
 
 export const authOptions = {
+  cookies: {
+    sessionToken: {
+      name: '__Secure-authjs.session-token',
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // `true` in production, `false` in development
+        sameSite: process.env.NODE_ENV === 'production' ? "none" as const : "lax" as const, // More permissive in dev, stricter in prod
+        path: '/',
+      }
+    }
+  },  
   providers: [
     GoogleProvider({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
@@ -23,9 +34,11 @@ export const authOptions = {
           
           const user = await User.findOne({ email: credentials?.email });
           if (!user) {
-            throw new Error('User not found');
+            console.error('User not found');
+            return null
           }
-          if (await user.comparePassword(credentials?.password)) {
+          const passwordsMatch = await user.comparePassword(credentials?.password);
+          if (passwordsMatch) {
             return {
               id: user._id.toString(),
               name: user.name,
@@ -37,7 +50,8 @@ export const authOptions = {
             return null;
           }
         } catch (error: any) {
-          throw new Error(error);
+          console.error(error)
+          return null
         }
       }
     })
@@ -58,7 +72,7 @@ export const authOptions = {
               email,
               name: user?.name || profile?.name, // Store name
               image: user?.image || profile?.picture, // Store profile picture
-              password: 'google_oauth' // Dummy password (not used for Google users)
+              password: "" // Dummy password (not used for Google users)
             });
           } else {
             // Update name and profile picture if it's changed
