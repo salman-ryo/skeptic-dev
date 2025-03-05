@@ -33,7 +33,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
         </AnimationWrapper>
         {blog && (
           <AnimationWrapper animationConfig={slideInRightConf}>
-            <div className="bg-gray-100  dark:bg-slate-950 md:border-2 dark:border-blue-300 rounded-md overflow-hidden p-4 md:p-10">
+            <div className="bg-gray-100  dark:bg-slate-950 md:border-2 dark:border-cyan-700 rounded-md overflow-hidden p-4 md:p-10">
               <div className="flex justify-between items-start gap-4 max-md:flex-col-reverse">
                 <div className="md:w-1/3 mr-4">
                   <time className="text-sm text-gray-500 dark:text-gray-300">

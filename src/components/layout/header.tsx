@@ -53,7 +53,7 @@ export function Header() {
   const dropdownLinkClass = "bg-slate-100 text-slate-900 dark:bg-cPeach dark:text-black"
 
   return (
-    <header className="w-full flex items-center justify-between px-6 md:px-10 text-white h-16 select-none">
+    <header className="w-full mx-auto flex items-center justify-between md:px-14 px-6 text-white h-16 select-none md:py-10">
       {/* Logo */}
       <Link
         href="/"
@@ -67,7 +67,7 @@ export function Header() {
           alt="Skeptic Dev Logo"
           width={300}
           height={100}
-          className="h-8 w-auto object-contain max-md:h-6"
+          className="h-7 w-auto object-contain max-md:h-6"
         />
       </Link>
 
