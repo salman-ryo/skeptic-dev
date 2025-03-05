@@ -24,7 +24,7 @@ export default function BlogSkeleton() {
   
         {/* Featured image skeleton */}
         <div className="aspect-[16/9] w-full bg-gray-200 rounded animate-pulse mb-4
-        dark:bg-black
+        dark:bg-slate-700
         "></div>
   
         {/* Image caption skeleton */}

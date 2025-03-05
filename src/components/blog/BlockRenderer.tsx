@@ -1,6 +1,7 @@
 "use client"
 import { Block } from "@/lib/types/blog";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 const DynamicCodeBlock = dynamic(
   () => import('./CodeBlock').then(mod => mod.CodeBlock), 
@@ -24,10 +25,15 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
     case 'image':
       return (
         <figure className="my-6">
-          <img
-            src={block.metadata?.url}
+          <Image
+            width={1920}
+            height={1080}
+            src={block.metadata?.url || "/images/blogs/codeblack.jpg"}
             alt={block.metadata?.alt || ''}
-            className="w-full max-h-[500px] object-cover rounded-lg"
+            className="w-full max-h-[500px] object-cover rounded-lg border
+            dark:border-gray-900
+            max-sm:h-[260px] max-md:h-[300px]
+            "
           />
           {block.metadata?.alt && (
             <figcaption className="text-center text-gray-600 mt-2 dark:text-gray-400">

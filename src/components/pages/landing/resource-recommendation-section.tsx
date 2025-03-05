@@ -67,7 +67,7 @@ export function ResourceRecommendationSection() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block py-2 border-b-2 light:bg-white border-gray-300 hover:translate-x-8 hover:pl-3 hover:scale-105 transition-all duration-400 hover:shadow-md hover:shadow-cGray hover:border-cGray w-full min-h-max
+                      className="block py-2 border-b-2 light:bg-white border-gray-300 hover:translate-x-4 hover:pl-3 hover:scale-105 transition-all duration-300 hover:shadow-md hover:shadow-cGray hover:border-cGray w-full min-h-max
                     dark:hover:shadow-blue-400
                     "
                     >
@@ -86,9 +86,9 @@ export function ResourceRecommendationSection() {
           </H2>
           <Button
             onClick={throttledDownload}
-            className="w-full rounded-br-3xl rounded-bl-3xl transition-all duration-500 py-5 font-bold border-2 border-cGray-light shadow-md shadow-gray-600 bg-black
-          hover:rounded-none hover:rounded-tr-3xl hover:rounded-tl-3xl hover:bg-white hover:text-black hover:border-black
-          dark:bg-slate-950 dark:text-gray-200 dark:shadow-blue-400 dark:hover:bg-slate-950/80
+            className="w-full rounded-br-3xl rounded-bl-3xl transition-all duration-300 py-5 font-bold border-2 border-cGray-light shadow-md shadow-gray-600 bg-black
+          hover:rounded-full hover:bg-white hover:text-black hover:border-black
+          dark:bg-slate-950 dark:text-gray-200 dark:shadow-blue-800 dark:hover:bg-slate-950/80 dark:border-gray-800
           "
             size={"lg"}
           >

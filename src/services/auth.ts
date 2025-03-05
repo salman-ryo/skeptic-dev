@@ -6,21 +6,21 @@ import { connectToDatabase } from '@/lib/mongoose';
 import { generateAccessToken, generateRefreshToken } from '@/lib/tokens';
 
 export const authOptions = {
-  cookies: {
-    sessionToken: {
-      name: '__Secure-authjs.session-token',
-      options: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // `true` in production, `false` in development
-        sameSite: process.env.NODE_ENV === 'production' ? "none" as const : "lax" as const, // More permissive in dev, stricter in prod
-        path: '/',
-      }
-    }
-  },  
+  // cookies: {
+  //   sessionToken: {
+  //     name: '__Secure-authjs.session-token',
+  //     options: {
+  //       httpOnly: true,
+  //       secure: process.env.NODE_ENV === 'production', // `true` in production, `false` in development
+  //       sameSite: process.env.NODE_ENV === 'production' ? "none" as const : "lax" as const, // More permissive in dev, stricter in prod
+  //       path: '/',
+  //     }
+  //   }
+  // },  
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -86,7 +86,7 @@ export const authOptions = {
           token.email = dbUser.email;
           token.image = dbUser.image;
           token.role = dbUser.role;
-          token.accessToken = generateAccessToken({ id: dbUser._id.toString(), role: dbUser.role });
+          token.accessToken = await generateAccessToken({ id: dbUser._id.toString(), role: dbUser.role });
           token.refreshToken = await generateRefreshToken({ id: dbUser._id.toString(), email: dbUser.email, role: dbUser.role });
         }
       }

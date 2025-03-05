@@ -27,10 +27,10 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
 
   return (
     <Card className="max-md:w-[380px] w-[400px] min-h-[530px] flex-shrink-0 bg-white h-full border-2 rounded-md shadow-md border-cGray-light snap-center transition-all duration-300
-    hover:scale-[101%] hover:shadow-gray-600
+    md:hover:scale-[100.5%] hover:shadow-gray-600
 
     dark:bg-slate-950 dark:border-cyan-950 dark:shadow-black
-    dark:hover:dark:border-blue-600 dark:hover:shadow-cyan-400
+    dark:hover:dark:border-blue-800 dark:hover:shadow-cyan-800
     ">
       <CardContent className="p-6">
         <div className="mb-4">
@@ -48,7 +48,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
               <Badge
                 key={idx}
                 variant="secondary"
-                className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none capitalize transition-colors duration-500
+                className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none capitalize transition-colors duration-300
                 dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:hover:text-white
                 "
               >

@@ -165,6 +165,18 @@ html.light {
     box-shadow: none !important;
   }
 
+  /* Mobile touch optimizations */
+@media (max-width: 767px) {
+  [data-radix-scroll-area-viewport] {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .snap-center {
+    scroll-snap-align: center;
+  }
+}
+
 }
 
 @layer base {

@@ -30,9 +30,14 @@ const SignupPage = () => {
     // }
 
     // Ignore otp logic for now
-    await api.post("/api/auth/signup", data);
-    successToast("Sign up", "Signup successful");
-    goto("/login");
+    try {
+      
+      await api.post("/api/auth/signup", data);
+      successToast("Signed up successfully", "Please login");
+      goto("/login");
+    } catch (error:any) {
+      errorToast("Signup failed", error?.data?.error || "Please try again later." );
+    }
   };
 
   const handleOtpVerified = async () => {

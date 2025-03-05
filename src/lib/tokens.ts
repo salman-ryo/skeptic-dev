@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '@/models/User';
 
-const JWT_SECRET = process.env.NEXT_PUBLIC_JWT_SECRET!;
+const JWT_SECRET = process.env.JWT_SECRET!;
 const ACCESS_EXPIRES_IN = '15m';
 const REFRESH_EXPIRES_IN = '7d';
 

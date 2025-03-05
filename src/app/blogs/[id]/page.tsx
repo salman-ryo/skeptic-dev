@@ -101,7 +101,9 @@ export default async function BlogPage({ params }: ParamProps) {
                     className="flex justify-center items-center gap-x-4"
                     key={index}
                   >
-                    <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300 capitalize dark:text-cyan-400">
+                    <span className="text-lg font-medium text-gray-400 hover:text-gray-600 transition-colors duration-300 capitalize dark:text-cyan-400
+                    max-md:text-xs
+                    ">
                       {tag}
                     </span>
                     {index < (blog.tags as string[]).length - 1 && (
@@ -117,7 +119,9 @@ export default async function BlogPage({ params }: ParamProps) {
               {blog.title}
             </h1>
             {blog.description && (
-              <p className="text-cGray text-lg font-medium mb-4 dark:text-cGray-light">
+              <p className="text-cGray text-lg font-medium mb-4 dark:text-cGray-light
+              max-md:text-base
+              ">
                 {blog.description}
               </p>
             )}

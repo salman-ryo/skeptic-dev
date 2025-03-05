@@ -18,7 +18,7 @@ import { loginSchema, LoginValues } from "@/lib/validation/auth";
 import AuthLayout from "@/components/pages/auth/auth-layout";
 import { FcGoogle } from "react-icons/fc";
 import LoaderButton from "@/components/common/LoaderButton";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 
