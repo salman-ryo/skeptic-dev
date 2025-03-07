@@ -26,7 +26,7 @@ export default function MustReadBlogs({
       {/* Scrollable Blog Cards */}
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 md:gap-x-20 overflow-x-auto scrollbar-hide snap-x snap-mandatory p-4"
+        className="flex gap-4 md:gap-x-16 overflow-x-auto scrollbar-hide snap-x snap-mandatory max-md:px-0 p-4"
       >
         {blogsData?.map((blog) => (
           <ScrollReveal
@@ -35,12 +35,12 @@ export default function MustReadBlogs({
               isMobile ? mobileRevealConf.variant : slideInRightConf.variant
             }
             transitionConfig={
-              isMobile ? mobileRevealConf.transition : slideInRightConf.transition
+              isMobile
+                ? mobileRevealConf.transition
+                : slideInRightConf.transition
             }
           >
-            <div className="flex-shrink-0 snap-center w-[90vw] sm:w-[350px] md:w-[400px]">
-              <BlogCard blog={blog} />
-            </div>
+            <BlogCard blog={blog} />
           </ScrollReveal>
         ))}
       </div>

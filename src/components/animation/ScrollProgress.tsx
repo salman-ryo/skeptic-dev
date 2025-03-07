@@ -12,7 +12,8 @@ export default function ScrollProgress({ className }: ScrollProgressProps) {
   return (
       <motion.div
         id="scroll-indicator"
-        className={cn("bg-gradient-to-r from-purple-400 to-cyan-400 dark:bg-orange-600 h-1 z-[999] rounded-full",className)}
+        className={cn("bg-gradient-to-r from-purple-400 via-blue-600 to-cyan-400 h-1 z-[999] rounded-full light:from-black light:to-gray-800",
+          className)}
         style={{
           scaleX: scrollYProgress,
           position: "fixed",

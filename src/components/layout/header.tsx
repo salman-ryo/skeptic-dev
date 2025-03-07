@@ -67,7 +67,10 @@ export function Header() {
           alt="Skeptic Dev Logo"
           width={300}
           height={100}
-          className="h-7 w-auto object-contain max-md:h-6"
+          className="h-[1.6rem] w-auto object-contain
+          light:grayscale
+          max-md:h-6
+          "
         />
       </Link>
 

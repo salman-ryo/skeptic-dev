@@ -72,6 +72,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                   alt={altText}
                   width={1920}
                   height={1080}
+                  priority
                   className="w-full md:h-[450px] object-cover blackNwhiteContast rounded-sm p-1
                   h-[200px]
                   "
