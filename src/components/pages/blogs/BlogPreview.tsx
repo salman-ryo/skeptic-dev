@@ -60,7 +60,7 @@ export default function BlogPreview({ blog }: { blog: BlogDocument }) {
               {formatDateUS(new Date(blog.createdAt))}
             </span>
           </div>
-          <ShareSection blogId={blog.id} />
+          <ShareSection slug={blog.slug} />
         </header>
         {blog.blocks && (
           <div className="prose prose-lg max-w-none">
