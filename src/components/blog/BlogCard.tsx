@@ -44,7 +44,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
           <div className="flex gap-2">
             {tags?.map((tag, idx) => (
               <Badge
-                key={slug || idx}
+                key={idx}
                 variant="secondary"
                 className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none capitalize transition-colors duration-300
                 dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:hover:text-white

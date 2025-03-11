@@ -96,6 +96,7 @@ export default function EditBlog() {
   return (
     <div className="container mx-auto py-8
     max-md:px-10
+    light:bg-white
     ">
       <div className="max-w-4xl mx-auto space-y-6">
         <Input
