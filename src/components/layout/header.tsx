@@ -53,7 +53,7 @@ export function Header() {
   const dropdownLinkClass = "bg-slate-100 text-slate-900 dark:bg-cPeach dark:text-black"
 
   return (
-    <header className="w-full mx-auto flex items-center justify-between md:px-14 px-6 text-white h-16 select-none md:py-10">
+    <header className="w-full mx-auto flex items-center justify-between md:px-14 px-6 text-white h-16 select-none md:py-2">
       {/* Logo */}
       <Link
         href="/"

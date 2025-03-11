@@ -1,4 +1,4 @@
-Need your help in writing development related blog. A my blog can have different types of blocks like:
+Need your help in writing development related blog. A blog types of blocks like:
 export type BlockType = 
   | 'text' 
   | 'heading1' 
@@ -8,14 +8,6 @@ export type BlockType =
   | 'quote'
   | 'bulletList'
   | 'numberedList'
-  | 'youtube'
-  | 'twitter'
   | 'divider';
 
-You job is to write a blog on "", keeping the words simple yet the blog must have good sense of humour. Make sure it has diferent blocks and is actually useful. Don't restrict yourself to any number of words, go as long as you can. Don't forget to add a short description and tags.
-
-#070424
-#4d015e
-#5e0901
-#04011c
-#010103
+You job is to write a blog on "", keeping the words simple yet the blog must have some sense of humour in a tutorial like format. Use words that psychologically invoke interests in people. Generate all blocks in plain text except code blocks should be in code. Make sure it has diferent blocks and is actually useful. Don't restrict yourself to any number of words, go as long as you can. Don't forget to add a catchy title, short description and tags.

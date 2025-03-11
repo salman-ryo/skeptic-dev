@@ -1,5 +1,5 @@
 "use client";
-import { FC, Key } from "react";
+import { FC } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -7,7 +7,6 @@ import { BlogDocument } from "@/lib/types/blog";
 import { useRandomImage } from "@/hooks/useRandomImage";
 import { formatDateUS } from "@/utils/dateTime";
 import { calculateReadTime, limitWords } from "@/utils/text";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Eye } from "lucide-react";
 import SimpleTooltip from "../common/SimpleTooltip";
 import Image from "next/image";
@@ -17,7 +16,7 @@ interface BlogCardProps {
 }
 
 const BlogCard: FC<BlogCardProps> = ({ blog }) => {
-  const { _id, title, description, tags, blocks, createdAt } = blog;
+  const { slug, title, description, tags, blocks, createdAt } = blog;
   const fallbackImg = useRandomImage();
 
   // Extract image from blocks if it exists
@@ -27,7 +26,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
 
   return (
     <Card className="max-sm:max-w-[355px] max-md:w-[380px] w-[400px] min-h-[530px] flex-shrink-0 bg-white h-full border-2 rounded-md shadow-md border-cGray-light snap-center transition-all duration-300
-    md:hover:scale-[100.5%] hover:shadow-gray-600
+    hover:shadow-gray-600
     dark:bg-slate-950 dark:border-cyan-950 dark:shadow-black
     dark:hover:dark:border-blue-800 dark:hover:shadow-cyan-800
     ">
@@ -45,7 +44,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
           <div className="flex gap-2">
             {tags?.map((tag, idx) => (
               <Badge
-                key={idx}
+                key={slug || idx}
                 variant="secondary"
                 className="rounded-full bg-cGray-dark text-white hover:text-cGray-dark hover:bg-cGray-light px-2.5 py-1 select-none capitalize transition-colors duration-300
                 dark:bg-cPeach-dark dark:text-black dark:hover:bg-black dark:hover:text-white
@@ -60,7 +59,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
           "
           >{formatDateUS(createdAt)}</p>
           <SimpleTooltip content={title}>
-            <Link href={`/blogs/${_id}`} className="block">
+            <Link href={`/blogs/${slug}`} className="block">
               <h3 className="text-xl font-bold hover:text-gray-700 text-left text-pretty
               dark:text-gray-200 dark:hover:text-cyan-400 transition-colors duration-300
               ">

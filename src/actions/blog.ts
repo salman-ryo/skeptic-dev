@@ -69,9 +69,9 @@ export async function fetchRandomBlogs() {
   }
 }
 
-export async function getBlogData(id: string) {
+export async function getBlogData(slug: string) {
   try {
-    const response = await fetch(`${BASE_URL}/api/public/blogs?id=${id}`, {
+    const response = await fetch(`${BASE_URL}/api/public/blogs?slug=${slug}`, {
       next: { revalidate: 60 },
       credentials: "include",
     });
@@ -79,14 +79,14 @@ export async function getBlogData(id: string) {
     if (!response.ok) {
       const errorBody = await response.text();
       console.error(
-        `Error fetching blog data for id ${id}. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
+        `Error fetching blog data for id ${slug}. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
       );
       return null;
     }
     
     return await response.json();
   } catch (error) {
-    console.error(`Network or server error when fetching blog data for id ${id}:`, error);
+    console.error(`Network or server error when fetching blog data for slug ${slug}:`, error);
     return null;
   }
 }

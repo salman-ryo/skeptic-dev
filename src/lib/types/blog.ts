@@ -31,6 +31,7 @@ export interface Block {
 export interface BlogDocument extends Document {
   _id:string;
   title: string;
+  slug:string;
   author: TSessionUser;
   description?:string;
   blocks?: Block[];

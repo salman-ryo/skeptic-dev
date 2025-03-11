@@ -13,19 +13,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const { blogId } = await request.json();
-    if (!blogId) {
-      return NextResponse.json({ error: 'Blog ID is required' }, { status: 400 });
+    const { slug } = await request.json();
+    if (!slug) {
+      return NextResponse.json({ error: 'Blog slug is required' }, { status: 400 });
     }
     const userId = session.user.id;
-    const existing = await SavedBlog.findOne({ user: userId, blog: blogId });
+    const existing = await SavedBlog.findOne({ user: userId, blog: slug });
     if (existing) {
       // Unsave blog
       await SavedBlog.deleteOne({ _id: existing._id });
       return NextResponse.json({ saved: false });
     } else {
       // Save blog
-      await SavedBlog.create({ user: userId, blog: blogId });
+      await SavedBlog.create({ user: userId, blog: slug });
       return NextResponse.json({ saved: true });
     }
   }

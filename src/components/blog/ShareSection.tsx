@@ -2,18 +2,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Mail, Facebook, Bookmark, Copy, Link } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Mail, Facebook, Bookmark, Link } from "lucide-react";
 import { useSession, signIn } from "next-auth/react";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import SimpleTooltip from "../common/SimpleTooltip";
 import { Button } from "../ui/button";
 
 interface ShareSectionProps {
-  blogId: string;
+  slug: string;
 }
 
-const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
+const ShareSection: React.FC<ShareSectionProps> = ({ slug }) => {
   const { data: session } = useSession();
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,34 +22,35 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   // Use the current URL for sharing and as a callback URL after login.
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
-  // On mount (or when session/blogId changes), check if this blog is already saved.
+  // On mount (or when session/slug changes), check if this blog is already saved.
   useEffect(() => {
-    if (session && blogId) {
-      fetch(`/api/user/blogs/saved/${blogId}`)
+    if (session && slug) {
+      fetch(`/api/user/blogs/saved/${slug}`)
         .then((res) => res.json())
         .then((data) => {
           setIsSaved(data.saved);
         })
         .catch((err) => console.error(err));
     }
-  }, [session, blogId]);
+  }, [session, slug]);
 
   const toggleSave = async () => {
     // If the user isn’t logged in, show the login modal.
-    if(!blogId){
-      errorToast("Failed","No actual blog ID")
+    if(!slug){
+      errorToast("Failed","No actual blog found")
       return
     }
     if (!session) {
       setShowLoginModal(true);
       return;
     }
+    if(loading)return;
     setLoading(true);
     try {
       const res = await fetch("/api/user/blogs/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ blogId }),
+        body: JSON.stringify({ slug }),
       });
       const data = await res.json();
       setIsSaved(data.saved);
@@ -67,7 +67,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const shareViaEmail = () => {
-    if(!blogId){
+    if(!slug){
       errorToast("Failed","No actual blog ID")
       return
     }
@@ -79,7 +79,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const shareToFacebook = () => {
-    if(!blogId){
+    if(!slug){
       errorToast("Failed","No actual blog ID")
       return
     }
@@ -90,8 +90,8 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const handleLogin = () => {
-    if(!blogId){
-      errorToast("Failed","No actual blog ID")
+    if(!slug){
+      errorToast("Failed","No actual blog found")
       return
     }
     // Using NextAuth’s signIn function with callbackUrl ensures that after login
@@ -100,14 +100,14 @@ const ShareSection: React.FC<ShareSectionProps> = ({ blogId }) => {
   };
 
   const copyLink = async () => {
-    if(!blogId){
-      errorToast("Failed","No actual blog ID")
+    if(!slug){
+      errorToast("Failed","No actual blog found")
       return
     }
     try {
       await navigator.clipboard.writeText(window.location.href);
       successToast(
-        "Link Copied",
+        "Copied",
         "The blog link has been copied to clipboard."
       );
     } catch (error) {

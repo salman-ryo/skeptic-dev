@@ -12,15 +12,15 @@ import { limitChars } from "@/utils/text";
 import Script from "next/script";
 
 type ParamProps = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(
   { params }: ParamProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { id } = await params;
-  const blog = await getBlogData(id);
+  const { slug } = await params;
+  const blog = await getBlogData(slug);
 
   if (!blog) {
     return {
@@ -30,7 +30,7 @@ export async function generateMetadata(
 
   const previousImages = (await parent).openGraph?.images || [];
   const coverImageUrl = getBlogImage(blog.blocks,"/images/blogs/skhero.jpg").url
-  const url = `${getBaseUrl()}/blog/${id}`; //for opengraph
+  const url = `${getBaseUrl()}/blog/${slug}`; //for opengraph
   return {
     metadataBase: new URL(getBaseUrl() as string),
     title: limitChars(blog.title,60),
@@ -58,8 +58,8 @@ export async function generateMetadata(
 }
 
 export default async function BlogPage({ params }: ParamProps) {
-  const { id } = await params;
-  const blog: BlogDocument = await getBlogData(id);
+  const { slug } = await params;
+  const blog: BlogDocument = await getBlogData(slug);
 
   if (!blog) {
     return (
@@ -153,7 +153,7 @@ export default async function BlogPage({ params }: ParamProps) {
                 {formatDateUS(new Date(blog.createdAt))}
               </span>
             </div>
-            <ShareSection blogId={id} />
+            <ShareSection slug={slug} />
           </header>
           {blog.blocks && (
             <div className="prose prose-lg max-w-none">

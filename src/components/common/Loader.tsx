@@ -4,8 +4,8 @@ import React from 'react';
 const LoadingSquaresFour: React.FC = () => {
   // The container is a square (w-24 h-24 = 96px) and each square is 24px (w-6 h-6).
   // The animation path moves each square by 96px - 24px = 72px along both X and Y.
-  const squareBaseClasses = "absolute size-12 rounded-sm";
-  const containerClasses = "relative w-24 h-24";
+  const squareBaseClasses = "absolute size-12 rounded-sm max-md:size-9";
+  const containerClasses = "relative size-24 max-md:size-20 mr-4";
   const animationDuration = "1.5s";
   // Offsetting each square so they follow the path sequentially.
   const delays = ["0s", "0.375s", "0.75s", "1.125s"];
