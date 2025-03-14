@@ -25,7 +25,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ slug }) => {
   // On mount (or when session/slug changes), check if this blog is already saved.
   useEffect(() => {
     if (session && slug) {
-      fetch(`/api/user/blogs/saved/${slug}`)
+      fetch(`/api/user/blogs/save/${slug}`)
         .then((res) => res.json())
         .then((data) => {
           setIsSaved(data.saved);
@@ -47,10 +47,10 @@ const ShareSection: React.FC<ShareSectionProps> = ({ slug }) => {
     if(loading)return;
     setLoading(true);
     try {
-      const res = await fetch("/api/user/blogs/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug }),
+      const res = await fetch(`/api/user/blogs/save/${slug}`, {
+        method: "POST"
+        // headers: { "Content-Type": "application/json" },
+        // body: JSON.stringify({ slug }),
       });
       const data = await res.json();
       setIsSaved(data.saved);

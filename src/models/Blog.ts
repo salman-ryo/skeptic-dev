@@ -41,6 +41,6 @@ BlogSchema.pre("save", function (next) {
     this.slug = slugify(this.title, { lower: true, strict: true });
   }
   next();
-});
+}); 
 
 export const Blog = models.Blog || model<BlogDocument>("Blog", BlogSchema);

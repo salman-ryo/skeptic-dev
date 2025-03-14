@@ -30,7 +30,7 @@ const NewsHeroBlog = ({ topBlog }: { topBlog: BlogDocument }) => {
            dark:border-cPeach-dark
           ">
             <Link
-              href={`/blogs/${topBlog._id}`}
+              href={`/blogs/${topBlog.slug}`}
               className="font-serif text-3xl md:text-4xl lg:text-5xl uppercase max-md:text-center" 
             >
               {topBlog.title}

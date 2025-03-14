@@ -35,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Add error handling for API call
-  const blogPosts = await fetch(`${baseUrl}/api/public/posts`)
+  const blogPosts = await fetch(`${baseUrl}/api/public/blogs`)
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch posts");
       return res.json();

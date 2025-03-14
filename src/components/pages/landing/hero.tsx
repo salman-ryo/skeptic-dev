@@ -40,7 +40,7 @@ export function Hero({ blog }: { blog: BlogDocument }) {
                     {formatDateUS(blog.createdAt)}
                   </time>
                   <H3 className="mb-1">
-                    <Link href={`/blogs/${blog._id}`}>{blog?.title}</Link>
+                    <Link href={`/blogs/${blog.slug}`}>{blog?.title}</Link>
                   </H3>
                   {blog?.blocks && (
                     <time className="text-sm text-gray-500 dark:text-gray-300 mb-4 block">
