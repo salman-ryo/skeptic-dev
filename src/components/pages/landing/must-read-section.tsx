@@ -40,7 +40,7 @@ export default function MustReadBlogs({
                 : slideInRightConf.transition
             }
           >
-            <BlogCard blog={blog} />
+            <BlogCard blog={blog}/>
           </ScrollReveal>
         ))}
       </div>

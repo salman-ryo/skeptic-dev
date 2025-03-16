@@ -49,7 +49,7 @@ export default function MostViewedBlogs({
                   isMobile ? mobileRevealConf.transition : slideInRightConf.transition
                 }
               >
-                <BlogCard blog={blog} />
+                <BlogCard blog={blog}/>
               </ScrollReveal>
             ))}
           </div>

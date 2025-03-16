@@ -10,12 +10,14 @@ import { calculateReadTime, limitWords } from "@/utils/text";
 import { Eye } from "lucide-react";
 import SimpleTooltip from "../common/SimpleTooltip";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface BlogCardProps {
   blog: BlogDocument; // Using BlogDocument as the type
+  imageStyle?:string;
 }
 
-const BlogCard: FC<BlogCardProps> = ({ blog }) => {
+const BlogCard: FC<BlogCardProps> = ({ blog,imageStyle }) => {
   const { slug, title, description, tags, blocks, createdAt } = blog;
   const fallbackImg = useRandomImage();
 
@@ -37,7 +39,9 @@ const BlogCard: FC<BlogCardProps> = ({ blog }) => {
             alt={altText}
             width={900}
             height={600}
-            className="w-full h-[210px] object-cover rounded-sm blackNwhiteContast"
+            className={cn(`w-full h-[210px] object-cover rounded-sm  border
+            dark:border-slate-900
+            `,imageStyle)}
           />
         </div>
         <div className="space-y-3">

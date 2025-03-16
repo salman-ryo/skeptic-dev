@@ -39,15 +39,15 @@ html.dark{
 /* Light only css */
 html.light {
   .blackNwhiteContast {
-    filter: grayscale(100%) contrast(1.1) brightness(0.8);
-    transition: filter 2s ease-in-out; /* Move transition here */
+    filter: grayscale(100%) contrast(1) brightness(1);
+    transition: filter 1s ease-in-out; /* Move transition here */
   }
 
   .blackNwhiteContast:hover {
     filter: grayscale(0%) contrast(1) brightness(1);
   }
   .blackNwhiteLonger {
-    filter: grayscale(100%) contrast(1.1) brightness(0.8);
+    filter: grayscale(100%) contrast(1) brightness(1);
     transition: filter 5s ease-in-out; /* Move transition here */
   }
   .blackNwhiteLonger:hover {

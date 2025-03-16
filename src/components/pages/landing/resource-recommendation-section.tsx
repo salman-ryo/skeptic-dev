@@ -47,7 +47,7 @@ export function ResourceRecommendationSection() {
             alt="Recommended resources"
             width={800}
             height={800}
-            className="h-full max-md:h-[200px] md:w-[40%] object-cover rounded-md mb-4 blackNwhiteContast"
+            className="h-full max-md:h-[200px] md:w-[40%] object-cover rounded-md mb-4"
           />
           <div className="flex flex-col items-start w-full h-full custom-scrollbar overflow-hidden hover:overflow-y-scroll">
             <span
