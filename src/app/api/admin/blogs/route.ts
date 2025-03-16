@@ -149,14 +149,14 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
-    if (!id) {
+    const slug = searchParams.get("slug");
+    if (!slug) {
       return NextResponse.json(
-        { error: "Blog Id is required" },
+        { error: "Blog slug is required" },
         { status: 400 }
       );
     }
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findOne({slug:slug});
     if (!blog) {
       return NextResponse.json({ error: "Blog not found" }, { status: 404 });
     }
@@ -166,8 +166,8 @@ export async function PUT(req: Request) {
     }
     const body = await req.json();
     const { title, description, blocks, tags } = body;
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      id,
+    const updatedBlog = await Blog.findOneAndUpdate(
+      {slug:slug},
       { title, description, blocks, tags },
       { new: true, runValidators: true }
     );

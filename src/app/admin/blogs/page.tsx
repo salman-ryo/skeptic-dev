@@ -166,7 +166,7 @@ export default function BlogsPage() {
                 >
                   <Trash className="hover:scale-110 transition-transform duration-300" />
                 </button>
-                <Link href={`/admin/edit-blog/${blog._id}`}>
+                <Link href={`/admin/edit-blog/${blog.slug}`}>
                   <Edit className="hover:scale-110 transition-transform duration-300" />
                 </Link>
               </div>

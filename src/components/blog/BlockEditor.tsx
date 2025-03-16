@@ -69,7 +69,7 @@ export const BlockEditor = ({ blocks, onBlocksChange }: BlockEditorProps) => {
       case "text":
         return (
           <RichTextEditor
-            content={block.content}
+            initialContent={block.content}
             onChange={(content) => updateBlock(block.id, { content })}
           />
         );
