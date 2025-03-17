@@ -27,6 +27,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import SimpleTooltip from "@/components/common/SimpleTooltip"
 
 interface RichTextEditorProps {
   onChange: (html: string) => void
@@ -34,7 +35,7 @@ interface RichTextEditorProps {
   placeholder?: string
 }
 
-export const RichTextEditor = ({ 
+export const RichTextEditor = ({
   onChange,
   initialContent = "",
   placeholder = "Write something amazing...",
@@ -78,6 +79,15 @@ export const RichTextEditor = ({
     setIsLinkDialogOpen(false)
   }
 
+    // For the bubble menu, toggle link: if active remove, else open dialog.
+    const handleLink = () => {
+      if (editor?.isActive("link")) {
+        editor.chain().focus().unsetLink().run()
+      } else {
+        setIsLinkDialogOpen(true)
+      }
+    }
+
   if (!editor) {
     return null
   }
@@ -85,108 +95,54 @@ export const RichTextEditor = ({
   return (
     <div className="border rounded-md">
       <div className="flex flex-wrap items-center gap-1 p-2 border-b bg-muted/50">
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("bold")}
-          onPressedChange={() => editor.chain().focus().toggleBold().run()}
-          aria-label="Toggle bold"
-        >
-          <Bold className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("italic")}
-          onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-          aria-label="Toggle italic"
-        >
-          <Italic className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("underline")}
-          onPressedChange={() => editor.chain().focus().toggleUnderline().run()}
-          aria-label="Toggle underline"
-        >
-          <UnderlineIcon className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("highlight")}
-          onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
-          aria-label="Toggle highlight"
-        >
-          <Highlighter className="w-4 h-4" />
-        </Toggle>
-
-        <Separator orientation="vertical" className="h-6 mx-1" />
-
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("heading", { level: 1 })}
-          onPressedChange={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          aria-label="Toggle h1"
-        >
-          <Heading1 className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("heading", { level: 2 })}
-          onPressedChange={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          aria-label="Toggle h2"
-        >
-          <Heading2 className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("heading", { level: 3 })}
-          onPressedChange={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          aria-label="Toggle h3"
-        >
-          <Heading3 className="w-4 h-4" />
-        </Toggle>
-
-        <Separator orientation="vertical" className="h-6 mx-1" />
-
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("bulletList")}
-          onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
-          aria-label="Toggle bullet list"
-        >
-          <List className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("orderedList")}
-          onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
-          aria-label="Toggle ordered list"
-        >
-          <ListOrdered className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("blockquote")}
-          onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
-          aria-label="Toggle blockquote"
-        >
-          <Quote className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive("codeBlock")}
-          onPressedChange={() => editor.chain().focus().toggleCodeBlock().run()}
-          aria-label="Toggle code block"
-        >
-          <Code className="w-4 h-4" />
-        </Toggle>
-
-        <Separator orientation="vertical" className="h-6 mx-1" />
+        <SimpleTooltip content="Bold">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("bold")}
+            onPressedChange={() => editor.chain().focus().toggleBold().run()}
+            aria-label="Toggle bold"
+          >
+            <Bold className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Italic">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("italic")}
+            onPressedChange={() => editor.chain().focus().toggleItalic().run()}
+            aria-label="Toggle italic"
+          >
+            <Italic className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Underline">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("underline")}
+            onPressedChange={() => editor.chain().focus().toggleUnderline().run()}
+            aria-label="Toggle underline"
+          >
+            <UnderlineIcon className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Highlight">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("highlight")}
+            onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
+            aria-label="Toggle highlight"
+          >
+            <Highlighter className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
 
         <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
           <DialogTrigger asChild>
-            <Toggle size="sm" pressed={editor.isActive("link")} aria-label="Add link">
-              <LinkIcon className="w-4 h-4" />
-            </Toggle>
+            <SimpleTooltip content="Link">
+              <Toggle size="sm" pressed={editor.isActive("link")} aria-label="Add link">
+                <LinkIcon className="w-4 h-4" />
+              </Toggle>
+            </SimpleTooltip>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
@@ -199,7 +155,10 @@ export const RichTextEditor = ({
                 onChange={(e) => setLinkUrl(e.target.value)}
                 className="flex-1"
               />
-              <button onClick={setLink} className="px-3 py-1.5 text-sm font-medium bg-primary text-primary-foreground rounded-md">
+              <button
+                onClick={setLink}
+                className="px-3 py-1.5 text-sm font-medium bg-black text-white rounded-md dark:bg-white dark:text-black"
+              >
                 Save
               </button>
             </div>
@@ -208,59 +167,167 @@ export const RichTextEditor = ({
 
         <Separator orientation="vertical" className="h-6 mx-1" />
 
-        <Toggle
-          size="sm"
-          pressed={editor.isActive({ textAlign: "left" })}
-          onPressedChange={() => editor.chain().focus().setTextAlign("left").run()}
-          aria-label="Align left"
-        >
-          <AlignLeft className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive({ textAlign: "center" })}
-          onPressedChange={() => editor.chain().focus().setTextAlign("center").run()}
-          aria-label="Align center"
-        >
-          <AlignCenter className="w-4 h-4" />
-        </Toggle>
-        <Toggle
-          size="sm"
-          pressed={editor.isActive({ textAlign: "right" })}
-          onPressedChange={() => editor.chain().focus().setTextAlign("right").run()}
-          aria-label="Align right"
-        >
-          <AlignRight className="w-4 h-4" />
-        </Toggle>
+        <SimpleTooltip content="Heading 1">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("heading", { level: 1 })}
+            onPressedChange={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+            aria-label="Toggle h1"
+          >
+            <Heading1 className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Heading 2">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("heading", { level: 2 })}
+            onPressedChange={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            aria-label="Toggle h2"
+          >
+            <Heading2 className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Heading 3">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("heading", { level: 3 })}
+            onPressedChange={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+            aria-label="Toggle h3"
+          >
+            <Heading3 className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+
+        <Separator orientation="vertical" className="h-6 mx-1" />
+
+        <SimpleTooltip content="Bullet List">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("bulletList")}
+            onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
+            aria-label="Toggle bullet list"
+          >
+            <List className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Ordered List">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("orderedList")}
+            onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
+            aria-label="Toggle ordered list"
+          >
+            <ListOrdered className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Blockquote">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("blockquote")}
+            onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
+            aria-label="Toggle blockquote"
+          >
+            <Quote className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Code Block">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive("codeBlock")}
+            onPressedChange={() => editor.chain().focus().toggleCodeBlock().run()}
+            aria-label="Toggle code block"
+          >
+            <Code className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+
+        <Separator orientation="vertical" className="h-6 mx-1" />
+
+        <SimpleTooltip content="Align Left">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive({ textAlign: "left" })}
+            onPressedChange={() => editor.chain().focus().setTextAlign("left").run()}
+            aria-label="Align left"
+          >
+            <AlignLeft className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Align Center">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive({ textAlign: "center" })}
+            onPressedChange={() => editor.chain().focus().setTextAlign("center").run()}
+            aria-label="Align center"
+          >
+            <AlignCenter className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
+        <SimpleTooltip content="Align Right">
+          <Toggle
+            size="sm"
+            pressed={editor.isActive({ textAlign: "right" })}
+            onPressedChange={() => editor.chain().focus().setTextAlign("right").run()}
+            aria-label="Align right"
+          >
+            <AlignRight className="w-4 h-4" />
+          </Toggle>
+        </SimpleTooltip>
       </div>
 
       {editor && (
-        <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+        <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} className="bg-white dark:bg-black opacity-85">
           <div className="flex items-center gap-1 p-1 rounded-md shadow-md bg-background border">
-            <Toggle
-              size="sm"
-              pressed={editor.isActive("bold")}
-              onPressedChange={() => editor.chain().focus().toggleBold().run()}
-              aria-label="Toggle bold"
-            >
-              <Bold className="w-3 h-3" />
-            </Toggle>
-            <Toggle
-              size="sm"
-              pressed={editor.isActive("italic")}
-              onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-              aria-label="Toggle italic"
-            >
-              <Italic className="w-3 h-3" />
-            </Toggle>
-            <Toggle
-              size="sm"
-              pressed={editor.isActive("highlight")}
-              onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
-              aria-label="Toggle highlight"
-            >
-              <Highlighter className="w-3 h-3" />
-            </Toggle>
+            <SimpleTooltip content="Bold">
+              <Toggle
+                size="sm"
+                pressed={editor.isActive("bold")}
+                onPressedChange={() => editor.chain().focus().toggleBold().run()}
+                aria-label="Toggle bold"
+              >
+                <Bold className="w-3 h-3" />
+              </Toggle>
+            </SimpleTooltip>
+            <SimpleTooltip content="Italic">
+              <Toggle
+                size="sm"
+                pressed={editor.isActive("italic")}
+                onPressedChange={() => editor.chain().focus().toggleItalic().run()}
+                aria-label="Toggle italic"
+              >
+                <Italic className="w-3 h-3" />
+              </Toggle>
+            </SimpleTooltip>
+            <SimpleTooltip content="Underline">
+              <Toggle
+                size="sm"
+                pressed={editor.isActive("underline")}
+                onPressedChange={() => editor.chain().focus().toggleUnderline().run()}
+                aria-label="Toggle underline"
+              >
+                <UnderlineIcon className="w-3 h-3" />
+              </Toggle>
+            </SimpleTooltip>
+            <SimpleTooltip content="Link">
+              <Toggle
+                size="sm"
+                pressed={editor.isActive("link")}
+                onPressedChange={handleLink}
+                aria-label="Add link"
+              >
+                <LinkIcon className="w-3 h-3" />
+              </Toggle>
+            </SimpleTooltip>
+            <SimpleTooltip content="Highlight">
+              <Toggle
+                size="sm"
+                pressed={editor.isActive("highlight")}
+                onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
+                aria-label="Toggle highlight"
+              >
+                <Highlighter className="w-3 h-3" />
+              </Toggle>
+            </SimpleTooltip>
           </div>
         </BubbleMenu>
       )}

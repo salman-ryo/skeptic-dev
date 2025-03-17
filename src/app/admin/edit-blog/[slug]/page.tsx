@@ -177,27 +177,21 @@ export default function EditBlog() {
         </div>
       </div>
       {/* Side Panel for Preview, Save */}
-      <div className="max-md:hidden fixed top-1/2 -translate-y-1/2 right-10 flex flex-col justify-center items-center gap-y-8 p-2 dark:bg-black rounded-full border-2 border-gray-400 dark:border-gray-800">
+      <div className="max-md:hidden fixed top-1/2 -translate-y-1/2 right-10 flex flex-col justify-center items-center gap-y-6 p-2 dark:bg-black rounded-full border-2 border-gray-400 dark:border-gray-800">
         <SimpleTooltip content="Preview Blog">
           <button
-            className="p-2 bg-gray-800 rounded-full shadow-md transition
-            hover:bg-gray-700 
-            dark:bg-white text-white dark:text-black
-            "
+            className="dark:text-blue-500 light:hover:text-blue-500 hover:scale-125 transition-all duration-300"
             onClick={() => setIsPreviewOpen(true)}
           >
-            <EyeIcon size={24} />
+            <EyeIcon size={28}/>
           </button>
         </SimpleTooltip>
         <SimpleTooltip content="Save Blog">
           <button
-            className="p-2 bg-gray-800 rounded-full shadow-md transition
-            hover:bg-gray-700 
-            dark:bg-white text-white dark:text-black
-            "
+            className="dark:text-green-500 light:hover:text-green-500 hover:scale-125 transition-all duration-300"
             onClick={handleSubmit}
           >
-            <Save size={24} />
+            <Save size={28}/>
           </button>
         </SimpleTooltip>
       </div>
