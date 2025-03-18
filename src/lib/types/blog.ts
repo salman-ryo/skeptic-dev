@@ -1,13 +1,12 @@
 import { Document } from "mongoose";
 import { TSessionUser } from "./user";
 
-// types/Blog.ts
 export type BlockType = 
-  | 'text' 
-  | 'heading1' 
-  | 'heading2' 
-  | 'image' 
-  | 'code' 
+  | 'text'
+  | 'heading1'
+  | 'heading2'
+  | 'image'
+  | 'code'
   | 'quote'
   | 'bulletList'
   | 'numberedList'
@@ -29,14 +28,14 @@ export interface Block {
 }
 
 export interface BlogDocument extends Document {
-  _id:string;
+  _id: string;
   title: string;
-  slug:string;
+  slug: string;
   author: TSessionUser;
-  description?:string;
+  description?: string;
   blocks?: Block[];
-  tags?:string[];
-  views:number;
+  tags?: string[];
+  views: number;
   createdAt: Date;
   updatedAt?: Date;
 }
