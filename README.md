@@ -1,4 +1,4 @@
-# Skeptic Dev
+# The Skeptic Dev
 
 A modern, block-based blog platform built with Next.js, inspired by Notion and Medium's intuitive content editing experience.
 
@@ -102,7 +102,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - [Medium](https://medium.com/) - Inspiration for content presentation
 
 ## 📧 Contact
-
-Your Name - [@yourusername](https://twitter.com/yourusername)
-
-Project Link: [https://github.com/yourusername/skeptic-dev](https://github.com/yourusername/skeptic-dev)
+email - dev.salman1508@gmail.com
