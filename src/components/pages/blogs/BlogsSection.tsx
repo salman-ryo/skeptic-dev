@@ -44,7 +44,9 @@ export default function BlogsSection() {
         {page !== totalPages && !loading && (
           <div className="mt-8 md:mt-12 flex justify-center">
             <Button
-              className="rounded-full w-full sm:w-auto ..."
+              className="rounded-full border-2
+            dark:bg-black dark:text-white dark:border-blue-400 dark:hover:bg-black dark:hover:shadow-md dark:hover:shadow-cyan-400 transition-all duration-300
+            "
               onClick={handleFetchMoreBlogs}
             >
               Load More Blogs
