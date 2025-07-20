@@ -33,7 +33,7 @@ export default function BlogsSection() {
         </ul>
 
         {loading && (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-8 max-md:justify-items-center items-center w-full">
+          <ul className="grid grid-cols-1 mt-6 md:mt-8 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-8 max-md:justify-items-center items-center w-full">
             {Array.from({ length: 3 }).map((_, index) => (
               <BlogCardSkeleton key={index} />
             ))}

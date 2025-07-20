@@ -62,7 +62,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignup }) => {
   return (
     <>
       <div className="space-y-2 text-center mb-5">
-        <h1 className="text-2xl font-semibold tracking-tight">
+        <h1 className="text-2xl font-semibold tracking-tight
+        max-md:space-y-4
+        ">
           Create an account
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -70,7 +72,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignup }) => {
         </p>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5
+          max-md:space-y-8
+        ">
           <FormField
             control={form.control}
             name="name"

@@ -78,8 +78,12 @@ export default function LoginPage() {
 
   return (
     <AuthLayout>
-      <div className="space-y-6">
-        <div className="space-y-2 text-center">
+      <div className="space-y-6
+      max-md:space-y-8
+      ">
+        <div className="space-y-2 text-center
+        max-md:space-y-4
+        ">
           <h1 className="text-2xl font-semibold tracking-tight">
             Welcome back
           </h1>
@@ -88,7 +92,9 @@ export default function LoginPage() {
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4
+          max-md:space-y-8
+          ">
             <FormField
               control={form.control}
               name="email"
