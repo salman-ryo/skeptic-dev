@@ -17,14 +17,14 @@ import {
   List,
   ListOrdered,
   ImageIcon,
-  Youtube,
+  Youtube as YoutubeIcon, // Renamed to avoid conflict with Youtube component
   Twitter,
   Minus,
   Type,
   Heading1,
   Heading2,
 } from "lucide-react"
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { LinkBubbleButton } from "./link-bubble-button"
 
 interface EditorToolbarProps {
@@ -33,40 +33,32 @@ interface EditorToolbarProps {
 
 export function EditorToolbar({ editor }: EditorToolbarProps) {
   const [imageUrl, setImageUrl] = useState("")
-  const [linkUrl, setLinkUrl] = useState("")
   const [youtubeUrl, setYoutubeUrl] = useState("")
   const [twitterUrl, setTwitterUrl] = useState("")
   const [codeLanguage, setCodeLanguage] = useState("javascript")
 
-  const addImage = () => {
+  const addImage = useCallback(() => {
     if (imageUrl) {
       editor.chain().focus().setImage({ src: imageUrl }).run()
       setImageUrl("")
     }
-  }
+  }, [editor, imageUrl])
 
-  const addLink = () => {
-    if (linkUrl) {
-      editor.chain().focus().setLink({ href: linkUrl }).run()
-      setLinkUrl("")
-    }
-  }
-
-  const addYoutube = () => {
+  const addYoutube = useCallback(() => {
     if (youtubeUrl) {
       editor.chain().focus().setYoutubeVideo({ src: youtubeUrl }).run()
       setYoutubeUrl("")
     }
-  }
+  }, [editor, youtubeUrl])
 
-  const addTwitter = () => {
+  const addTwitter = useCallback(() => {
     if (twitterUrl) {
       editor.chain().focus().setTwitterEmbed({ url: twitterUrl }).run()
       setTwitterUrl("")
     }
-  }
+  }, [editor, twitterUrl])
 
-  const addCodeBlock = () => {
+  const addCodeBlock = useCallback(() => {
     editor
       .chain()
       .focus()
@@ -75,10 +67,10 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         attrs: { language: codeLanguage },
       })
       .run()
-  }
+  }, [editor, codeLanguage])
 
   return (
-    <div className="sticky top-0 z-10 light:bg-white border-b p-2 flex flex-wrap gap-1 items-center">
+    <div className="dark:bg-slate-950 bg-gray-300 border-b border-border p-2 flex flex-wrap gap-1 items-center rounded-t-lg">
       {/* Text Formatting */}
       <Button
         variant={editor.isActive("bold") ? "default" : "ghost"}
@@ -98,6 +90,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         variant={editor.isActive("underline") ? "default" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
+        disabled={!editor.can().toggleUnderline()}
       >
         <Underline className="w-4 h-4" />
       </Button>
@@ -116,7 +109,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         <Code className="w-4 h-4" />
       </Button>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 mx-1" />
 
       {/* Headings */}
       <Button
@@ -141,7 +134,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         <Heading2 className="w-4 h-4" />
       </Button>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 mx-1" />
 
       {/* Lists and Quote */}
       <Button
@@ -166,7 +159,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         <Quote className="w-4 h-4" />
       </Button>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 mx-1" />
 
       {/* Code Block with Language Selection */}
       <div className="flex items-center gap-2">
@@ -196,7 +189,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         </Button>
       </div>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 mx-1" />
 
       {/* Media */}
       <Dialog>
@@ -231,7 +224,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="ghost" size="sm">
-            <Youtube className="w-4 h-4" />
+            <YoutubeIcon className="w-4 h-4" />
           </Button>
         </DialogTrigger>
         <DialogContent>

@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Link, Unlink } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface LinkBubbleButtonProps {
-  editor: Editor
+  editor: Editor;
+  className?:string;
 }
 
-export function LinkBubbleButton({ editor }: LinkBubbleButtonProps) {
+export function LinkBubbleButton({ editor, className }: LinkBubbleButtonProps) {
   const [url, setUrl] = useState("")
   const [isOpen, setIsOpen] = useState(false)
 
@@ -41,7 +43,7 @@ export function LinkBubbleButton({ editor }: LinkBubbleButtonProps) {
         <Button
           variant={editor.isActive("link") ? "secondary" : "ghost"}
           size="sm"
-          className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+          className={cn("h-8 w-8 p-0 light:hover:bg-gray-100",className)}
         >
           <Link className="w-4 h-4" />
         </Button>

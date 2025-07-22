@@ -1,63 +1,57 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { X, Plus, Save, Eye } from "lucide-react"
-import { BlogPreview } from "@/components/blog/v2-editor/blog-preview"
-import { BlogEditor } from "@/components/blog/v2-editor/blog-editor"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus, Save } from "lucide-react";
+import { BlogPreview } from "@/components/blog/v2-editor/blog-preview";
+import { BlogEditor } from "@/components/blog/v2-editor/blog-editor";
+import { EditorModeToggle } from "@/components/blog/v2-editor/editor-mode-toggle";
 
 export default function EditorPage() {
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [tags, setTags] = useState<string[]>([])
-  const [currentTag, setCurrentTag] = useState("")
-  const [content, setContent] = useState("")
-  const [isPreview, setIsPreview] = useState(false)
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState("");
+  const [content, setContent] = useState("");
+  const [isPreview, setIsPreview] = useState(false);
 
   const addTag = () => {
-    const trimmed = currentTag.trim()
+    const trimmed = currentTag.trim();
     if (trimmed && !tags.includes(trimmed)) {
-      setTags([...tags, trimmed])
-      setCurrentTag("")
+      setTags([...tags, trimmed]);
+      setCurrentTag("");
     }
-  }
+  };
 
   const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
-  }
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
 
   const handleSave = () => {
-    const blogPost = { title, description, tags, content }
-    console.log("Saving blog post:", blogPost)
+    const blogPost = { title, description, tags, content };
+    console.log("Saving blog post:", blogPost);
     // TODO: save to backend
-  }
+  };
+
+  const handleToggleMode = (preview: boolean) => {
+    setIsPreview(preview);
+  };
 
   return (
     <div className="container mx-auto py-16 min-h-screen light:bg-white max-md:px-10">
-      <div className="max-w-4xl mx-auto space-y-6 p-6 border-2 border-cyan-600 rounded-xl">
+      <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Blog Editor</h1>
-          <div className="flex gap-2">
-            <Button
-              variant={isPreview ? "outline" : "default"}
-              onClick={() => setIsPreview(false)}
-              size="sm"
-            >
-              Edit
-            </Button>
-            <Button
-              variant={isPreview ? "default" : "outline"}
-              onClick={() => setIsPreview(true)}
-              size="sm"
-            >
-              <Eye className="w-4 h-4 mr-2" />
-              Preview
-            </Button>
-            <Button onClick={handleSave} size="sm">
+          <div className="flex items-center gap-4">
+            <EditorModeToggle
+              isPreview={isPreview}
+              onToggle={handleToggleMode}
+            />
+            <Button onClick={handleSave} size="sm" className="ml-2">
               <Save className="w-4 h-4 mr-2" />
               Save
             </Button>
@@ -123,25 +117,25 @@ export default function EditorPage() {
             </div>
           </div>
         )}
+      </div>
 
-        <div className="">
-          {isPreview ? (
-            <div className="border-2 border-gray-300 dark:border-cyan-800 p-4 rounded">
-              <BlogPreview
-                title={title}
-                description={description}
-                tags={tags}
-                content={content}
-              />
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <Label className="text-base font-medium">Content</Label>
-                <BlogEditor content={content} onChange={setContent} />
-            </div>
-          )}
-        </div>
+      <div className="md:w-[70%] md:mx-auto mt-6">
+        {isPreview ? (
+          <div className="border border-gray-300 dark:border-cyan-800 p-4 rounded">
+            <BlogPreview
+              title={title}
+              description={description}
+              tags={tags}
+              content={content}
+            />
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <Label className="text-base font-medium">Content</Label>
+            <BlogEditor content={content} onChange={setContent} />
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }

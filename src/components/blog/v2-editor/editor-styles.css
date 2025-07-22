@@ -168,3 +168,23 @@
 .blog-preview .hljs-built_in {
   color: #8b5cf6;
 }
+
+
+/* Light styles */
+html.light{
+  .prose h1, h2{
+    color: black;
+  }
+}
+/* Dark styles */
+html.dark{
+  .prose {
+    h1,h2{
+      color: #e7e9ec;
+    }
+    p{
+      color: #d1d5db;
+    }
+  }
+  
+}

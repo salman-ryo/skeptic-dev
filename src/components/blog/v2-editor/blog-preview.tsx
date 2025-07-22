@@ -1,168 +1,104 @@
-"use client"
+// src/components/BlogPreview.tsx
 
-import { Badge } from "@/components/ui/badge"
-import { useEffect } from "react"
+"use client"; // Required because we are using the useSession hook
+
+import { useSession } from "next-auth/react";
+import { TSessionUser } from "@/lib/types/user";
+import { Bar } from "@/components/common/Bar";
+import UserAvatar from "@/components/common/UserAvatar";
+import ShareSection from "@/components/blog/ShareSection";
+import { formatDateUS } from "@/utils/dateTime";
+import { ContentRenderer } from "./ContentRenderer";
 
 interface BlogPreviewProps {
-  title: string
-  description: string
-  tags: string[]
-  content: string
+  title: string;
+  description: string;
+  tags: string[];
+  content: string; // The raw HTML content
+  author?: TSessionUser;
+  createdAt?: Date | string;
+  slug?: string;
 }
 
-export function BlogPreview({ title, description, tags, content }: BlogPreviewProps) {
-  useEffect(() => {
-    // Add copy functionality to code blocks after component mounts
-    const addCopyButtons = () => {
-      const codeBlocks = document.querySelectorAll(".blog-preview pre code")
+export function BlogPreview({
+  title,
+  description,
+  tags,
+  content,
+  createdAt = new Date(),
+  slug = "random stuff",
+  author,
+}: BlogPreviewProps) {
+  const { data: session } = useSession();
 
-      codeBlocks.forEach((codeElement) => {
-        const pre = codeElement.parentElement
-        if (pre && !pre.querySelector(".copy-button")) {
-          // Create wrapper if it doesn't exist
-          let wrapper = pre.parentElement
-          if (!wrapper?.classList.contains("code-block-preview-wrapper")) {
-            wrapper = document.createElement("div")
-            wrapper.className = "code-block-preview-wrapper"
-            pre.parentNode?.insertBefore(wrapper, pre)
-            wrapper.appendChild(pre)
-          }
+  // Use the author from the session if available, otherwise use the passed author prop
+  const blogAuthor = (session?.user as TSessionUser) || author;
 
-          // Create header
-          const header = document.createElement("div")
-          header.className = "code-block-header"
-
-          // Get language from class
-          const language =
-            Array.from(codeElement.classList)
-              .find((cls) => cls.startsWith("language-"))
-              ?.replace("language-", "") || "text"
-
-          const langSpan = document.createElement("span")
-          langSpan.textContent = language.charAt(0).toUpperCase() + language.slice(1)
-          langSpan.className = "code-block-language"
-
-          // Create copy button
-          const copyBtn = document.createElement("button")
-          copyBtn.className = "copy-button"
-          copyBtn.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span>Copy</span>
-          `
-
-          copyBtn.onclick = async () => {
-            try {
-              await navigator.clipboard.writeText(codeElement.textContent || "")
-              copyBtn.innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="20,6 9,17 4,12"></polyline>
-                </svg>
-                <span>Copied!</span>
-              `
-              setTimeout(() => {
-                copyBtn.innerHTML = `
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                  <span>Copy</span>
-                `
-              }, 2000)
-            } catch (err) {
-              console.error("Failed to copy:", err)
-            }
-          }
-
-          header.appendChild(langSpan)
-          header.appendChild(copyBtn)
-          wrapper.insertBefore(header, pre)
-        }
-      })
-    }
-
-    // Add copy buttons after a short delay to ensure DOM is ready
-    const timer = setTimeout(addCopyButtons, 100)
-    return () => clearTimeout(timer)
-  }, [content])
+  if (!blogAuthor) {
+    // Handle the case where author is not available
+    return <div>Loading author information or author not found...</div>;
+  }
 
   return (
-    <div className="blog-preview">
-      <article className="max-w-none">
+    <main className="w-full">
+      <article className="w-full md:w-[90%] mx-auto p-6">
         <header className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">{title || "Untitled"}</h1>
-          {description && <p className="text-xl text-gray-600 mb-4">{description}</p>}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
+          {/* Tags Section */}
+          {tags && tags.length > 0 && (
+            <div className="flex justify-start items-center gap-x-4 mb-8">
+              {tags.map((tag, index) => (
+                <div className="flex justify-center items-center gap-x-4" key={tag}>
+                  <span className="text-lg font-medium text-gray-500 hover:text-gray-700 transition-colors duration-300 capitalize dark:text-cyan-400 dark:hover:text-cyan-300">
+                    {tag}
+                  </span>
+                  {index < tags.length - 1 && <Bar className="w-[2px]" />}
+                </div>
               ))}
             </div>
           )}
+
+          {/* Title */}
+          <h1 className="text-5xl font-bold mb-4 dark:text-gray-200">
+            {title || "Untitled Blog Post"}
+          </h1>
+
+          {/* Description */}
+          {description && (
+            <p className="text-lg font-medium mb-6 text-gray-600 dark:text-gray-400">
+              {description}
+            </p>
+          )}
+
+          {/* Author and Date Section */}
+          <div className="flex justify-start items-center space-x-6 font-medium mb-6">
+            <div className="flex justify-start items-center space-x-3">
+              <UserAvatar className="size-12" user={blogAuthor} />
+              <div className="flex flex-col justify-start items-start">
+                <span className="font-semibold text-gray-800 dark:text-blue-400">
+                  {blogAuthor.name || "Anonymous"}
+                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  Author
+                </span>
+              </div>
+            </div>
+            <Bar />
+            <span className="text-gray-500 dark:text-gray-400">
+              {formatDateUS(new Date(createdAt))}
+            </span>
+          </div>
+
+          {/* Share Section */}
+          <ShareSection slug={slug} />
         </header>
 
-        <div
-          className="prose prose-lg max-w-none"
-          dangerouslySetInnerHTML={{ __html: content || "<p>Start writing to see the preview...</p>" }}
-        />
+        {/* The Content, now rendered with our powerful ContentRenderer */}
+        <div className="prose prose-lg max-w-none dark:prose-invert">
+          <ContentRenderer
+            htmlContent={content || "<p>Start writing to see the preview...</p>"}
+          />
+        </div>
       </article>
-
-      <style jsx>{`
-        .code-block-preview-wrapper {
-          margin: 1rem 0;
-          border-radius: 0.5rem;
-          overflow: hidden;
-          border: 1px solid #374151;
-        }
-        
-        .code-block-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background: #1f2937;
-          color: white;
-          padding: 0.5rem 1rem;
-          font-size: 0.875rem;
-        }
-        
-        .copy-button {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: #374151;
-          color: white;
-          border: none;
-          padding: 0.25rem 0.5rem;
-          border-radius: 0.25rem;
-          cursor: pointer;
-          font-size: 0.75rem;
-          transition: background-color 0.2s;
-        }
-        
-        .copy-button:hover {
-          background: #4b5563;
-        }
-        
-        .code-block-preview-wrapper pre {
-          margin: 0 !important;
-          background: #111827 !important;
-          color: #f3f4f6 !important;
-          padding: 1rem !important;
-          border-radius: 0 !important;
-        }
-
-        .code-block-preview-wrapper code {
-          background: none !important;
-          color: inherit !important;
-          padding: 0 !important;
-          border-radius: 0 !important;
-          font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
-        }
-      `}</style>
-    </div>
-  )
+    </main>
+  );
 }

@@ -64,14 +64,16 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
   return (
     <div
       ref={menuRef}
-      className="bubble-menu flex items-center gap-1 bg-gray-900 text-white rounded-lg p-1 shadow-lg border"
+      className="bubble-menu flex items-center gap-1 bg-gray-900 text-white rounded-lg p-1 shadow-lg border
+      dark:bg-white dark:text-black
+      "
       style={{ display: "none" }}
     >
       <Button
         variant={editor.isActive("bold") ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Bold className="w-4 h-4" />
       </Button>
@@ -79,7 +81,7 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
         variant={editor.isActive("italic") ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Italic className="w-4 h-4" />
       </Button>
@@ -87,7 +89,7 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
         variant={editor.isActive("underline") ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Underline className="w-4 h-4" />
       </Button>
@@ -95,7 +97,7 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
         variant={editor.isActive("strike") ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Strikethrough className="w-4 h-4" />
       </Button>
@@ -103,16 +105,16 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
         variant={editor.isActive("code") ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleCode().run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Code className="w-4 h-4" />
       </Button>
-      <div className="w-px h-6 bg-gray-600 mx-1" />
+      <div className="w-px h-6 dark:bg-gray-600 mx-1" />
       <Button
         variant={editor.isActive("heading", { level: 1 }) ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Heading1 className="w-4 h-4" />
       </Button>
@@ -120,7 +122,7 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
         variant={editor.isActive("heading", { level: 2 }) ? "secondary" : "ghost"}
         size="sm"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className="h-8 w-8 p-0 text-white hover:bg-gray-700"
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
       >
         <Heading2 className="w-4 h-4" />
       </Button>

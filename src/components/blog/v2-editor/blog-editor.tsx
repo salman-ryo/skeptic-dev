@@ -7,6 +7,7 @@ import Link from "@tiptap/extension-link"
 import Youtube from "@tiptap/extension-youtube"
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import Placeholder from "@tiptap/extension-placeholder"
+import Underline from "@tiptap/extension-underline" // ✨ Import Underline
 import { createLowlight, common } from "lowlight"
 import { EditorToolbar } from "./editor-toolbar"
 import { TwitterExtension } from "./extensions/twitter-extension"
@@ -26,8 +27,9 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        codeBlock: false, // We'll use CodeBlockLowlight instead
+        codeBlock: false,
       }),
+      Underline, // ✨ Add the Underline extension here
       Image.configure({
         HTMLAttributes: {
           class: "rounded-lg max-w-full h-auto",
@@ -66,7 +68,8 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
     },
     editorProps: {
       attributes: {
-        class: "prose prose-lg max-w-none focus:outline-none min-h-[400px] p-4 border rounded-md text-gray-50 light:text-black",
+        class:
+          "prose prose-lg max-w-none focus:outline-none min-h-[400px] p-4 rounded-md text-gray-50 light:text-black",
       },
     },
   })
@@ -76,9 +79,9 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
   }
 
   return (
-    <div className="border rounded-lg">
+    <div className="border rounded-lg bg-background text-foreground light:border-gray-400">
       <EditorToolbar editor={editor} />
-      <div className="relative">
+      <div className="relative h-[75dvh] overflow-y-scroll">
         <EditorContent editor={editor} />
         {editor && <BubbleMenuComponent editor={editor} />}
       </div>
