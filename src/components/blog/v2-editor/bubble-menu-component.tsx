@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useCallback, useMemo } from "react"
 import type { Editor } from "@tiptap/react"
 import { Button } from "@/components/ui/button"
-import { Bold, Italic, Underline, Strikethrough, Code, Heading1, Heading2 } from "lucide-react"
+import { Bold, Italic, Underline, Strikethrough, Code, Heading1, Heading2, Highlighter, Type } from "lucide-react"
 import { LinkBubbleButton } from "./link-bubble-button"
 
 interface BubbleMenuComponentProps {
@@ -12,30 +12,101 @@ interface BubbleMenuComponentProps {
 
 export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
   const menuRef = useRef<HTMLDivElement>(null)
+  const isPositioningRef = useRef(false)
 
-  useEffect(() => {
-    const updateMenu = () => {
-      const { selection } = editor.state
-      const { from, to } = selection
+  // Memoized button configurations for better performance
+  const formatButtons = useMemo(() => [
+    {
+      icon: Bold,
+      action: () => editor.chain().focus().toggleBold().run(),
+      isActive: () => editor.isActive("bold"),
+      key: "bold"
+    },
+    {
+      icon: Italic,
+      action: () => editor.chain().focus().toggleItalic().run(),
+      isActive: () => editor.isActive("italic"),
+      key: "italic"
+    },
+    {
+      icon: Underline,
+      action: () => editor.chain().focus().toggleUnderline().run(),
+      isActive: () => editor.isActive("underline"),
+      key: "underline",
+      disabled: () => !editor.can().toggleUnderline()
+    },
+    {
+      icon: Strikethrough,
+      action: () => editor.chain().focus().toggleStrike().run(),
+      isActive: () => editor.isActive("strike"),
+      key: "strike"
+    },
+    {
+      icon: Highlighter,
+      action: () => editor.chain().focus().toggleHighlight().run(),
+      isActive: () => editor.isActive("highlight"),
+      key: "highlight"
+    },
+    {
+      icon: Code,
+      action: () => editor.chain().focus().toggleCode().run(),
+      isActive: () => editor.isActive("code"),
+      key: "code"
+    }
+  ], [editor])
 
-      if (from === to) {
-        // No selection, hide menu
-        if (menuRef.current) {
-          menuRef.current.style.display = "none"
-        }
-        return
-      }
+  const headingButtons = useMemo(() => [
+    {
+      icon: Type,
+      action: () => editor.chain().focus().setParagraph().run(),
+      isActive: () => editor.isActive("paragraph"),
+      key: "paragraph"
+    },
+    {
+      icon: Heading1,
+      action: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+      isActive: () => editor.isActive("heading", { level: 1 }),
+      key: "heading1"
+    },
+    {
+      icon: Heading2,
+      action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      isActive: () => editor.isActive("heading", { level: 2 }),
+      key: "heading2"
+    }
+  ], [editor])
 
-      // Show menu
+  // Optimized update function with debouncing
+  const updateMenu = useCallback(() => {
+    if (isPositioningRef.current) return
+    
+    const { selection } = editor.state
+    const { from, to, empty } = selection
+
+    if (empty || from === to) {
+      // No selection, hide menu
       if (menuRef.current) {
+        menuRef.current.style.display = "none"
+      }
+      return
+    }
+
+    // Show menu and position it
+    if (menuRef.current) {
+      isPositioningRef.current = true
+      
+      requestAnimationFrame(() => {
+        if (!menuRef.current) {
+          isPositioningRef.current = false
+          return
+        }
+
         menuRef.current.style.display = "flex"
 
         // Position the menu
         const { view } = editor
         const start = view.coordsAtPos(from)
         const end = view.coordsAtPos(to)
-
-        const editorRect = view.dom.getBoundingClientRect()
         const menuRect = menuRef.current.getBoundingClientRect()
 
         const left = Math.max(
@@ -49,17 +120,45 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
         menuRef.current.style.left = `${left}px`
         menuRef.current.style.top = `${top}px`
         menuRef.current.style.zIndex = "50"
-      }
-    }
 
-    editor.on("selectionUpdate", updateMenu)
-    editor.on("transaction", updateMenu)
-
-    return () => {
-      editor.off("selectionUpdate", updateMenu)
-      editor.off("transaction", updateMenu)
+        isPositioningRef.current = false
+      })
     }
   }, [editor])
+
+  // Debounced update function
+  const debouncedUpdate = useCallback(
+    (() => {
+      let timeoutId: NodeJS.Timeout
+      return () => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(updateMenu, 10)
+      }
+    })(),
+    [updateMenu]
+  )
+
+  useEffect(() => {
+    // Enhanced event handling
+    const events = ["selectionUpdate", "transaction", "focus", "blur"] as const
+    
+    events.forEach(event => {
+      editor.on(event, debouncedUpdate)
+    })
+
+    // Handle window events
+    const handleWindowEvent = () => debouncedUpdate()
+    window.addEventListener("resize", handleWindowEvent)
+    window.addEventListener("scroll", handleWindowEvent, true)
+
+    return () => {
+      events.forEach(event => {
+        editor.off(event, debouncedUpdate)
+      })
+      window.removeEventListener("resize", handleWindowEvent)
+      window.removeEventListener("scroll", handleWindowEvent, true)
+    }
+  }, [editor, debouncedUpdate])
 
   return (
     <div
@@ -69,47 +168,33 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
       "
       style={{ display: "none" }}
     >
-      <Button
-        variant={editor.isActive("bold") ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Bold className="w-4 h-4" />
-      </Button>
-      <Button
-        variant={editor.isActive("italic") ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Italic className="w-4 h-4" />
-      </Button>
-      <Button
-        variant={editor.isActive("underline") ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Underline className="w-4 h-4" />
-      </Button>
-      <Button
-        variant={editor.isActive("strike") ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Strikethrough className="w-4 h-4" />
-      </Button>
-      <Button
-        variant={editor.isActive("code") ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Code className="w-4 h-4" />
-      </Button>
+      {/* Text formatting buttons */}
+      {formatButtons.map(({ icon: Icon, action, isActive, key, disabled }) => (
+        <Button
+          key={key}
+          variant={isActive() ? "secondary" : "ghost"}
+          size="sm"
+          onClick={action}
+          disabled={disabled?.()}
+          className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
+        >
+          <Icon className="w-4 h-4" />
+        </Button>
+      ))}
+
       <div className="w-px h-6 dark:bg-gray-600 mx-1" />
+
+      {/* Paragraph button */}
+      <Button
+        variant={editor.isActive("paragraph") ? "secondary" : "ghost"}
+        size="sm"
+        onClick={() => editor.chain().focus().setParagraph().run()}
+        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
+      >
+        <Type className="w-4 h-4" />
+      </Button>
+
+      {/* Heading buttons */}
       <Button
         variant={editor.isActive("heading", { level: 1 }) ? "secondary" : "ghost"}
         size="sm"
@@ -126,7 +211,9 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
       >
         <Heading2 className="w-4 h-4" />
       </Button>
+
       <div className="w-px h-6 bg-gray-600 mx-1" />
+
       <LinkBubbleButton editor={editor} />
     </div>
   )

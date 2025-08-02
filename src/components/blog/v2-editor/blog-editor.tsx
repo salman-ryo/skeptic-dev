@@ -7,7 +7,8 @@ import Link from "@tiptap/extension-link"
 import Youtube from "@tiptap/extension-youtube"
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import Placeholder from "@tiptap/extension-placeholder"
-import Underline from "@tiptap/extension-underline" // ✨ Import Underline
+import Underline from "@tiptap/extension-underline"
+import Highlight from "@tiptap/extension-highlight" // ✨ Import Highlight extension
 import { createLowlight, common } from "lowlight"
 import { EditorToolbar } from "./editor-toolbar"
 import { TwitterExtension } from "./extensions/twitter-extension"
@@ -29,7 +30,13 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
       StarterKit.configure({
         codeBlock: false,
       }),
-      Underline, // ✨ Add the Underline extension here
+      Underline,
+      Highlight.configure({ // ✨ Add the Highlight extension here
+        multicolor: false, // Set to true if you want multiple highlight colors
+        HTMLAttributes: {
+          class: "bg-yellow-200 dark:bg-yellow-800 px-1 rounded",
+        },
+      }),
       Image.configure({
         HTMLAttributes: {
           class: "rounded-lg max-w-full h-auto",
@@ -81,7 +88,7 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
   return (
     <div className="border rounded-lg bg-background text-foreground light:border-gray-400">
       <EditorToolbar editor={editor} />
-      <div className="relative h-[75dvh] overflow-y-scroll">
+      <div className="relative h-[75dvh] overflow-y-scroll pb-10">
         <EditorContent editor={editor} />
         {editor && <BubbleMenuComponent editor={editor} />}
       </div>
