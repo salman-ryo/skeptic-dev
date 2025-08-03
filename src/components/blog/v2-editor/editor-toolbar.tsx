@@ -138,7 +138,9 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
   );
 
   return (
-    <div className="dark:bg-slate-950 bg-gray-300 border-b border-border p-2 flex flex-wrap gap-1 items-center rounded-t-lg">
+    <div className="dark:bg-slate-900 bg-gray-200 border-b border-border p-2 flex flex-wrap gap-1 items-center rounded-t-lg
+    dark:border-cyan-400
+    ">
       {/* Text Formatting */}
       <div className="flex items-center gap-1">
         <Button
@@ -257,7 +259,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
       {/* Enhanced Code Block with Language Selection */}
       <div className="flex items-center gap-2">
         <Select value={codeLanguage} onValueChange={setCodeLanguage}>
-          <SelectTrigger className="w-40 h-8">
+          <SelectTrigger className="w-40 h-8 border border-black dark:border-purple-400">
             <SelectValue placeholder="Select language..." />
           </SelectTrigger>
           <SelectContent className="max-h-80 overflow-y-auto">

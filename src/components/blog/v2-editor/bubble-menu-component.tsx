@@ -169,50 +169,85 @@ export function BubbleMenuComponent({ editor }: BubbleMenuComponentProps) {
       style={{ display: "none" }}
     >
       {/* Text formatting buttons */}
-      {formatButtons.map(({ icon: Icon, action, isActive, key, disabled }) => (
-        <Button
-          key={key}
-          variant={isActive() ? "secondary" : "ghost"}
-          size="sm"
-          onClick={action}
-          disabled={disabled?.()}
-          className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-        >
-          <Icon className="w-4 h-4" />
-        </Button>
-      ))}
+      {formatButtons.map(({ icon: Icon, action, isActive, key, disabled }) => {
+        const active = isActive()
+        return (
+          <Button
+            key={key}
+            variant={active ? "secondary" : "ghost"}
+            size="sm"
+            onClick={action}
+            disabled={disabled?.()}
+            className={`h-8 w-8 p-0 ${
+              active 
+                ? "bg-white text-black dark:bg-gray-800 dark:text-white" 
+                : "text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300 dark:hover:text-gray-700"
+            }`}
+          >
+            <Icon className="w-4 h-4" />
+          </Button>
+        )
+      })}
 
-      <div className="w-px h-6 dark:bg-gray-600 mx-1" />
+      <div className="w-px h-6 bg-gray-600 dark:bg-gray-300 mx-1" />
 
       {/* Paragraph button */}
-      <Button
-        variant={editor.isActive("paragraph") ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Type className="w-4 h-4" />
-      </Button>
+      {(() => {
+        const active = editor.isActive("paragraph")
+        return (
+          <Button
+            variant={active ? "secondary" : "ghost"}
+            size="sm"
+            onClick={() => editor.chain().focus().setParagraph().run()}
+            className={`h-8 w-8 p-0 ${
+              active 
+                ? "bg-white text-black dark:bg-gray-800 dark:text-white" 
+                : "text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300 dark:hover:text-gray-700"
+            }`}
+          >
+            <Type className="w-4 h-4" />
+          </Button>
+        )
+      })()}
 
       {/* Heading buttons */}
-      <Button
-        variant={editor.isActive("heading", { level: 1 }) ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Heading1 className="w-4 h-4" />
-      </Button>
-      <Button
-        variant={editor.isActive("heading", { level: 2 }) ? "secondary" : "ghost"}
-        size="sm"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className="h-8 w-8 p-0 light:text-white hover:bg-gray-700"
-      >
-        <Heading2 className="w-4 h-4" />
-      </Button>
+      {(() => {
+        const h1Active = editor.isActive("heading", { level: 1 })
+        return (
+          <Button
+            variant={h1Active ? "secondary" : "ghost"}
+            size="sm"
+            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+            className={`h-8 w-8 p-0 ${
+              h1Active 
+                ? "bg-white text-black dark:bg-gray-800 dark:text-white" 
+                : "text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300 dark:hover:text-gray-700"
+            }`}
+          >
+            <Heading1 className="w-4 h-4" />
+          </Button>
+        )
+      })()}
+      
+      {(() => {
+        const h2Active = editor.isActive("heading", { level: 2 })
+        return (
+          <Button
+            variant={h2Active ? "secondary" : "ghost"}
+            size="sm"
+            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            className={`h-8 w-8 p-0 ${
+              h2Active 
+                ? "bg-white text-black dark:bg-gray-800 dark:text-white" 
+                : "text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300 dark:hover:text-gray-700"
+            }`}
+          >
+            <Heading2 className="w-4 h-4" />
+          </Button>
+        )
+      })()}
 
-      <div className="w-px h-6 bg-gray-600 mx-1" />
+      <div className="w-px h-6 bg-gray-600 dark:bg-gray-300 mx-1" />
 
       <LinkBubbleButton editor={editor} />
     </div>

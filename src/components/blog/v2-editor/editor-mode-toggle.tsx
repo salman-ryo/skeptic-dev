@@ -15,7 +15,7 @@ export function EditorModeToggle({ isPreview, onToggle }: EditorModeToggleProps)
       <div
         className={cn(
           "absolute top-1 bottom-1 w-[calc(50%-4px)]  dark:text-black rounded-md shadow-sm transition-all duration-300 ease-in-out border border-gray-200 dark:border-gray-600",
-          isPreview ? "translate-x-[calc(95%)] bg-slate-900" : "translate-x-0 bg-cyan-500"
+          isPreview ? "translate-x-[calc(95%)] " : "translate-x-0 bg-cyan-500 text-black"
         )}
       />
       
@@ -39,7 +39,7 @@ export function EditorModeToggle({ isPreview, onToggle }: EditorModeToggleProps)
         className={cn(
           "relative z-10 flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 min-w-[80px] justify-center",
           isPreview
-            ? "text-gray-900 dark:text-gray-100"
+            ? "text-gray-900 bg-cyan-400 dark:text-gray-100"
             : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
         )}
       >
