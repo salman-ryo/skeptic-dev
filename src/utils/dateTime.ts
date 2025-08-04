@@ -5,7 +5,7 @@
  * @param date - The date to format.
  * @returns A string representing the formatted date.
  */
-export function formatDateUS(date: Date): string {
+export function formatDateUS(date: Date | string): string {
   const parseDate = new Date(date)
     const options: Intl.DateTimeFormatOptions = {
       month: 'long',
