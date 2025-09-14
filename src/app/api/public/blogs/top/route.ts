@@ -20,6 +20,6 @@ export async function GET() {
     return NextResponse.json(mostViewedBlog, { status: 200 });
   } catch (error: any) {
     console.error('Error fetching most viewed blog:', error.message);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
