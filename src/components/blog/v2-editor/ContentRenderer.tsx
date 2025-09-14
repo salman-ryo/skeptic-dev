@@ -20,6 +20,7 @@ export function ContentRenderer({ htmlContent }: ContentRendererProps) {
           const langClass = codeNode.attribs.class || ""; // e.g., "language-javascript"
           const language = langClass.replace("language-", "");
 
+          // @ts-ignore
           const codeContent = (codeNode.children[0]?.data || "").trim();
 
           // Replace the <pre> tag with our interactive React component
