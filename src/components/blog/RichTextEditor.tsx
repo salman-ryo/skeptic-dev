@@ -60,6 +60,7 @@ export const RichTextEditor = ({
         types: ["heading", "paragraph"],
       }),
     ],
+    immediatelyRender:false,
     content: initialContent,
     editorProps: {
       attributes: {

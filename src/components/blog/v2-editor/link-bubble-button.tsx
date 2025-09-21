@@ -48,7 +48,9 @@ export function LinkBubbleButton({ editor, className }: LinkBubbleButtonProps) {
           <Link className="w-4 h-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80 opacity-90
+      light:bg-white bg-slate-900
+      ">
         <div className="space-y-3">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Add Link</h4>

@@ -1,27 +1,27 @@
 "use client"
-
-import { useEditor, EditorContent } from "@tiptap/react"
-import StarterKit from "@tiptap/starter-kit"
-import Image from "@tiptap/extension-image"
-import Link from "@tiptap/extension-link"
-import Youtube from "@tiptap/extension-youtube"
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
-import Placeholder from "@tiptap/extension-placeholder"
-import Underline from "@tiptap/extension-underline"
-import Highlight from "@tiptap/extension-highlight" // ✨ Import Highlight extension
-import { createLowlight, common } from "lowlight"
-import { EditorToolbar } from "./editor-toolbar"
-import { TwitterExtension } from "./extensions/twitter-extension"
-import { DividerExtension } from "./extensions/divider-extension"
-import "./editor-styles.css"
-import { BubbleMenuComponent } from "./bubble-menu-component"
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
+import Youtube from "@tiptap/extension-youtube";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
+import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@tiptap/extension-text-align";
+import { createLowlight, common } from "lowlight";
+import { EditorToolbar } from "./editor-toolbar";
+import { TwitterExtension } from "./extensions/twitter-extension";
+import { DividerExtension } from "./extensions/divider-extension";
+import "./editor-styles.css";
+import { BubbleMenuComponent } from "./bubble-menu-component";
 
 // Create lowlight instance with common languages
-const lowlight = createLowlight(common)
+const lowlight = createLowlight(common);
 
 interface BlogEditorProps {
-  content: string
-  onChange: (content: string) => void
+  content: string;
+  onChange: (content: string) => void;
 }
 
 export function BlogEditor({ content, onChange }: BlogEditorProps) {
@@ -31,15 +31,20 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
         codeBlock: false,
       }),
       Underline,
-      Highlight.configure({ // ✨ Add the Highlight extension here
-        multicolor: false, // Set to true if you want multiple highlight colors
+      Highlight.configure({
+        multicolor: false,
         HTMLAttributes: {
           class: "bg-yellow-200 dark:bg-yellow-800 px-1 rounded",
         },
       }),
+      TextAlign.configure({ // ✨ Configure TextAlign extension
+        types: ['heading', 'paragraph'],
+        alignments: ['left', 'center', 'right', 'justify'],
+        defaultAlignment: 'left',
+      }),
       Image.configure({
         HTMLAttributes: {
-          class: "rounded-lg max-w-full h-auto",
+          class: "w-full max-h-[500px] object-cover rounded-lg border dark:border-gray-900 max-sm:h-[260px] max-md:h-[300px]",
         },
       }),
       Link.configure({
@@ -54,7 +59,7 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
         width: 640,
         height: 480,
         HTMLAttributes: {
-          class: "rounded-lg",
+          class: "rounded-lg mx-auto",
         },
       }),
       CodeBlockLowlight.configure({
@@ -69,6 +74,7 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
       TwitterExtension,
       DividerExtension,
     ],
+    immediatelyRender: false,
     content,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML())
@@ -79,10 +85,14 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
           "prose prose-lg max-w-none focus:outline-none min-h-[400px] p-4 rounded-md text-gray-50 light:text-black",
       },
     },
-  })
+  });
 
   if (!editor) {
-    return null
+    return (
+      <div className="border rounded-lg bg-background text-foreground light:border-gray-400 min-h-[400px] flex items-center justify-center">
+        <div className="text-muted-foreground">Loading editor...</div>
+      </div>
+    )
   }
 
   return (
