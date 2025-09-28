@@ -57,10 +57,10 @@ export async function generateMetadata(
   };
 }
 
-export default async function BlogPage({ params }: ParamProps) {
+export default async function BlogDetailScreen({ params }: ParamProps) {
   const { slug } = await params;
   const blog: BlogDocument = await getBlogData(slug);
-  console.log(blog.content)
+
   if (!blog) {
     return (
       <div className="container mx-auto p-6">
@@ -155,17 +155,13 @@ export default async function BlogPage({ params }: ParamProps) {
             </div>
             <ShareSection slug={slug} />
           </header>
-          {/* {blog.blocks && ( */}
-          {
-            blog.content &&
-            <div dangerouslySetInnerHTML={{__html: blog.content}}>
-              {/* {blog.blocks.map((block: Block) => (
+          {blog.blocks && (
+            <div className="prose prose-lg max-w-none">
+              {blog.blocks.map((block: Block) => (
                 <BlockRenderer key={block.id} block={block} />
-              ))} */}
-
+              ))}
             </div>
-          }
-          {/* // )} */}
+          )}
         </article>
       )}
     </main>

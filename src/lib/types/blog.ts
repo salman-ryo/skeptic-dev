@@ -35,6 +35,7 @@ export interface BlogDocument extends Document {
   description?: string;
   blocks?: Block[];
   tags?: string[];
+  content?:string;
   views: number;
   createdAt: Date;
   updatedAt?: Date;

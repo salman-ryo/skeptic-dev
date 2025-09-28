@@ -71,7 +71,11 @@ export async function fetchRandomBlogs() {
 
 export async function getBlogData(slug: string) {
   try {
-    const response = await fetch(`${BASE_URL}/api/public/blogs?slug=${slug}`, {
+    // const response = await fetch(`${BASE_URL}/api/public/blogs?slug=${slug}`, {
+    //   next: { revalidate: 60 },
+    //   credentials: "include",
+    // });
+    const response = await fetch(`${BASE_URL}/api/v2/admin/blogs/${slug}`, {
       next: { revalidate: 60 },
       credentials: "include",
     });

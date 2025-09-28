@@ -1,21 +1,19 @@
-// models/Blog.ts
-import { Block, BlogDocument } from "@/lib/types/blog";
-import { Schema, model, models } from "mongoose";
+import { TSessionUser } from "@/lib/types/user";
+import { Document, model, models, Schema } from "mongoose";
 import slugify from "slugify";
 
-const BlockSchema = new Schema<Block>({
-  id: { type: String, required: true },
-  type: { type: String, required: true },
-  content: { type: String },
-  metadata: {
-    url: String,
-    alt: String,
-    language: String,
-    listItems: [String],
-    embedId: String,
-  },
-});
-
+interface BlogDocument extends Document{
+    _id: string;
+      title: string;
+      slug: string;
+      author: TSessionUser;
+      description?: string;
+      content?: string;
+      tags?: string[];
+      views: number;
+      createdAt: Date;
+      updatedAt?: Date;
+}
 const BlogSchema = new Schema<BlogDocument>(
   {
     title: { type: String, required: true },
@@ -26,9 +24,7 @@ const BlogSchema = new Schema<BlogDocument>(
       required: true,
     },
     description: { type: String, maxlength: 2000 },
-    blocks: [BlockSchema],
     content: {type: String, maxlength:100000},
-
     tags: { type: [String], index: true },
     views: { type: Number, default: 0 },
   },

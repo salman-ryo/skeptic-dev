@@ -84,7 +84,7 @@ export function estimateReadTime(text: string, wordsPerMinute: number = 200): st
   }
 
   export function limitChars(input: string, charLimit: number): string {
-    if (input.length > charLimit) {
+    if (input?.length > charLimit) {
       return input.substring(0, charLimit) + '...';
     }
     return input;

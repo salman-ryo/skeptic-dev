@@ -1,0 +1,5 @@
+Create new blog renderer
+    - Create new blog detail page with new api
+    - Integrate collection API to save unsave blogs
+    - Create new APIs for all the old ones like Top blogs, etc
+    - Create API for blog views

@@ -1,5 +1,4 @@
-import { Block, BlogDocument } from "@/lib/types/blog";
-import { BlockRenderer } from "@/components/blog/BlockRenderer";
+import { BlogDocument } from "@/lib/types/blog";
 import { Bar } from "@/components/common/Bar";
 import ShareSection from "@/components/blog/ShareSection";
 import { formatDateUS } from "@/utils/dateTime";
@@ -10,10 +9,13 @@ import { getBaseUrl } from "@/utils/getBaseUrl";
 import { getBlogImage } from "@/utils/getBlogImage";
 import { limitChars } from "@/utils/text";
 import Script from "next/script";
+import HTMLRenderer from "./HTMLRenderer";
+
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
 };
+
 
 export async function generateMetadata(
   { params }: ParamProps,
@@ -22,13 +24,16 @@ export async function generateMetadata(
   const { slug } = await params;
   const blog = await getBlogData(slug);
 
+
   if (!blog) {
     return {
       title: "Blog Not Found",
     };
   }
 
+
   const previousImages = (await parent).openGraph?.images || [];
+  // Since we no longer have blocks, we'll need to extract image from content or use default
   const coverImageUrl = getBlogImage(blog.blocks,"/images/blogs/skhero.jpg").url
   const url = `${getBaseUrl()}/blog/${slug}`; //for opengraph
   return {
@@ -57,10 +62,12 @@ export async function generateMetadata(
   };
 }
 
+
 export default async function BlogPage({ params }: ParamProps) {
   const { slug } = await params;
   const blog: BlogDocument = await getBlogData(slug);
-  console.log(blog.content)
+
+
   if (!blog) {
     return (
       <div className="container mx-auto p-6">
@@ -68,6 +75,7 @@ export default async function BlogPage({ params }: ParamProps) {
       </div>
     );
   }
+
 
     // JSON‑LD structured data for this blog post
     const jsonLd = {
@@ -81,6 +89,7 @@ export default async function BlogPage({ params }: ParamProps) {
         name: blog.author?.name || "Anonymous",
       },
     };
+
 
   return (
     <>
@@ -155,17 +164,13 @@ export default async function BlogPage({ params }: ParamProps) {
             </div>
             <ShareSection slug={slug} />
           </header>
-          {/* {blog.blocks && ( */}
-          {
-            blog.content &&
-            <div dangerouslySetInnerHTML={{__html: blog.content}}>
-              {/* {blog.blocks.map((block: Block) => (
-                <BlockRenderer key={block.id} block={block} />
-              ))} */}
-
-            </div>
-          }
-          {/* // )} */}
+          {/* Render blog content using HTMLRenderer */}
+          {blog.content && (
+            <HTMLRenderer
+              content={blog.content}
+              className="mb-8"
+            />
+          )}
         </article>
       )}
     </main>

@@ -56,7 +56,26 @@ export default function BlogEditorScreen() {
     console.log("Saving blog post:", blogPost);
     
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+          const response = await fetch("/api/v2/admin/blogs", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(blogPost),
+          });
+          console.log("🚀 ~ handleSave ~ response:", response)
+    
+          if (!response.ok) throw new Error("Failed to save blog");
+    
+          // Reset form
+          // setTitle("");
+          // setDescription("");
+          // setTags([]);
+        } catch (error) {
+          console.error("An error occurred while saving the blog");
+        } finally {
+          // setIsSubmitting(false);
+        }
     setIsSaving(false);
     // TODO: save to backend
   };
