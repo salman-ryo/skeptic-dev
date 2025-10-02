@@ -13,8 +13,6 @@ interface RouteParams {
 // Helper to safely resolve params (works whether params is a value or a promise)
 async function resolveSlug(params: any): Promise<string> {
   const resolved = (await params) as any;
-  console.log("🚀 ~ resolveSlug ~ resolved:", resolved)
-  // In some contexts `params` might be `{ slug: '...' }`, in others it might be directly the slug.
   const slug = resolved?.slug ?? resolved;
   if (!slug || typeof slug !== 'string') {
     throw new ApiError('Missing or invalid slug parameter', 400);
@@ -27,7 +25,6 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     await connectToDatabase();
     const slug = await resolveSlug(params);
-    console.log("🚀 ~ GET ~ slug:", slug)
 
     const blog = await Blog.findOne({ slug }).populate('author', 'name email image');
 

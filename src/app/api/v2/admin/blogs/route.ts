@@ -72,7 +72,6 @@ export const POST = withRole(['author', 'admin'], async (request: NextRequest, u
     }
 
     const body = await request.json();
-    console.log("🚀 ~ body:", body)
     const { title, description, content, tags } = body;
 
     if (!title || !content) {

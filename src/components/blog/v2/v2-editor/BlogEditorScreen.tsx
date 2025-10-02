@@ -7,13 +7,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { X, Plus, Save } from "lucide-react";
-import { BlogPreview } from "@/components/blog/v2-editor/blog-preview";
-import { EditorModeToggle } from "@/components/blog/v2-editor/editor-mode-toggle";
+import { BlogPreview } from "@/components/blog/v2/v2-editor/blog-preview";
+import { EditorModeToggle } from "@/components/blog/v2/v2-editor/editor-mode-toggle";
 import dynamic from "next/dynamic";
 
 // Dynamic imports for better performance
 const DynamicBlogEditor = dynamic(
-  () => import("@/components/blog/v2-editor/blog-editor").then(mod => ({ default: mod.BlogEditor })),
+  () => import("@/components/blog/v2/v2-editor/blog-editor").then(mod => ({ default: mod.BlogEditor })),
   {
     ssr: false,
     loading: () => (
@@ -53,7 +53,6 @@ export default function BlogEditorScreen() {
     
     setIsSaving(true);
     const blogPost = { title, description, tags, content };
-    console.log("Saving blog post:", blogPost);
     
     // Simulate API call
     // await new Promise(resolve => setTimeout(resolve, 1000));
@@ -63,7 +62,6 @@ export default function BlogEditorScreen() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(blogPost),
           });
-          console.log("🚀 ~ handleSave ~ response:", response)
     
           if (!response.ok) throw new Error("Failed to save blog");
     

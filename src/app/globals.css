@@ -31,10 +31,6 @@ body::-webkit-scrollbar {
 /* Dark styles */
 html.dark{
 
-  p > strong{
-    color: cyan;
-  }
-
   --primary: #0770f0;
 }
 

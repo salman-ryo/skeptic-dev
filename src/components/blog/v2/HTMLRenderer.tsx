@@ -41,9 +41,14 @@ const HTMLRenderer: React.FC<HTMLRendererProps> = ({ content }) => {
           // Get the code content
           const codeContent = getTextContent(codeElement);
 
-          // Define background colors for light and dark modes
-          const darkModeBg = "#020617"; // slate-950
-          const lightModeBg = "#1e1e1e"; // VS Code dark background for light mode
+          // code block style
+          const themeBasedStyle =
+            mounted && theme === "dark"
+              ? {
+                  backgroundColor: "#020617",
+                  border: "2px solid #1e1e1e",
+                }
+              : { backgroundColor: "#1e1e1e", border: "2px solid gray" };
 
           return (
             <div className="code-block-wrapper relative my-6 rounded-lg overflow-hidden">
@@ -55,7 +60,7 @@ const HTMLRenderer: React.FC<HTMLRendererProps> = ({ content }) => {
                   margin: 0,
                   padding: "1.5rem",
                   borderRadius: "0.5rem",
-                  backgroundColor: mounted && theme === "dark" ? darkModeBg : lightModeBg,
+                  ...themeBasedStyle,
                 }}
                 codeTagProps={{
                   style: {
@@ -93,28 +98,32 @@ const HTMLRenderer: React.FC<HTMLRendererProps> = ({ content }) => {
 
   return (
     <div
-      className="prose prose-lg dark:prose-invert max-w-none 
-      prose-headings:font-bold 
-      prose-h1:text-4xl prose-h1:mb-4 prose-h1:mt-8
-      prose-h2:text-3xl prose-h2:mb-3 prose-h2:mt-6
-      prose-h3:text-2xl prose-h3:mb-2 prose-h3:mt-4
-      prose-p:text-[1.25rem] prose-p:leading-7 prose-p:mb-4
-      prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-      prose-strong:text-gray-900 dark:prose-strong:text-cyan-400 prose-strong:font-semibold prose-strong:text-xl
-      prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-      prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
-      prose-li:my-1
-      prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-700 
-      prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300
-      prose-img:rounded-lg prose-img:shadow-lg
-      prose-hr:my-8 prose-hr:border-gray-300 dark:prose-hr:border-gray-700
-      prose-table:w-full prose-table:border-collapse
-      prose-th:border prose-th:border-gray-300 dark:prose-th:border-gray-700 prose-th:p-2 prose-th:bg-gray-100 dark:prose-th:bg-gray-800
-      prose-td:border prose-td:border-gray-300 dark:prose-td:border-gray-700 prose-td:p-2
-    "
-    >
-      {parse(content, options)}
-    </div>
+  className="prose prose-lg dark:prose-invert max-w-none 
+  prose-headings:font-bold 
+  prose-h1:text-4xl prose-h1:mb-4 prose-h1:mt-8
+  prose-h2:text-3xl prose-h2:mb-3 prose-h2:mt-6
+  prose-h3:text-2xl prose-h3:mb-2 prose-h3:mt-4
+  prose-p:text-[1.125rem] prose-p:leading-7 prose-p:mb-4
+  prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+  prose-strong:text-cyan-400 prose-strong:font-bold
+  [&_blockquote_strong]:text-gray-700 dark:[&_blockquote_strong]:text-gray-300
+  [&_h2_strong]:text-gray-900 dark:[&_h2_strong]:text-white
+  [&_h1_strong]:text-gray-900 dark:[&_h1_strong]:text-white
+  prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+  prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+  prose-li:my-1
+  prose-blockquote:border-l-4 prose-blockquote:border-gray-600 dark:prose-blockquote:border-purple-400 
+  prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300
+  prose-img:rounded-lg prose-img:shadow-lg
+  prose-hr:my-8 prose-hr:border-gray-300 dark:prose-hr:border-gray-700
+  prose-table:w-full prose-table:border-collapse
+  prose-th:border prose-th:border-gray-300 dark:prose-th:border-gray-700 prose-th:p-2 prose-th:bg-gray-100 dark:prose-th:bg-gray-800
+  prose-td:border prose-td:border-gray-300 dark:prose-td:border-gray-700 prose-td:p-2
+"
+>
+  {parse(content, options)}
+</div>
+
   );
 };
 
