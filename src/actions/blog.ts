@@ -71,10 +71,27 @@ export async function fetchRandomBlogs() {
 
 export async function getBlogData(slug: string) {
   try {
-    // const response = await fetch(`${BASE_URL}/api/public/blogs?slug=${slug}`, {
-    //   next: { revalidate: 60 },
-    //   credentials: "include",
-    // });
+    const response = await fetch(`${BASE_URL}/api/public/blogs?slug=${slug}`, {
+      next: { revalidate: 60 },
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error(
+        `Error fetching blog data for id ${slug}. Status: ${response.status} ${response.statusText}. Response: ${errorBody}`
+      );
+      return null;
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Network or server error when fetching blog data for slug ${slug}:`, error);
+    return null;
+  }
+}
+export async function getv2BlogData(slug: string) {
+  try {
     const response = await fetch(`${BASE_URL}/api/v2/admin/blogs/${slug}`, {
       next: { revalidate: 60 },
       credentials: "include",
