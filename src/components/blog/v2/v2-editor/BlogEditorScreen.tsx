@@ -1,28 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus, Save } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { BlogPreview } from "@/components/blog/v2/v2-editor/blog-preview";
-import { EditorModeToggle } from "@/components/blog/v2/v2-editor/editor-mode-toggle";
+import { DraggableActionsMenu } from "@/components/blog/v2/v2-editor/actions-menu";
 import dynamic from "next/dynamic";
 
-// Dynamic imports for better performance
 const DynamicBlogEditor = dynamic(
-  () => import("@/components/blog/v2/v2-editor/blog-editor").then(mod => ({ default: mod.BlogEditor })),
+  () =>
+    import("@/components/blog/v2/v2-editor/blog-editor").then((mod) => ({
+      default: mod.BlogEditor,
+    })),
   {
     ssr: false,
     loading: () => (
       <div className="border rounded-lg bg-background text-foreground light:border-gray-400 min-h-[400px] flex items-center justify-center">
         <div className="text-muted-foreground">Loading editor...</div>
       </div>
-    )
+    ),
   }
 );
+
+type ToolbarPosition = "left" | "top";
+type ActionsPosition = "right" | "top";
 
 export default function BlogEditorScreen() {
   const [title, setTitle] = useState("");
@@ -33,9 +38,28 @@ export default function BlogEditorScreen() {
   const [isPreview, setIsPreview] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
+  // Menu positions
+  const [toolbarPosition, setToolbarPosition] = useState<ToolbarPosition>("left");
+  const [actionsPosition, setActionsPosition] = useState<ActionsPosition>("right");
+
+  // Handle collision detection
+  const handleToolbarPositionChange = (newPosition: ToolbarPosition) => {
+    if (newPosition === "top" && actionsPosition === "top") {
+      setActionsPosition("right");
+    }
+    setToolbarPosition(newPosition);
+  };
+
+  const handleActionsPositionChange = (newPosition: ActionsPosition) => {
+    if (newPosition === "top" && toolbarPosition === "top") {
+      setToolbarPosition("left");
+    }
+    setActionsPosition(newPosition);
+  };
+
   const addTag = () => {
     const trimmed = currentTag.trim();
-    if (trimmed && !tags.includes(trimmed) && tags.length < 10) { // Limit to 10 tags
+    if (trimmed && !tags.includes(trimmed) && tags.length < 10) {
       setTags([...tags, trimmed]);
       setCurrentTag("");
     }
@@ -50,32 +74,23 @@ export default function BlogEditorScreen() {
       alert("Title and content are required");
       return;
     }
-    
+
     setIsSaving(true);
     const blogPost = { title, description, tags, content };
-    
-    // Simulate API call
-    // await new Promise(resolve => setTimeout(resolve, 1000));
+
     try {
-          const response = await fetch("/api/v2/admin/blogs", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(blogPost),
-          });
-    
-          if (!response.ok) throw new Error("Failed to save blog");
-    
-          // Reset form
-          // setTitle("");
-          // setDescription("");
-          // setTags([]);
-        } catch (error) {
-          console.error("An error occurred while saving the blog");
-        } finally {
-          // setIsSubmitting(false);
-        }
-    setIsSaving(false);
-    // TODO: save to backend
+      const response = await fetch("/api/v2/admin/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(blogPost),
+      });
+
+      if (!response.ok) throw new Error("Failed to save blog");
+    } catch (error) {
+      console.error("An error occurred while saving the blog");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleToggleMode = (preview: boolean) => {
@@ -90,25 +105,42 @@ export default function BlogEditorScreen() {
   };
 
   return (
-    <div className="container mx-auto py-16 min-h-screen light:bg-white max-md:px-10">
+    <div className="container mx-auto py-16 min-h-screen light:bg-white max-md:px-10 select-none">
+      {/* Draggable Actions Menu */}
+      {!isPreview && (
+        <DraggableActionsMenu
+          isPreview={isPreview}
+          onTogglePreview={handleToggleMode}
+          onSave={handleSave}
+          isSaving={isSaving}
+          canSave={!!title.trim() && !!content.trim()}
+          position={actionsPosition}
+          onPositionChange={handleActionsPositionChange}
+          otherMenuPosition={toolbarPosition}
+        />
+      )}
+
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Blog Editor</h1>
-          <div className="flex items-center gap-4">
-            <EditorModeToggle
-              isPreview={isPreview}
-              onToggle={handleToggleMode}
-            />
-            <Button 
-              onClick={handleSave} 
-              size="sm" 
-              className="ml-2" 
-              disabled={isSaving || !title.trim() || !content.trim()}
-            >
-              <Save className="w-4 h-4 mr-2" />
-              {isSaving ? "Saving..." : "Save"}
-            </Button>
-          </div>
+          {isPreview && (
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={() => setIsPreview(false)}
+                size="sm"
+                variant="outline"
+              >
+                Back to Editor
+              </Button>
+              <Button
+                onClick={handleSave}
+                size="sm"
+                disabled={isSaving || !title.trim() || !content.trim()}
+              >
+                {isSaving ? "Saving..." : "Save"}
+              </Button>
+            </div>
+          )}
         </div>
 
         {!isPreview && (
@@ -156,10 +188,14 @@ export default function BlogEditorScreen() {
                   maxLength={20}
                   disabled={tags.length >= 10}
                 />
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={addTag}
-                  disabled={!currentTag.trim() || tags.includes(currentTag.trim()) || tags.length >= 10}
+                  disabled={
+                    !currentTag.trim() ||
+                    tags.includes(currentTag.trim()) ||
+                    tags.length >= 10
+                  }
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
@@ -199,7 +235,13 @@ export default function BlogEditorScreen() {
         ) : (
           <div className="space-y-2">
             <Label className="text-base font-medium">Content</Label>
-            <DynamicBlogEditor content={content} onChange={setContent} />
+            <DynamicBlogEditor
+              content={content}
+              onChange={setContent}
+              toolbarPosition={toolbarPosition}
+              onToolbarPositionChange={handleToolbarPositionChange}
+              actionsMenuPosition={actionsPosition}
+            />
           </div>
         )}
       </div>

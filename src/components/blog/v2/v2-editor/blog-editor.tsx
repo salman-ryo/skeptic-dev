@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
@@ -10,21 +11,32 @@ import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import { createLowlight, common } from "lowlight";
-import { EditorToolbar } from "./editor-toolbar";
+import { DraggableToolbar } from "./draggable-toolbar";
 import { TwitterExtension } from "./extensions/twitter-extension";
 import { DividerExtension } from "./extensions/divider-extension";
 import "./editor-styles.css";
 import { BubbleMenuComponent } from "./bubble-menu-component";
+import { useState, useEffect } from "react";
 
-// Create lowlight instance with common languages
 const lowlight = createLowlight(common);
+
+type Position = "left" | "top" | "right";
 
 interface BlogEditorProps {
   content: string;
   onChange: (content: string) => void;
+  toolbarPosition: "left" | "top";
+  onToolbarPositionChange: (position: "left" | "top") => void;
+  actionsMenuPosition: Position;
 }
 
-export function BlogEditor({ content, onChange }: BlogEditorProps) {
+export function BlogEditor({
+  content,
+  onChange,
+  toolbarPosition,
+  onToolbarPositionChange,
+  actionsMenuPosition,
+}: BlogEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -37,20 +49,22 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
           class: "bg-yellow-200 dark:bg-yellow-800 px-1 rounded",
         },
       }),
-      TextAlign.configure({ // ✨ Configure TextAlign extension
-        types: ['heading', 'paragraph'],
-        alignments: ['left', 'center', 'right', 'justify'],
-        defaultAlignment: 'left',
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+        alignments: ["left", "center", "right", "justify"],
+        defaultAlignment: "left",
       }),
       Image.configure({
         HTMLAttributes: {
-          class: "w-full max-h-[500px] object-cover rounded-lg border dark:border-gray-900 max-sm:h-[260px] max-md:h-[300px]",
+          class:
+            "w-full max-h-[500px] object-cover rounded-lg border dark:border-gray-900 max-sm:h-[260px] max-md:h-[300px]",
         },
       }),
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: "text-blue-600 hover:text-blue-800 underline cursor-pointer",
+          class:
+            "text-blue-600 hover:text-blue-800 underline cursor-pointer",
           rel: "noopener noreferrer",
           target: "_blank",
         },
@@ -77,7 +91,7 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
     immediatelyRender: false,
     content,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
+      onChange(editor.getHTML());
     },
     editorProps: {
       attributes: {
@@ -92,16 +106,24 @@ export function BlogEditor({ content, onChange }: BlogEditorProps) {
       <div className="border rounded-lg bg-background text-foreground light:border-gray-400 min-h-[400px] flex items-center justify-center">
         <div className="text-muted-foreground">Loading editor...</div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="border rounded-lg bg-background text-foreground light:border-gray-400">
-      <EditorToolbar editor={editor} />
-      <div className="relative h-[75dvh] overflow-y-scroll pb-10">
-        <EditorContent editor={editor} />
-        {editor && <BubbleMenuComponent editor={editor} />}
+    <>
+      <DraggableToolbar
+        editor={editor}
+        position={toolbarPosition}
+        onPositionChange={onToolbarPositionChange}
+        otherMenuPosition={actionsMenuPosition}
+      />
+
+      <div className="border rounded-lg bg-background text-foreground light:border-gray-400">
+        <div className="relative h-[75dvh] overflow-y-scroll pb-10">
+          <EditorContent editor={editor} />
+          {editor && <BubbleMenuComponent editor={editor} />}
+        </div>
       </div>
-    </div>
-  )
+    </>
+  );
 }
